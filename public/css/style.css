@@ -1,0 +1,8 @@
+.bg-orange {
+    background-color: #ffd400;
+}
+
+.btn-login:hover{
+    background: rgba(255,172,10,.6);
+    color: black;
+}
