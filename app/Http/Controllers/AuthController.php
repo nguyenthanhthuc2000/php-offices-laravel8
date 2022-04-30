@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 class AuthController extends Controller
 {
     public function index(){
-        return 'login page';
+        return view('login');
     }
 
     public function login(Request $request){
@@ -24,9 +24,8 @@ class AuthController extends Controller
             'password.required' => 'Mâth khẩu không được bỏ trống.'
         ]
         );
-
         if (Auth::attempt($credentials, $remember)) {
-            return route('login');
+            return route('dashboard');
         }
 
         return back()->withErrors([

@@ -1,10 +1,14 @@
 <?php
 use Illuminate\Support\Facades\Auth;
 
-function getRole() {
-    return Auth::user()->role;
+if(!function_exists('getRole')){
+    function getRole() {
+        return Auth::user()->role;
+    }
 }
 
-function getClassListByUser() {
+if(!function_exists('getClassListByUser')){
+    function getClassListByUser() {
 
+    }
 }
