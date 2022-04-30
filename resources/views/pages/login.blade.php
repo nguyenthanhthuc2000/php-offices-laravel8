@@ -1,12 +1,6 @@
-<!DOCTYPE html>
-<html lang="vn">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
+@section('title', 'Đăng nhập')
+
+@section('content')
     @if ($errors)
         {{ $errors }}
     @endif
@@ -18,5 +12,4 @@
         <br>
         <button type="submit">login</button>
     </form>
-</body>
-</html>
+@endsection
