@@ -10,7 +10,9 @@ use App\Http\Controllers\AuthController;
     // return view('welcome');
 // });
 
-Route::match(['get', 'post'],'/login',[AuthController::class, 'index'])->name('login');
+Route::get('/login',[AuthController::class, 'index'])->name('login');
+Route::post('/login',[AuthController::class, 'login'])->name('login.post');
+
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 
