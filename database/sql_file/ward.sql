@@ -9,7 +9,7 @@
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
-SET time_zone = "+00:00";
+SET time_zone = "+07:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Cơ sở dữ liệu: `db_newland`
+-- Cơ sở dữ liệu: `db_php_offices`
 --
 
 -- --------------------------------------------------------
@@ -26,7 +26,7 @@ SET time_zone = "+00:00";
 --
 -- Cấu trúc bảng cho bảng `ward`
 --
-
+DROP TABLE IF EXISTS `ward`;
 CREATE TABLE `ward` (
   `id` int(10) UNSIGNED NOT NULL,
   `_name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
