@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controller\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,4 +16,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::get('/login', [UserController::class, 'index'])->name('login');
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('dashboard', [] )->name('dashboard');
 });
