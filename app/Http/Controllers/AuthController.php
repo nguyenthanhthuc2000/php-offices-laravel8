@@ -27,7 +27,7 @@ class AuthController extends Controller
         );
 
         if (Auth::attempt($credentials, $remember)) {
-            return redirect()->route('dashboard');
+            return redirect()->route('listStudent');
         }
 
         return back()->withErrors(
