@@ -58,11 +58,6 @@
                     </div>
                 @endif
             </div>
-            @if ($errors->has('userExist'))
-                <div class="invalid-text mb-3">
-                    {{ $errors->first('userExist') }}
-                </div>
-            @endif
             <div class="d-grid justify-content-center">
                 <button class="btn btn-primary text-uppercase fw-bold" type="submit">Thêm mới</button>
             </div>
