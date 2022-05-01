@@ -11,7 +11,7 @@ class UserController extends Controller
     }
 
     public function create(){
-        return 'create user';
+        return view('pages.auth.register');
     }
 
     public function store(Request $request){

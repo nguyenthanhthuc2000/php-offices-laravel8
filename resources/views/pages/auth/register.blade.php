@@ -1,10 +1,10 @@
 @extends('layout')
 
-@section('title', 'Đăng nhập')
+@section('title', 'Đăng ký')
 @section('content')
     <div class="card border-0 shadow rounded-3 my-5 w-50 mx-auto">
         <div class="card-body p-4 p-sm-5">
-          <h3 class="card-title text-center text-uppercase">Đăng nhập</h3>
+          <h3 class="card-title text-center text-uppercase">Tạo mới</h3>
           <hr class="my-4">
           <form action="{{ route('login.post') }}" method="POST" class="needs-validation" novalidate>
             @method('post')

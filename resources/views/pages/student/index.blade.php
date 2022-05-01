@@ -1,33 +1,43 @@
 @extends('layout')
 
+@section('title', 'Danh sách người dùng')
 @section('content')
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">First</th>
-            <th scope="col">Last</th>
-            <th scope="col">Handle</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-        </tr>
-        <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-        </tr>
-        <tr>
-            <th scope="row">3</th>
-            <td colspan="2">Larry the Bird</td>
-            <td>@twitter</td>
-        </tr>
-        </tbody>
-    </table>
+    <div class="header-table mb-3 d-flex justify-content align-center">
+        <a class="btn btn-primary" href="{{ route('register') }}">
+            <i class="fa-solid fa-plus"></i> Thêm mới
+        </a>
+    </div>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Họ tên</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Chức vụ</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($lstUsers as $index => $user)
+                    <tr>
+                        <th scope="row">{{ ++$index }}</th>
+                        <td>{{ $user->name }}</td>
+                        <td>{{ $user->email }}</td>
+                        <td>{{ getNameRole($user->role) }}</td>
+                        <td>
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                <button class="btn btn-mute text-warning" type="button">
+                                    <i class="fa-solid fa-user-pen"></i>
+                                </button>
+                                <button class="btn btn-mute text-danger" type="button">
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </button>
+                              </div>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
 @endsection

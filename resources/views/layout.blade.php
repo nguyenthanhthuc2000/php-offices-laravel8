@@ -4,8 +4,9 @@
 <body class="">
     @include('layouts.menu')
 
-    @yield('content')
-
+    <div class="container my-3">
+        @yield('content')
+    </div>
     @include('layouts.script')
 </body>
 </html>

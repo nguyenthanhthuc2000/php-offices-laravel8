@@ -8,13 +8,14 @@ use Illuminate\Support\Facades\Auth;
 class AuthController extends Controller
 {
     public function index(){
-        return view('login');
+        return view('pages.auth.login');
     }
 
     public function login(Request $request){
         $remember = $request->remember ? true : false;
 
-        $credentials = $request->validate([
+        $credentials = $this->validate($request,
+        [
             'email' => ['bail', 'required', 'email'],
             'password' => ['bail', 'required'],
         ],
@@ -22,15 +23,16 @@ class AuthController extends Controller
             'email.required' => 'Emai không được bỏ trống.',
             'email.email' => 'Emai không đúng định dạng.',
             'password.required' => 'Mâth khẩu không được bỏ trống.'
-        ]
+            ]
         );
+
         if (Auth::attempt($credentials, $remember)) {
-            return route('dashboard');
+            return redirect()->route('dashboard');
         }
 
-        return back()->withErrors([
-            'err' => 'Email hoặc mật khẩu không chính xác',
-        ])->onlyInput('email');
+        return back()->withErrors(
+            ['userNotExist' => 'Email hoặc mật khẩu không chính xác']
+        )->onlyInput('email');
     }
 
     public function logout(Request $request) {
@@ -40,6 +42,6 @@ class AuthController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/login');
+        return redirect()->route('login');
     }
 }
