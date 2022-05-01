@@ -3,8 +3,9 @@
     @include('layouts.head')
 <body class="">
     @include('layouts.menu')
-
-    @yield('content')
+    <div class="container mt-3">
+        @yield('content')
+    </div>
 
     @include('layouts.script')
 </body>

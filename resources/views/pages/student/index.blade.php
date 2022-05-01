@@ -4,30 +4,26 @@
     <table class="table">
         <thead>
         <tr>
-            <th scope="col">#</th>
-            <th scope="col">First</th>
-            <th scope="col">Last</th>
-            <th scope="col">Handle</th>
+            <th scope="col">STT</th>
+            <th scope="col">Họ tên</th>
+            <th scope="col">Email</th>
+            <th scope="col">Mã số SV</th>
+            <th scope="col">Thao tác</th>
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-        </tr>
-        <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-        </tr>
-        <tr>
-            <th scope="row">3</th>
-            <td colspan="2">Larry the Bird</td>
-            <td>@twitter</td>
-        </tr>
+        @foreach($students as $student)
+            <tr>
+                <th scope="row">1</th>
+                <td>{{$student->name}}</td>
+                <td>{{$student->email}}</td>
+                <td>{{$student->info->student_code}}</td>
+                <td></td>
+            </tr>
+        @endforeach
         </tbody>
     </table>
+    <div style="display: flex;justify-content: end;">
+        {{$students->links()}}
+    </div>
 @endsection
