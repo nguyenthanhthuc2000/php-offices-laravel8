@@ -11,17 +11,19 @@ use App\Http\Controllers\StudentController;
      return view('layout');
  });
 
-Route::get('/login',[AuthController::class, 'index'])->name('login');
-Route::post('/login',[AuthController::class, 'login'])->name('login.post');
+Route::get('/dang-nhap',[AuthController::class, 'index'])->name('login');
+Route::post('/login-submit',[AuthController::class, 'login'])->name('login.post');
 
-Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('/dang-xuat', [AuthController::class, 'logout'])->name('logout');
 
 
 
-//Route::middleware(['auth'])->group(function () {
-    Route::get('dashboard', function(){
-        return 'thành công';
-    } )->name('dashboard');
+Route::middleware(['auth'])->group(function () {
+    // user
+    Route::get('/dang-ky', [UserController::class, 'create'])->name('register')->middleware('isAdmin');
 
-    Route::get('/danh-sach-sinh-vien', [StudentController::class, 'listStudent'])->name('listStudent');
-//});
+
+    Route::get('/danh-sach-nguoi-dung', [StudentController::class, 'listStudent'])->name('dashboard');
+
+    // Route::get('/danh-sach-sinh-vien', [StudentController::class, 'listStudent'])->name('listStudent');
+});

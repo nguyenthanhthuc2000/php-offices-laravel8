@@ -20,6 +20,6 @@ class IsStudent
         if($role == 2) { //teacher
             return $next($request);
         }
-        return route('login');
+        return redirect()->route('logout');
     }
 }

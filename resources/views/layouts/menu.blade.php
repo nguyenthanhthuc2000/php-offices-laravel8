@@ -10,7 +10,19 @@
                 <input class="form-control me-2" type="search" placeholder="Tìm kiếm" aria-label="Search">
                 <i class="fa-solid fa-magnifying-glass" style="position: absolute;right: 20px;top: 11px; cursor: pointer;"></i>
             </form>
-            <a class="btn btn-outline-success btn-login"  href="">Đăng nhập</a>
+            @if(!Auth::check())
+                <a class="btn btn-outline-success btn-login"  href="{{ route('login') }}">Đăng nhập</a>
+            @else
+                <div class="dropdown">
+                    <a class="btn btn-mute text-light dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        {{ Auth::user()->name }}
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <li><a class="dropdown-item" href="#">Hồ sơ</a></li>
+                    <li><a class="dropdown-item" href="{{ route('logout') }}">Đăng xuất</a></li>
+                    </ul>
+                </div>
+            @endif
         </div>
         <div class="d-flex">
 {{--                <button class="btn btn-outline-success btn-login" type="submit">Đăng nhập</button>--}}

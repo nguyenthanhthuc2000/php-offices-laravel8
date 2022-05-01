@@ -18,7 +18,16 @@
                 <td>{{$student->name}}</td>
                 <td>{{$student->email}}</td>
                 <td>{{$student->info->student_code}}</td>
-                <td></td>
+                <td>
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button class="btn btn-mute text-warning" type="button">
+                            <i class="fa-solid fa-user-pen"></i>
+                        </button>
+                        <button class="btn btn-mute text-danger" type="button">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                    </div>
+                </td>
             </tr>
         @endforeach
         </tbody>

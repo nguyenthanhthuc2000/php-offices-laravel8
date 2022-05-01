@@ -1,15 +1,25 @@
 .bg-orange {
     background-color: #ffd400;
 }
-.bg-blue{
+
+.bg-blue {
     background-color: #005ab7;
 }
+
 .btn-login {
     color: #fff;
     border-color: #fff;
 }
-.btn-login:hover{
+
+.btn-login:hover {
     border-color: #fff;
     background: none;
     box-shadow: 1px 1px 9px 1px #0000004a;
+}
+
+.invalid-text {
+    width: 100%;
+    margin-top: 0.25rem;
+    font-size: .875em;
+    color: #dc3545;
 }
