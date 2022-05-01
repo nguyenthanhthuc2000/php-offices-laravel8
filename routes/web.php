@@ -21,9 +21,11 @@ Route::get('/dang-xuat', [AuthController::class, 'logout'])->name('logout');
 Route::middleware(['auth'])->group(function () {
     // user
     Route::get('/dang-ky', [UserController::class, 'create'])->name('register')->middleware('isAdmin');
+    Route::get('/trang-chu', function () {
+        return view('layout');
+    })->name('dashboard');
 
+//    Route::get('/danh-sach-giao-vien', [StudentController::class, 'listStudent'])->name('dashboard');
 
-    Route::get('/danh-sach-nguoi-dung', [StudentController::class, 'listStudent'])->name('dashboard');
-
-    // Route::get('/danh-sach-sinh-vien', [StudentController::class, 'listStudent'])->name('listStudent');
+    Route::get('/danh-sach-sinh-vien', [StudentController::class, 'listStudent'])->name('listStudent');
 });

@@ -7,7 +7,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent" style="justify-content: end;">
             <form class="d-flex" style="    position: relative;">
-                <input class="form-control me-2" type="search" placeholder="Tìm kiếm" aria-label="Search">
+                <input class="form-control me-2" type="search" placeholder="Tìm kiếm..." aria-label="Search">
                 <i class="fa-solid fa-magnifying-glass" style="position: absolute;right: 20px;top: 11px; cursor: pointer;"></i>
             </form>
             @if(!Auth::check())

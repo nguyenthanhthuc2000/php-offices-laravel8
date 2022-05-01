@@ -13,6 +13,13 @@ if(!function_exists('getClassListByUser')){
     }
 }
 
+if(!function_exists('getNo')){
+    function getNo($perPage, $currentPage) {
+        return $perPage * $currentPage - 10;
+    }
+}
+
+
 if(!function_exists('getNameRole')){
     function getNameRole($role) {
         $role_name = [
