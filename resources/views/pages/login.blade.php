@@ -1,4 +1,3 @@
-@section('title', 'Đăng nhập')
 
 @section('content')
     @if ($errors)

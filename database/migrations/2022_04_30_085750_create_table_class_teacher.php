@@ -13,7 +13,7 @@ class CreateTableClassTeacher extends Migration
      */
     public function up()
     {
-        Schema::create('teacher_class_teacher', function (Blueprint $table) {
+        Schema::create('teacher_class', function (Blueprint $table) {
             $table->id();
             $table->integer('class_id');
             $table->integer('user_id');
