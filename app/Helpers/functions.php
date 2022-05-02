@@ -1,21 +1,26 @@
 <?php
 use Illuminate\Support\Facades\Auth;
 
+
 if(!function_exists('getRole')){
     function getRole() {
-        return Auth::user()->role;
+        if(Auth::check()) {
+            return Auth::user()->role;
+        }
     }
 }
 
 if(!function_exists('getClassListByUser')){
     function getClassListByUser() {
+        if(Auth::check()) {
 
+        }
     }
 }
 
 if(!function_exists('getNo')){
     function getNo($perPage, $currentPage) {
-        return $perPage * $currentPage - 10;
+        return $perPage * $currentPage - $perPage;
     }
 }
 
