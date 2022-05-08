@@ -20,7 +20,7 @@ if(!function_exists('getClassListByUser')){
 
 if(!function_exists('getNo')){
     function getNo($perPage, $currentPage) {
-        return $perPage * $currentPage - $perPage;
+        return $perPage * $currentPage - $perPage + 1;
     }
 }
 

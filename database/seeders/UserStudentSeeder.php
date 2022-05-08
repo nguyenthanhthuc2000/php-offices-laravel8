@@ -17,8 +17,16 @@ class UserStudentSeeder extends Seeder
     {
         $faker = \Faker\Factory::create();
 
-        $limit = 110;
+        $limit = 100;
 
+        for ($i = 0; $i < $limit; $i++) {
+            DB::table('users')->insert([
+                'name' => $faker->name,
+                'email' => $faker->unique()->email,
+                'role' => 2,
+                'password' =>  Hash::make(123456),
+            ]);
+        }
         for ($i = 0; $i < $limit; $i++) {
             DB::table('users')->insert([
                 'name' => $faker->name,
@@ -27,5 +35,11 @@ class UserStudentSeeder extends Seeder
                 'password' =>  Hash::make(123456),
             ]);
         }
+        DB::table('users')->insert([
+            'name' => 'admin',
+            'email' => 'admin@gmail.com',
+            'role' => 1,
+            'password' =>  Hash::make(123456),
+        ]);
     }
 }
