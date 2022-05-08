@@ -36,3 +36,9 @@ if(!function_exists('getNameRole')){
         return $role_name[$role] ?? '--';
     }
 }
+
+if(!function_exists('dateFormat')){
+    function dateFormat($date) {
+        return date("d/m/Y", strtotime($date));
+    }
+}

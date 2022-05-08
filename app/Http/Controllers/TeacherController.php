@@ -13,7 +13,7 @@ class TeacherController extends Controller
         $this->model = $user;
     }
 
-    public function listTeacher (){
+    public function index (){
 
         $teachers = $this->model->where('role', '2')->paginate(8);
         return view('pages.teacher.index', compact('teachers'));

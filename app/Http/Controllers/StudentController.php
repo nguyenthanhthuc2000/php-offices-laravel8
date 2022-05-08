@@ -14,15 +14,36 @@ class StudentController extends Controller
         $this->model = $user;
     }
 
-    public function listStudent (){
-
+    public function index (){
         $students = $this->model->where('role', '3')->paginate(8);
+
         return view('pages.student.index', compact('students'));
     }
 
     public function profile () {
-        $auth_id = Auth::id();
-        $student = $this->model->find($auth_id);
+        $student_id = Auth::id();
+        $student = $this->model->find($student_id);
+
         return view('pages.student.profile', compact('student'));
+    }
+
+    public function detail ($id) {
+        $student_id = Auth::id();
+        if(getRole() == 2 || getRole() == 1) {
+            $student_id = $id;
+        }
+        $student = $this->model->find($student_id);
+
+        return view('pages.student.detail', compact('student'));
+    }
+    
+    public function edit ($id) {
+        $student_id = Auth::id();
+        if(getRole() == 2 || getRole() == 1) {
+            $student_id = $id;
+        }
+        $student = $this->model->find($student_id);
+
+        return view('pages.student.edit', compact('student'));
     }
 }

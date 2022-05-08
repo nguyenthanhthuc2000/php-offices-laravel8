@@ -12,25 +12,31 @@
                 </li>
                 @if(Auth::check() && getRole() == 1)
                     <li class="nav-item">
-                        <a class="nav-link active text-light" aria-current="page" href="{{ route('listTeacher') }}">GIÁO VIÊN</a>
+                        <a class="nav-link active text-light" aria-current="page" href="{{ route('teacher.index') }}">GIÁO VIÊN</a>
                     </li>
                 @endif
                 @if(Auth::check() && getRole() == 1 || getRole() == 2 )
                     <li class="nav-item">
-                        <a class="nav-link text-light" href="{{ route('listStudent') }}">SINH VIÊN</a>
+                        <a class="nav-link text-light" href="{{ route('student.index') }}">SINH VIÊN</a>
                     </li>
                 @endif
                 @if(Auth::check() && getRole() == 1)
                     <li class="nav-item">
-                        <a class="nav-link text-light" href="{{ route('listClass') }}">LỚP</a>
+                        <a class="nav-link text-light" href="{{ route('faculty.index') }}">KHOA</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="{{ route('class.index') }}">LỚP</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="{{ route('school.year.index') }}">NIÊN KHÓA</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="#">TIN TỨC</a>
                     </li>
                 @endif
                 @if(Auth::check() && getRole() == 3)
                     <li class="nav-item">
                         <a class="nav-link text-light" href="{{ route('profile') }}">THÔNG TIN CÁ NHÂN</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-light" href="#">IN BIỂU MẨU</a>
                     </li>
                 @endif
             </ul>

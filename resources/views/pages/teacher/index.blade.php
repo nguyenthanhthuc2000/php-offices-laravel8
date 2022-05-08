@@ -49,7 +49,7 @@
                             <th scope="row">{{ $no++ }}</th>
                             <td>{{$teacher->name}}</td>
                             <td>{{$teacher->email}}</td>
-                            <th scope="col"></th>
+                            <td >{{$teacher->facultyTeacher ? $teacher->facultyTeacher->faculty->name : 'Chưa cập nhật'}}</td>
                             <td class="text-end">
                                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                                     <button class="btn btn-mute text-warning" title="Chỉnh sửa" type="button">

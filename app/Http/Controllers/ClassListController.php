@@ -13,7 +13,7 @@ class ClassListController extends Controller
         $this->model = $class;
     }
 
-    public function listClass (){
+    public function index (){
 
         $class = $this->model->paginate(8);
         return view('pages.class.index', compact('class'));

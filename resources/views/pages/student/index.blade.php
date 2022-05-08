@@ -50,8 +50,8 @@
                             <td>{{$student->name}}</td>
                             <td>{{$student->email}}</td>
                             <td>{{$student->info->student_code}}</td>
-                            <td>Quản trị mạng 18C</td>
-                            <td>2018-2021</td>
+                            <td>{{$student->info->class->name}}</td>
+                            <td>{{$student->info->schoolYear->name}}</td>
                             <td class="text-end">
                                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                                     <button class="btn btn-mute text-warning" type="button">

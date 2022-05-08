@@ -7,6 +7,7 @@
         @yield('content')
     </div>
 
+    @include('pages.modal.file_output')
     @include('layouts.script')
 </body>
 </html>
