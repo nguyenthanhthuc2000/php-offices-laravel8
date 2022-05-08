@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\StudentController;
@@ -17,6 +18,8 @@ Route::get('/trang-chu', [HomeController::class, 'index'])->name('home');
 Route::get('/dang-nhap',[AuthController::class, 'index'])->name('login');
 Route::post('/login-submit',[AuthController::class, 'login'])->name('login.post');
 Route::get('/dang-xuat', [AuthController::class, 'logout'])->name('logout');
+Route::get('/get-district/{id_province}', [Controller::class, 'getDistrictByProvince'])->name('getDistrict');
+Route::get('/get-ward/{id_district}/{id_province}', [Controller::class, 'getWardByDistrict'])->name('getWard/{id_province}');
 
 Route::middleware(['auth'])->group(function () {
     // user

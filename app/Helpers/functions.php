@@ -54,19 +54,17 @@ if(!function_exists('getProvince')){
 
 if(!function_exists('getDistrict')){
     function getDistrict($id_province = null){
-        if($id_province == null){
-            return District::get();
+        if($id_province != null){
+            return District::where('_province_id', $id_province)->get();
         }
-        return District::where('_province_id', $id_province)->get();
     }
 }
 
 if(!function_exists('getWard')){
     function getWard($id_district = null, $id_province = null){
-        if($id_district == null){
-            return Ward::get();
+        if($id_district != null && $id_province != null){
+            return Ward::where(['_province_id' => $id_province, '_district_id' => $id_district])->get();
         }
-        return Ward::where(['_province_id' => $id_province, '_district_id' => $id_district])->get();
     }
 }
 
