@@ -122,15 +122,15 @@
             <form>
             <div class="modal-body">
                 <input type="hidden" id="student_id" value={{$student->id}}>
-                    <select class="form-select" aria-label="Default select example" id='file_type'>
-                        <option selected value="">Chọn biểu mẩu</option>
-                        <option value="1">Sơ yếu lí lịch</option>
-                        <option value="2">Giấy hoãn nghĩa vụ quân sự</option>
-                    </select>
+                <select class="form-select" aria-label="Default select example" id='file_type'>
+                    <option value="">Chọn biểu mẩu</option>
+                    <option value="1">Sơ yếu lí lịch</option>
+                    {{-- <option value="2">Giấy hoãn nghĩa vụ quân sự</option> --}}
+                </select>
             </div>
             <div class="modal-footer">
+                <a href="" class="btn btn-primary btn-dowload d-none" data-url={{route('file.dowload')}}>Tải về</a>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-primary" id='export'>Xuất</button>
             </div>
         </form>
         </div>
@@ -139,40 +139,18 @@
 @endsection
 @push('javascript')
   <script>
-    $('#export').click(function() {
-      const type = $('#file_type').val();
+    $('#file_type').change(function() {
       const id = $('#student_id').val();
-      console.log(type, id)
-      Swal.fire({
-        title: 'Xác nhận?',
-        text: 'Xuất biểu mẩu!',
-        showCancelButton: true,
-        confirmButtonText: 'OK',
-        cancelButtonText: 'Hủy',
-        icon: 'question',
-      }).then((result) => {
-        /* Read more about isConfirmed, isDenied below */
-        if (result.isConfirmed) {
-            if(type == '') {
-                Swal.fire(
-                    'Lỗi!',
-                    'Vui lòng chọn biểu mẩu!',
-                    'error'
-                )
-            }
-            else if(type != '' && id != ''){
-                console.log('ok')
-                $.ajax({
-                    url: "/xuat-bieu-mau",
-                    method: 'GET',
-                    data:{type:type, id:id},
-                }).done(function(res) {
-                    console.log(res)
-                    Swal.fire('Thành công!', '', 'success')
-                });
-            }
-        }
-      })
+      const type = $('#file_type').val();
+      
+      if([1,2].includes(parseInt(type))) {
+        $('.btn-dowload').removeClass('d-none');
+        let url = $('.btn-dowload').attr('data-url')+'?'+'id='+id+'?type='+type;
+        $('.btn-dowload').attr('href', url);
+      }
+      else {
+        $('.btn-dowload').addClass('d-none');
+      }
     })
 
   </script>
