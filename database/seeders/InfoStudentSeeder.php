@@ -19,6 +19,7 @@ class InfoStudentSeeder extends Seeder
 
         for ($i = 110; $i < $limit; $i++) {
             DB::table('info')->insert([
+                'status' => 1,
                 'user_id' => $i,
                 'birth_date' => $faker->date(),
                 'ethnic' => 1,
@@ -32,7 +33,10 @@ class InfoStudentSeeder extends Seeder
                 'place_birth' => 53,
                 'identity_card_number' => $i.time(),
                 'student_code' => $i.time(),
-                'phone' => '036'.$faker->numerify('#######'),
+                'type_education' => 1, //Bậc đào tạo: 1. Chính quy, 2.Chất lượng cao
+                'branch' => 1, //ID ngành học
+                'education_level' => 1, //Bậc đào tạo: 1 đại học, 2 cao đẳng
+                'school_year' => 1,
             ]);
         }
     }

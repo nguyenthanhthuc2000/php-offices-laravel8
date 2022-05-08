@@ -22,12 +22,17 @@ class AuthController extends Controller
         [
             'email.required' => 'Emai không được bỏ trống.',
             'email.email' => 'Emai không đúng định dạng.',
-            'password.required' => 'Mâth khẩu không được bỏ trống.'
+            'password.required' => 'Mật khẩu không được bỏ trống.'
             ]
         );
 
         if (Auth::attempt($credentials, $remember)) {
-            return redirect()->route('listStudent');
+            if(Auth::user()->role < 3) {
+                return redirect()->route('home');
+            }
+            else {
+                return redirect()->route('profile');
+            }
         }
 
         return back()->withErrors(

@@ -1,24 +1,56 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-blue">
-    <div class="container-fluid container">
-        <a class="navbar-brand" href="#" style="padding: 0;"><img style="height: 55px;" src="{{ asset('/images/sv_header_login.png') }}" alt=""></a>
+    <div class="container">
+        <a class="navbar-brand" href="{{ route('home') }}" style="padding: 1px;"><img style="height: 55px;" src="{{ asset('/images/sv_header_login.png') }}" alt=""></a>
 
         <button class="navbar-toggler" style="border-color: #fff;" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent" style="justify-content: end;">
-            <form class="d-flex" style="    position: relative;">
-                <input class="form-control me-2" type="search" placeholder="Tìm kiếm" aria-label="Search">
-                <i class="fa-solid fa-magnifying-glass" style="position: absolute;right: 20px;top: 11px; cursor: pointer;"></i>
-            </form>
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active text-light" aria-current="page" href="{{ route('home') }}">TRANG CHỦ</a>
+                </li>
+                @if(Auth::check() && getRole() == 1)
+                    <li class="nav-item">
+                        <a class="nav-link active text-light" aria-current="page" href="{{ route('teacher.index') }}">GIÁO VIÊN</a>
+                    </li>
+                @endif
+                @if(Auth::check() && getRole() == 1 || getRole() == 2 )
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="{{ route('student.index') }}">SINH VIÊN</a>
+                    </li>
+                @endif
+                @if(Auth::check() && getRole() == 1)
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="{{ route('faculty.index') }}">KHOA</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="{{ route('class.index') }}">LỚP</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="{{ route('school.year.index') }}">NIÊN KHÓA</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="#">TIN TỨC</a>
+                    </li>
+                @endif
+                @if(Auth::check() && getRole() == 3)
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="{{ route('profile') }}">THÔNG TIN CÁ NHÂN</a>
+                    </li>
+                @endif
+            </ul>
             @if(!Auth::check())
                 <a class="btn btn-outline-success btn-login"  href="{{ route('login') }}">Đăng nhập</a>
             @else
-                <div class="dropdown">
-                    <a class="btn btn-mute text-light dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                        {{ Auth::user()->name }}
+                <div class="dropdown" >
+                    <a class="btn btn-mute text-light dropdown-toggle" type="button" style="display: flex;
+    align-items: center;    text-transform: uppercase;    padding: 10px 0;" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="{{ asset('images/no_avatar.jpg') }}" style="border-radius: 50%; width: 25px; margin-right: 5px" > {{ Auth::user()->name }}
                     </a>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    <li><a class="dropdown-item" href="#">Hồ sơ</a></li>
+                    <ul class="dropdown-menu " aria-labelledby="dropdownMenuButton1">
+                    <li style="    border-bottom: 1px solid #3333;"><a class="dropdown-item" href="#">Hồ sơ</a></li>
+                    <li style="    border-bottom: 1px solid #3333;"><a class="dropdown-item" href="#">Đổi mật khẩu</a></li>
                     <li><a class="dropdown-item" href="{{ route('logout') }}">Đăng xuất</a></li>
                     </ul>
                 </div>
@@ -29,3 +61,4 @@
         </div>
     </div>
 </nav>
+

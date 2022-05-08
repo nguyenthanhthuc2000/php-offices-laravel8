@@ -17,9 +17,9 @@ class IsTeacher
     public function handle(Request $request, Closure $next)
     {
         $role = getRole();
-        if($role == 3) { //student
+        if($role == 2) { //teacher
             return $next($request);
         }
-        return redirect()->route('logout');
+        return redirect()->route('home');
     }
 }

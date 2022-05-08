@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTableClassTeacher extends Migration
+class AddSignFacultyToClassList extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,9 @@ class CreateTableClassTeacher extends Migration
      */
     public function up()
     {
-        Schema::create('teacher_class', function (Blueprint $table) {
-            $table->id();
-            $table->integer('class_id');
-            $table->integer('user_id');
-            $table->timestamps();
+        Schema::table('class_list', function (Blueprint $table) {
+            $table->string('sign')->after('name');
+            $table->string('faculty_id')->after('sign');
         });
     }
 
@@ -28,6 +26,8 @@ class CreateTableClassTeacher extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('teacher_class_teacher');
+        Schema::table('class_list', function (Blueprint $table) {
+            //
+        });
     }
 }

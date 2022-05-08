@@ -17,7 +17,10 @@ class DatabaseSeeder extends Seeder
         $this->call([
 //            EthnicSeeder::class,
 //            InfoStudentSeeder::class,
-//            UserStudentSeeder::class
+//            UserStudentSeeder::class,
+//            ClassSeeder::class,
+//            FacultySeeder::class,
+                SchoolYearSeeder::class,
         ]);
     }
 }
