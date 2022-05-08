@@ -15,9 +15,9 @@ class InfoStudentSeeder extends Seeder
     public function run()
     {
         $faker = \Faker\Factory::create('vi_VN');
-        $limit = 220;
+        $limit = 201;
 
-        for ($i = 110; $i < $limit; $i++) {
+        for ($i = 100; $i < $limit; $i++) {
             DB::table('info')->insert([
                 'status' => 1,
                 'user_id' => $i,

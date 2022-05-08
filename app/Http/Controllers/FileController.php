@@ -36,9 +36,9 @@ class FileController extends Controller
                 if(file_exists($path)) {
                     dd();
                     // $docContent = Storage::get($path);
-                    // $content = File::get($path);
+                    $content = File::get($path);
                     // $phpWord = \PhpOffice\PhpWord\IOFactory::load($path);
-                    // $templateProcessor = new TemplateProcessor($content);
+                    $templateProcessor = new TemplateProcessor($content);
                     // dd($phpWord);
                     return response()->json(['status' => 200, 'message' => 'Xuất thành công!', 'user' => $user]);
                 }
