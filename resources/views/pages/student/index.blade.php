@@ -47,16 +47,16 @@
                     @foreach($students as $student)
                         <tr>
                             <th scope="row">{{ $no++ }}</th>
-                            <td>{{$student->name}}</td>
-                            <td>{{$student->email}}</td>
-                            <td>{{$student->info->student_code}}</td>
-                            <td>{{$student->info->class->name}}</td>
-                            <td>{{$student->info->schoolYear->name}}</td>
+                            <td>{{$student->name ?? '--'}}</td>
+                            <td>{{$student->email ?? '--'}}</td>
+                            <td>{{$student->info->student_code ?? '--'}}</td>
+                            <td>{{$student->info->class->name ?? '--'}}</td>
+                            <td>{{$student->info->schoolYear->name ?? '--'}}</td>
                             <td class="text-end">
                                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                    <button class="btn btn-mute text-warning" type="button">
+                                    <a class="btn btn-mute text-warning" href="{{ route('student.edit', $student->id) }}">
                                         <i class="fa-solid fa-user-pen"></i>
-                                    </button>
+                                    </a>
                                     <button class="btn btn-mute text-danger" type="button">
                                         <i class="fa-solid fa-trash-can"></i>
                                     </button>

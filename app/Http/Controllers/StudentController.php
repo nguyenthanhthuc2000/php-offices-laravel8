@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use DB;
 
 class StudentController extends Controller
 {
@@ -36,14 +37,15 @@ class StudentController extends Controller
 
         return view('pages.student.detail', compact('student'));
     }
-    
+
     public function edit ($id) {
         $student_id = Auth::id();
+        $lstEthnic  = DB::table('ethnic')->get();
         if(getRole() == 2 || getRole() == 1) {
             $student_id = $id;
         }
         $student = $this->model->find($student_id);
 
-        return view('pages.student.edit', compact('student'));
+        return view('pages.student.edit', compact('student', 'lstEthnic'));
     }
 }

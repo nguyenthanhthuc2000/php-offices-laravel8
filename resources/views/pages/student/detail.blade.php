@@ -47,16 +47,16 @@
                                 <div class="form-horizontal">
                                     <div class="form-body">
                                         <div class="form-group row" style="">
-                                            <label class="col-md-6 ">MSSV: <span class="bold">{{$student->info->student_code }}</span></label>
-                                            <label class="col-md-6 ">Lớp học: <span class="bold">{{ $student->info->class->name }}</span></label>
+                                            <label class="col-md-6 ">MSSV: <span class="bold">{{ $student->info->student_code ?? '--' }}</span></label>
+                                            <label class="col-md-6 ">Lớp học: <span class="bold">{{ $student->info->class->name ?? '--' }}</span></label>
                                         </div>
                                         <div class="form-group row" style="">
-                                            <label class="col-md-6 ">Khóa học: <span class="bold">{{ $student->info->schoolYear->name }}</span></label>
-                                            <label class="col-md-6 ">Bậc đào tạo: <span class="bold">{{ $student->info->sex == DAI_HOC ? 'Đại học' : 'Cao đẳng' }}</span></label>
+                                            <label class="col-md-6 ">Khóa học: <span class="bold">{{ $student->info->schoolYear->name ?? '--'  }}</span></label>
+                                            <label class="col-md-6 ">Bậc đào tạo: <span class="bold">{{ $student->info && $student->info->sex == DAI_HOC ? 'Đại học' : 'Cao đẳng' }}</span></label>
                                         </div>
                                         <div class="form-group row" style="">
-                                            <label class="col-md-6 ">Loại: <span class="bold">{{ $student->info->sex == CHINH_QUY ? 'Chính quy' : 'Chất lượng cao' }}</span></label>
-                                            <label class="col-md-6 ">Khoa: <span class="bold">{{$student->info->class ? $student->info->class->faculty->name  : 'Chưa cập nhật'}}</span></label>
+                                            <label class="col-md-6 ">Loại: <span class="bold">{{ $student->info && $student->info->sex == CHINH_QUY ? 'Chính quy' : 'Chất lượng cao' }}</span></label>
+                                            <label class="col-md-6 ">Khoa: <span class="bold">{{ $student->info && $student->info->class ? $student->info->class->faculty->name  : 'Chưa cập nhật'}}</span></label>
                                         </div>
                                         <div class="form-group row" style="">
                                             <label class="col-md-6 ">Họ tên: <span class="bold">{{  $student->name  }}</span></label>
@@ -78,25 +78,26 @@
                                 <div class="form-horizontal">
                                     <div class="form-body">
                                         <div class="form-group row" style="">
-                                            <label class="col-md-3">Ngày sinh: <span class="bold">{{ dateFormat($student->info->birth_date) }}</span></label>
-                                            <label class="col-md-3">Số CMND: <span class="bold">{{ $student->info->identity_card_number }}</span></label>
-                                            <label class="col-md-3">Dân tộc: <span class="bold">{{$student->info->getEthnic ?  $student->info->getEthnic->name  : 'Chưa cập nhật'}}</span></label>
+                                            <label class="col-md-3">Ngày sinh: <span class="bold">{{ $student->info ? dateFormat($student->info->birth_date) : '--' }}</span></label>
+                                            <label class="col-md-3">Số CMND: <span class="bold">{{ $student->info && $student->info->identity_card_number }}</span></label>
+                                            <label class="col-md-3">Dân tộc: <span class="bold">{{ $student->info && $student->info->getEthnic ?  $student->info->getEthnic->name  : 'Chưa cập nhật'}}</span></label>
 
                                         </div>
                                         <div class="form-group row" style="">
-                                            <label class="col-md-3">Ngày vào Đoàn: <span class="bold">{{ dateFormat($student->info->date_join_csvn) }}</span></label>
-                                            <label class="col-md-3">Điện thoại: <span class="bold">{{ $student->info->phone }}</span></label>
-                                            <label class="col-md-3">Giới tính: <span class="bold">{{ $student->info->sex == NAM ? 'Nam' : 'Nữ' }}</span></label>
+                                            <label class="col-md-3">Ngày vào Đoàn: <span class="bold">{{ $student->info ? dateFormat($student->info->date_join_csvn) : '--' }}</span></label>
+                                            <label class="col-md-3">Điện thoại: <span class="bold">{{ $student->info ? $student->info->phone : '--' }}</span></label>
+                                            <label class="col-md-3">Giới tính: <span class="bold">{{ $student->info && $student->info->sex == NAM ? 'Nam' : 'Nữ' }}</span></label>
 
                                         </div>
                                         <div class="form-group row" style="">
-                                            <label class="col-md-3">Ngày vào Đảng: <span class="bold">{{dateFormat($student->info->date_join_tncshcm) }}</span></label>
-                                            <label class="col-md-3">Nơi sinh: <span class="bold">{{ $student->info->placeBirth->_name }}</span></label>
-                                            <label class="col-md-3">Hộ khẩu: 
+                                            <label class="col-md-3">Ngày vào Đảng: <span class="bold">{{ $student->info ? dateFormat($student->info->date_join_tncshcm) : '--' }}</span></label>
+                                            <label class="col-md-3">Nơi sinh: <span class="bold">{{ $student->info ? $student->info->placeBirth->_name : '--' }}</span></label>
+                                            <label class="col-md-3">Hộ khẩu:
                                                 <span class="bold">
-                                                    {{
-                                                        $student->info->getProvince->_name. ', '.$student->info->getDistrict->_name. ', '  .$student->info->getWard->_prefix.' '.$student->info->getWard->_name
+                                                    @if($student->info)
+                                                    {{ $student->info->getProvince->_name. ', '.$student->info->getDistrict->_name. ', '  .$student->info->getWard->_prefix.' '.$student->info->getWard->_name
                                                     }}
+                                                    @endif
                                                 </span>
                                             </label>
                                         </div>

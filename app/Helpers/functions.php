@@ -1,5 +1,6 @@
 <?php
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 
 if(!function_exists('getRole')){
@@ -40,5 +41,23 @@ if(!function_exists('getNameRole')){
 if(!function_exists('dateFormat')){
     function dateFormat($date) {
         return date("d/m/Y", strtotime($date));
+    }
+}
+
+if(!function_exists('getProvince')){
+    function getProvince($id = null){
+        if($id == null){
+            return DB::table('province')->get();
+        }
+        return DB::table('province')->where('id',$id)->first();
+    }
+}
+
+if(!function_exists('getDistrict')){
+    function getDistrict($id = null){
+        if($id == null){
+            return DB::table('district')->get();
+        }
+        return DB::table('district')->where('id',$id)->first()->ward;
     }
 }

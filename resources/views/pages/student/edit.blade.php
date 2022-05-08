@@ -2,6 +2,7 @@
 @extends('layout')
 @section('title', 'Cập nhật thông tin sinh viên')
 @section('content')
+{{-- @dd(getProvince(1)) --}}
     <div style="display: flex; align-items: center; justify-content: space-between">
     </div>
     <div class="row" style="background-color: #fff;border-radius: 5px;margin: 0; padding: 10px;">
@@ -44,21 +45,21 @@
                             <div class="col-sm-6">
                                 <div class="form-horizontal">
                                     <div class="form-body">
-                                        <div class="form-group row" style="">
-                                            <label class="col-md-6 ">MSSV: <span class="bold">{{$student->info->student_code }}</span></label>
-                                            <label class="col-md-6 ">Lớp học: <span class="bold">{{ $student->info->class->name }}</span></label>
+                                        <div class="form-group row">
+                                            <label class="col-md-6 ">MSSV: <span class="bold">{{ $student->info->student_code ?? '--' }}</span></label>
+                                            <label class="col-md-6 ">Lớp học: <span class="bold">{{ $student->info->class->name ?? '--' }}</span></label>
                                         </div>
-                                        <div class="form-group row" style="">
-                                            <label class="col-md-6 ">Khóa học: <span class="bold">{{ $student->info->schoolYear->name }}</span></label>
-                                            <label class="col-md-6 ">Bậc đào tạo: <span class="bold">{{ $student->info->sex == DAI_HOC ? 'Đại học' : 'Cao đẳng' }}</span></label>
+                                        <div class="form-group row">
+                                            <label class="col-md-6 ">Khóa học: <span class="bold">{{ $student->info->schoolYear->name ?? '--' }}</span></label>
+                                            <label class="col-md-6 ">Bậc đào tạo: <span class="bold">{{ $student->info && $student->info->sex == DAI_HOC ? 'Đại học' : 'Cao đẳng' }}</span></label>
                                         </div>
-                                        <div class="form-group row" style="">
-                                            <label class="col-md-6 ">Loại: <span class="bold">{{ $student->info->sex == CHINH_QUY ? 'Chính quy' : 'Chất lượng cao' }}</span></label>
-                                            <label class="col-md-6 ">Khoa: <span class="bold">{{$student->info->class ? $student->info->class->faculty->name  : 'Chưa cập nhật'}}</span></label>
+                                        <div class="form-group row">
+                                            <label class="col-md-6 ">Loại: <span class="bold">{{ $student->info && $student->info->sex == CHINH_QUY ? 'Chính quy' : 'Chất lượng cao' }}</span></label>
+                                            <label class="col-md-6 ">Khoa: <span class="bold">{{ $student->info && $student->info->class ? $student->info->class->faculty->name  : 'Chưa cập nhật'}}</span></label>
                                         </div>
-                                        <div class="form-group row" style="">
-                                            <label class="col-md-6 ">Họ tên: <span class="bold">{{  $student->name  }}</span></label>
-                                            <label class="col-md-6 ">Email: <span class="bold">{{  $student->email  }}</span></label>
+                                        <div class="form-group row">
+                                            <label class="col-md-6 ">Họ tên: <span class="bold">{{  $student->name ?? '--'  }}</span></label>
+                                            <label class="col-md-6 ">Email: <span class="bold">{{  $student->email ?? '--'  }}</span></label>
                                         </div>
                                     </div>
                                 </div>
@@ -76,69 +77,85 @@
                                 <div class="col-sm-12">
                                     <div class="form-horizontal">
                                         <div class="form-body">
-                                            <div class="form-group row" style="">
+                                            <div class="form-group row">
                                                 <div class="col-md-3 mb-2">
                                                     <label for="exampleFormControlInput1" class="form-label">Ngày sinh:</label>
-                                                    <input type="date" class="form-control" value={{$student->info->birth_date}} id="exampleFormControlInput1" placeholder="name@example.com">
+                                                    <input type="date" class="form-control" value={{ $student->info->birth_date ?? '1990-01-01' }} id="exampleFormControlInput1" placeholder="name@example.com">
                                                 </div>
                                                 <div class="col-md-3 mb-2">
                                                     <label for="exampleFormControlInput1" class="form-label">Số CMND:</label>
-                                                    <input type="text" class="form-control" value={{ $student->info->identity_card_number }} id="exampleFormControlInput1" placeholder="name@example.com">
+                                                    <input type="text" class="form-control" value={{ $student->info->identity_card_number ?? '--' }} id="exampleFormControlInput1" placeholder="name@example.com">
                                                 </div>
                                                 <div class="col-md-3 mb-2">
                                                     <label for="exampleFormControlInput1" class="form-label">Dân tộc:</label>
                                                     <select class="form-select" aria-label="Default select example">
                                                         <option selected>Chọn dân tộc</option>
-                                                        <option value="">{{ $student->info->getEthnic->name }}</option>
+                                                        @foreach ($lstEthnic as $ethnic)
+                                                            <option value="{{ $ethnic->id }}"
+                                                                    {{ $student->info && $student->info->getEthnic->id == $ethnic->id ? 'selected' : '' }}>{{ $ethnic->name }}</option>
+                                                        @endforeach
                                                       </select>
                                                 </div>
                                                 <div class="col-md-3 mb-2">
                                                     <label for="exampleFormControlInput1" class="form-label">Ngày vào Đoàn:</label>
-                                                    <input type="date" class="form-control" value={{$student->info->date_join_csvn }} id="exampleFormControlInput1" placeholder="name@example.com">
+                                                    <input type="date" class="form-control" value={{$student->info->date_join_csvn ?? '1990-01-01' }} id="exampleFormControlInput1" placeholder="name@example.com">
                                                 </div>
                                             </div>
-                                            <div class="form-group row" style="">
+                                            <div class="form-group row">
                                                 <div class="col-md-3 mb-2">
                                                     <label for="exampleFormControlInput1" class="form-label">Điện thoại:</label>
-                                                    <input type="text" class="form-control" value={{$student->info->phone }} id="exampleFormControlInput1" placeholder="name@example.com">
+                                                    <input type="text" class="form-control" value={{ $student->info->phone ?? '--' }} id="exampleFormControlInput1" placeholder="name@example.com">
                                                 </div>
                                                 <div class="col-md-3 mb-2">
                                                     <label for="exampleFormControlInput1" class="form-label">Giới tính</label>
                                                     <select class="form-select" aria-label="Default select example">
                                                         <option selected>Chọn giới tính</option>
-                                                        <option {{$student->info->sex == NAM ? 'selected' : ''}} value='1'>Nam</option>
-                                                        <option {{$student->info->sex == NU ? 'selected' : ''}} value='0'>Nữ</option>
+                                                        <option {{ $student->info && $student->info->sex == NAM ? 'selected' : ''}} value='1'>Nam</option>
+                                                        <option {{ $student->info && $student->info->sex == NU ? 'selected' : ''}} value='0'>Nữ</option>
                                                       </select>
                                                 </div>
                                                 <div class="col-md-3 mb-2">
                                                     <label for="exampleFormControlInput1" class="form-label">Ngày vào Đảng:</label>
-                                                    <input type="date" class="form-control" value={{$student->info->date_join_tncshcm}} id="exampleFormControlInput1" placeholder="name@example.com">
+                                                    <input type="date" class="form-control" value={{ $student->info->date_join_tncshcm ?? '1990-01-01' }} id="exampleFormControlInput1" placeholder="name@example.com">
                                                 </div>
                                                 <div class="col-md-3 mb-2">
                                                     <label for="exampleFormControlInput1" class="form-label">Nơi sinh (Tỉnh / Thành phố)</label>
                                                     <select class="form-select" aria-label="Default select example">
-                                                        <option selected>Chọn nơi sinh</option>
-                                                      </select>
+                                                        <option label="Chọn nơi sinh"></option>
+                                                        @foreach (getProvince() as $province)
+                                                            <option value="{{ $province->id }}">{{ $province->_name }}</option>
+                                                        @endforeach
+                                                    </select>
                                                 </div>
                                             </div>
-                                            <div class="form-group row" style="">
+                                            <div class="form-group row">
                                                 <div class="col-md-3 mb-2">
                                                     <label for="exampleFormControlInput1" class="form-label">Tỉnh / Thành phố</label>
                                                     <select class="form-select" aria-label="Default select example">
-                                                        <option selected>Chọn Tỉnh / Thành phố</option>
+                                                        <option label="Chọn Tỉnh / Thành phố"></option>
+                                                        @foreach (getProvince() as $province)
+                                                            <option value="{{ $province->id }}"
+                                                                    {{ $student->info && $student->info->province == $province->id ? 'selected' : '' }}>{{ $province->_name }}</option>
+                                                        @endforeach
                                                       </select>
                                                 </div>
                                                 <div class="col-md-3 mb-2">
                                                     <label for="exampleFormControlInput1" class="form-label">Quận huyện</label>
                                                     <select class="form-select" aria-label="Default select example">
-                                                        <option selected>Chọn Quận huyện</option>
-                                                      </select>
+                                                        <option label="Chọn Quận huyện"></option>
+                                                        @if ($student->info && $student->info->province)
+                                                            @foreach (getProvince($student->info->province) as $province)
+                                                                <option value="{{ $province->id }}"
+                                                                        {{ $student->info && $student->info->province == $province->id ? 'selected' : '' }}>{{ $province->_name }}</option>
+                                                            @endforeach
+                                                        @endif
+                                                    </select>
                                                 </div>
                                                 <div class="col-md-3 mb-2">
                                                     <label for="exampleFormControlInput1" class="form-label">Phường / Xã / Thị trấn</label>
                                                     <select class="form-select" aria-label="Default select example">
-                                                        <option selected>Chọn Xã / Thị trấn</option>
-                                                      </select>
+                                                        <option label="Chọn Xã / Thị trấn"></option>
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
@@ -155,4 +172,9 @@
             </div>
         </div>
     </div>
+    @section('script')
+        <script>
+
+        </script>
+    @endsection
 @endsection

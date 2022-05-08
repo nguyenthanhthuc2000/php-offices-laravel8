@@ -14,16 +14,12 @@ use App\Http\Controllers\FileController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/trang-chu', [HomeController::class, 'index'])->name('home');
-
 Route::get('/dang-nhap',[AuthController::class, 'index'])->name('login');
 Route::post('/login-submit',[AuthController::class, 'login'])->name('login.post');
 Route::get('/dang-xuat', [AuthController::class, 'logout'])->name('logout');
 
 Route::middleware(['auth'])->group(function () {
-
     // user
-
-
     Route::middleware(['auth'])->group(function () {
         Route::get('/tao-moi', [UserController::class, 'create'])->name('register');
         Route::post('/register', [UserController::class, 'store'])->name('register.post');
@@ -37,6 +33,5 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/thong-tin-sinh-vien/{id}', [StudentController::class, 'detail'])->name('student.detail');
     Route::get('/chinh-sua-thong-tin-sinh-vien/{id}', [StudentController::class, 'edit'])->name('student.edit');
     Route::get('/profile', [StudentController::class, 'profile'])->name('profile');
-
     Route::get('/xuat-bieu-mau', [FileController::class, 'export'])->name('file.export');
 });

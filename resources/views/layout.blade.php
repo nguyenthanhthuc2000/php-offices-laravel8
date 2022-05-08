@@ -9,5 +9,6 @@
 
     @include('pages.modal.file_output')
     @include('layouts.script')
+    @yield('script')
 </body>
 </html>
