@@ -2,7 +2,6 @@
 @extends('layout')
 @section('title', 'Cập nhật thông tin sinh viên')
 @section('content')
-{{-- @dd(getProvince(1)) --}}
     <div style="display: flex; align-items: center; justify-content: space-between">
     </div>
     <div class="row" style="background-color: #fff;border-radius: 5px;margin: 0; padding: 10px;">
@@ -144,9 +143,9 @@
                                                     <select class="form-select" aria-label="Default select example">
                                                         <option label="Chọn Quận huyện"></option>
                                                         @if ($student->info && $student->info->province)
-                                                            @foreach (getProvince($student->info->province) as $province)
-                                                                <option value="{{ $province->id }}"
-                                                                        {{ $student->info && $student->info->province == $province->id ? 'selected' : '' }}>{{ $province->_name }}</option>
+                                                            @foreach (getDistrict($student->info->province) as $district)
+                                                                <option value="{{ $district->id }}"
+                                                                        {{ $student->info && $student->info->district == $district->id ? 'selected' : '' }}>{{ $district->_name }}</option>
                                                             @endforeach
                                                         @endif
                                                     </select>
@@ -155,6 +154,12 @@
                                                     <label for="exampleFormControlInput1" class="form-label">Phường / Xã / Thị trấn</label>
                                                     <select class="form-select" aria-label="Default select example">
                                                         <option label="Chọn Xã / Thị trấn"></option>
+                                                        @if ($student->info && $student->info->province && $student->info->district)
+                                                            @foreach (getWard($student->info->district, $student->info->province) as $ward)
+                                                                <option value="{{ $ward->id }}"
+                                                                        {{ $student->info && $student->info->ward == $ward->id ? 'selected' : '' }}>{{ $ward->_name }}</option>
+                                                            @endforeach
+                                                        @endif
                                                     </select>
                                                 </div>
                                             </div>
@@ -172,9 +177,10 @@
             </div>
         </div>
     </div>
-    @section('script')
-        <script>
+@endsection
 
-        </script>
-    @endsection
+@section('script')
+    <script>
+        console.log(123)
+    </script>
 @endsection

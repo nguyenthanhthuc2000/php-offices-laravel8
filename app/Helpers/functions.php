@@ -1,6 +1,8 @@
 <?php
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
+use App\Models\Province;
+use App\Models\District;
+use App\Models\Ward;
 
 
 if(!function_exists('getRole')){
@@ -45,19 +47,26 @@ if(!function_exists('dateFormat')){
 }
 
 if(!function_exists('getProvince')){
-    function getProvince($id = null){
-        if($id == null){
-            return DB::table('province')->get();
-        }
-        return DB::table('province')->where('id',$id)->first();
+    function getProvince(){
+        return Province::get();
     }
 }
 
 if(!function_exists('getDistrict')){
-    function getDistrict($id = null){
-        if($id == null){
-            return DB::table('district')->get();
+    function getDistrict($id_province = null){
+        if($id_province == null){
+            return District::get();
         }
-        return DB::table('district')->where('id',$id)->first()->ward;
+        return District::where('_province_id', $id_province)->get();
     }
 }
+
+if(!function_exists('getWard')){
+    function getWard($id_district = null, $id_province = null){
+        if($id_district == null){
+            return Ward::get();
+        }
+        return Ward::where(['_province_id' => $id_province, '_district_id' => $id_district])->get();
+    }
+}
+
