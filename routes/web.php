@@ -33,5 +33,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/thong-tin-sinh-vien/{id}', [StudentController::class, 'detail'])->name('student.detail');
     Route::get('/chinh-sua-thong-tin-sinh-vien/{id}', [StudentController::class, 'edit'])->name('student.edit');
     Route::get('/profile', [StudentController::class, 'profile'])->name('profile');
-    Route::get('/xuat-bieu-mau', [FileController::class, 'export'])->name('file.export');
+    // Route::get('/xuat-bieu-mau', [FileController::class, 'export'])->name('file.export');
+    Route::get('/xuat-bieu-mau', [FileController::class, 'export'])->name('file.dowload');
 });
