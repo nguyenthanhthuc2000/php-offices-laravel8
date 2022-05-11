@@ -108,7 +108,7 @@
                                                 </div>
                                                 <div class="col-md-3 mb-2">
                                                     <label for="exampleFormControlInput1" class="form-label">Giới tính</label>
-                                                    <select class="form-select" aria-label="Default select example">
+                                                    <select class="form-select" aria-label="selectGender" name="gender">
                                                         <option selected>Chọn giới tính</option>
                                                         <option {{ $student->info && $student->info->sex == NAM ? 'selected' : ''}} value='1'>Nam</option>
                                                         <option {{ $student->info && $student->info->sex == NU ? 'selected' : ''}} value='0'>Nữ</option>
@@ -130,35 +130,35 @@
                                             </div>
                                             <div class="form-group row">
                                                 <div class="col-md-3 mb-2">
-                                                    <label for="exampleFormControlInput1" class="form-label">Tỉnh / Thành phố</label>
-                                                    <select class="form-select" aria-label="Default select example">
+                                                    <label for="selectProvince" class="form-label">Tỉnh / Thành phố</label>
+                                                    <select class="form-select" aria-label="selectProvince" name="province">
                                                         <option label="Chọn Tỉnh / Thành phố"></option>
                                                         @foreach (getProvince() as $province)
                                                             <option value="{{ $province->id }}"
-                                                                    {{ $student->info && $student->info->province == $province->id ? 'selected' : '' }}>{{ $province->_name }}</option>
+                                                                    {{ $student->info && $student->info->province == $province->id ? 'selected' : '' }}>{{  $province->_name }}</option>
                                                         @endforeach
                                                       </select>
                                                 </div>
                                                 <div class="col-md-3 mb-2">
-                                                    <label for="exampleFormControlInput1" class="form-label">Quận huyện</label>
-                                                    <select class="form-select" aria-label="Default select example">
+                                                    <label for="selectDistrict" class="form-label">Quận huyện</label>
+                                                    <select class="form-select" aria-label="selectDistrict" name="district">
                                                         <option label="Chọn Quận huyện"></option>
                                                         @if ($student->info && $student->info->province)
                                                             @foreach (getDistrict($student->info->province) as $district)
                                                                 <option value="{{ $district->id }}"
-                                                                        {{ $student->info && $student->info->district == $district->id ? 'selected' : '' }}>{{ $district->_name }}</option>
+                                                                        {{ $student->info && $student->info->district == $district->id ? 'selected' : '' }}>{{  $district->_prefix.' '.$district->_name }}</option>
                                                             @endforeach
                                                         @endif
                                                     </select>
                                                 </div>
                                                 <div class="col-md-3 mb-2">
                                                     <label for="exampleFormControlInput1" class="form-label">Phường / Xã / Thị trấn</label>
-                                                    <select class="form-select" aria-label="Default select example">
+                                                    <select class="form-select" aria-label="selectWard" name="ward">
                                                         <option label="Chọn Xã / Thị trấn"></option>
                                                         @if ($student->info && $student->info->province && $student->info->district)
                                                             @foreach (getWard($student->info->district, $student->info->province) as $ward)
                                                                 <option value="{{ $ward->id }}"
-                                                                        {{ $student->info && $student->info->ward == $ward->id ? 'selected' : '' }}>{{ $ward->_name }}</option>
+                                                                        {{ $student->info && $student->info->ward == $ward->id ? 'selected' : '' }}>{{ $ward->_prefix.' '.$ward->_name }}</option>
                                                             @endforeach
                                                         @endif
                                                     </select>
@@ -182,6 +182,40 @@
 
 @section('script')
     <script>
-        console.log(123)
+        var provinceEle = $('[name="province"]');
+        var districtEle = $('[name="district"]');
+        var wardEle = $('[name="ward"]');
+        provinceEle.change(function(){
+            var lstDistrict = '<option label="Chọn Quận huyện"></option>';
+            var lstWard = '<option label="Chọn Xã / Thị trấn"></option>';
+            let id_province = $(this).val();
+            districtEle.html(lstDistrict);
+            wardEle.html(lstWard);
+            if(!id_province){
+                return;
+            }
+            $.get('/get-district/'+id_province, function(data){
+                $(data).each(function(index, item){
+                    lstDistrict += `<option value="${item.id}">${item._prefix} ${item._name}</option>`;
+                })
+                districtEle.html(lstDistrict);
+            })
+        })
+
+        districtEle.change(function(){
+            var lstWard = '<option label="Chọn Xã / Thị trấn"></option>';
+            let id_province = provinceEle.val();
+            let id_district = $(this).val();
+            wardEle.html(lstWard);
+            if(!id_province || !id_district){
+                return;
+            }
+            $.get('/get-ward/' + id_district + '/' + id_province, function(data){
+                $(data).each(function(index, item){
+                    lstWard += `<option value="${item.id}">${item._prefix} ${item._name}</option>`;
+                })
+                wardEle.html(lstWard);
+            })
+        })
     </script>
 @endsection
