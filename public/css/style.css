@@ -74,6 +74,26 @@ a:hover {
 .form-horizontal .form-group {
     margin-bottom: 15px;
 }
+
+.text-split-2{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+}
+
+.text-split-1{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+}
+
+
 @media (min-width: 992px) {
     .w-lg-50 {
         width: 50%;

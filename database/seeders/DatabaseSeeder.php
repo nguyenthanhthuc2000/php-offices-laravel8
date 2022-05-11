@@ -15,12 +15,13 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
         $this->call([
-           EthnicSeeder::class,
-           InfoStudentSeeder::class,
-           UserStudentSeeder::class,
-           ClassSeeder::class,
-           FacultySeeder::class,
-            SchoolYearSeeder::class,
+//           EthnicSeeder::class,
+//           InfoStudentSeeder::class,
+//           UserStudentSeeder::class,
+//           ClassSeeder::class,
+//           FacultySeeder::class,
+//            SchoolYearSeeder::class,
+            NewsSeeder::class
         ]);
     }
 }

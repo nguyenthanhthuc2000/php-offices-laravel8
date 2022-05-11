@@ -142,7 +142,7 @@
     $('#file_type').change(function() {
       const id = $('#student_id').val();
       const type = $('#file_type').val();
-      
+
       if([1,2].includes(parseInt(type))) {
         $('.btn-dowload').removeClass('d-none');
         let url = $('.btn-dowload').attr('data-url')+'?'+'id='+id+'?type='+type;

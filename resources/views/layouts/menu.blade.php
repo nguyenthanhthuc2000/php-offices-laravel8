@@ -31,7 +31,7 @@
                         <a class="nav-link text-light" href="{{ route('school.year.index') }}">NIÊN KHÓA</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-light" href="#">TIN TỨC</a>
+                        <a class="nav-link text-light" href="{{ route('news.index') }}">TIN TỨC</a>
                     </li>
                 @endif
                 @if(Auth::check() && getRole() == 3)
