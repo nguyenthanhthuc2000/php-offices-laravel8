@@ -41,8 +41,8 @@ if(!function_exists('getNameRole')){
 }
 
 if(!function_exists('dateFormat')){
-    function dateFormat($date) {
-        return date("d/m/Y", strtotime($date));
+    function dateFormat($date, $fomat = "d/m/Y") {
+        return date($fomat, strtotime($date));
     }
 }
 
@@ -68,3 +68,8 @@ if(!function_exists('getWard')){
     }
 }
 
+if(!function_exists('goPrev')){
+    function goPrev(){
+        return url()->previous() == url()->current() ? route('student.index') :  url()->previous();
+    }
+}

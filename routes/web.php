@@ -27,9 +27,12 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/tao-moi', [UserController::class, 'create'])->name('register');
         Route::post('/register', [UserController::class, 'store'])->name('register.post');
         Route::get('/danh-sach-giao-vien', [TeacherController::class, 'index'])->name('teacher.index');
+        Route::get('/chinh-sua-thong-tin-giao-vien/{id}', [TeacherController::class, 'edit'])->name('teacher.edit');
         Route::get('/danh-sach-khoa', [FacultyController::class, 'index'])->name('faculty.index');
         Route::get('/danh-sach-lop', [ClassListController::class, 'index'])->name('class.index');
         Route::get('/nien-khoa', [SchoolYearController::class, 'index'])->name('school.year.index');
+
+        Route::post('/edit-user/{id}', [UserController::class, 'update'])->name('user.update');
     });
 
     Route::get('/danh-sach-sinh-vien', [StudentController::class, 'index'])->name('student.index');

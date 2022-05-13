@@ -52,9 +52,9 @@
                             <td >{{$teacher->facultyTeacher ? $teacher->facultyTeacher->faculty->name : 'Chưa cập nhật'}}</td>
                             <td class="text-end">
                                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                    <button class="btn btn-mute text-warning" title="Chỉnh sửa" type="button">
+                                    <a class="btn btn-mute text-warning" title="Chỉnh sửa" href="{{ route('teacher.edit', $teacher->id) }}">
                                         <i class="fa-solid fa-user-pen"></i>
-                                    </button>
+                                    </a>
                                     <button class="btn btn-mute text-danger" title="Xóa" type="button">
                                         <i class="fa-solid fa-trash-can"></i>
                                     </button>
