@@ -24,7 +24,7 @@ Route::get('/get-ward/{id_district}/{id_province}', [Controller::class, 'getWard
 
 Route::middleware(['auth'])->group(function () {
     // user
-    Route::middleware(['auth'])->group(function () {
+    Route::middleware(['isAdmin'])->group(function () {
         Route::get('/tao-moi', [UserController::class, 'create'])->name('register');
         Route::post('/register', [UserController::class, 'store'])->name('register.post');
         Route::get('/danh-sach-giao-vien', [TeacherController::class, 'index'])->name('teacher.index');

@@ -13,3 +13,6 @@ define('CAO_DANG', '2');
 define('CHINH_QUY', '1');
 define('CHAT_LUONG_CAO', '2');
 
+define('IS_ADMIN', '1');
+define('IS_TEACHER', '2');
+define('IS_STUDENT', '3');

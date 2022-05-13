@@ -5,7 +5,9 @@
 <div  style="background-color: #fff;border-radius: 5px;margin: 0;      padding: 10px;">
     <div style="display: flex; align-items: center; justify-content: space-between">
         <h4>Danh sách khoa</h4>
+        @if (getRole() == IS_ADMIN)
         <a href="#" class="btn btn-primary btn-blue" style="border-radius: 25px;"><i class="fa-solid fa-plus"></i> Thêm mới</a>
+        @endif
     </div>
     <div class="table-responsive">
         <table class="table">

@@ -26,7 +26,9 @@
 
         <div style="display: flex; align-items: center; justify-content: space-between">
             <h4>Danh sách giáo viên</h4>
+            @if (getRole() == IS_ADMIN)
             <a href="{{ route('register') }}" class="btn btn-primary btn-blue" style="border-radius: 25px;"><i class="fa-solid fa-plus"></i> Thêm mới</a>
+            @endif
         </div>
         <div class="table-responsive">
             <table class="table">
