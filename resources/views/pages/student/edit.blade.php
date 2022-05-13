@@ -20,7 +20,7 @@
                                     <img src="{{ asset('images/no_avatar.jpg') }}" style="border-radius: 50%;" class="img-responsive">
                                 </div>
                                 <div class="text-center">
-                                    <p>Trạng thái:
+                                    <span>Trạng thái:
                                         <span class="bold" style="color: red">
                                             @if($student->info)
                                                 @if($student->info->status == DANG_HOC)
@@ -38,7 +38,8 @@
                                                 Đang cập nhật
                                             @endif
                                         </span>
-                                    </p>
+                                    </span><br>
+                                    <a href="{{ route('student.detail', $student->id) }}" class="color-active">Về trang cá nhân</a>
                                 </div>
                             </div>
                             <div class="col-sm-6">

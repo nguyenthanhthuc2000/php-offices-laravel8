@@ -11,6 +11,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\FacultyController;
 use App\Http\Controllers\SchoolYearController;
 use App\Http\Controllers\FileController;
+use App\Http\Controllers\NewsController;
 
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -33,6 +34,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/nien-khoa', [SchoolYearController::class, 'index'])->name('school.year.index');
 
         Route::post('/edit-user/{id}', [UserController::class, 'update'])->name('user.update');
+        Route::get('/danh-sach-bai-viet', [NewsController::class, 'index'])->name('news.index');
     });
 
     Route::get('/danh-sach-sinh-vien', [StudentController::class, 'index'])->name('student.index');
@@ -41,4 +43,5 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [StudentController::class, 'profile'])->name('profile');
     // Route::get('/xuat-bieu-mau', [FileController::class, 'export'])->name('file.export');
     Route::get('/xuat-bieu-mau', [FileController::class, 'export'])->name('file.dowload');
+    Route::get('/tin-tuc/{slug}', [NewsController::class, 'detail'])->name('news.detail');
 });
