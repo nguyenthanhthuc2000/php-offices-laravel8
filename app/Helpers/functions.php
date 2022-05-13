@@ -3,6 +3,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Province;
 use App\Models\District;
 use App\Models\Ward;
+use App\Models\Ethnic;
 
 
 if(!function_exists('getRole')){
@@ -68,8 +69,17 @@ if(!function_exists('getWard')){
     }
 }
 
+if(!function_exists('getEthnic')){
+    function getEthnic(){
+        return Ethnic::get();
+    }
+}
+
 if(!function_exists('goPrev')){
-    function goPrev(){
-        return url()->previous() == url()->current() ? route('student.index') :  url()->previous();
+    function goPrev($routeBackTo = null){
+        if($routeBackTo == null){
+            $routeBackTo = url()->current();
+        }
+        return url()->previous() == url()->current() ? route($routeBackTo) :  url()->previous();
     }
 }

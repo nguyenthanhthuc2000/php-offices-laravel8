@@ -1,10 +1,12 @@
 .bg-orange {
     background-color: #ffd400;
 }
+
 a,
 a:hover {
     text-decoration: none;
 }
+
 .bg-blue {
     background-color: #005ab7 !important;
 }
@@ -27,15 +29,24 @@ a:hover {
     color: #dc3545;
 }
 
+
 /*.profile-ds-info {*/
+
+
 /*    height: 248px;*/
+
+
 /*    overflow: hidden;*/
+
+
 /*}*/
+
 .portlet {
     margin-bottom: 0;
     margin-top: 0;
     padding: 0;
- }
+}
+
 .portlet>.portlet-title {
     border-bottom: 1px solid #eee;
     padding: 0;
@@ -47,6 +58,7 @@ a:hover {
     -o-border-radius: 4px 4px 0 0;
     border-radius: 4px 4px 0 0;
 }
+
 .portlet>.portlet-title>.caption {
     float: left;
     display: inline-block;
@@ -54,28 +66,34 @@ a:hover {
     line-height: 18px;
     padding: 10px 0;
 }
+
 .bold {
     font-weight: 700!important;
 }
+
 .portlet>.portlet-body {
     clear: both;
 }
+
 .profile-userpic img {
     width: 120px;
     height: 120px;
     margin-bottom: 10px;
 }
+
 .color-active {
     color: #1da1f2;
 }
+
 .profile-ds-info .form-body {
     padding: 15px;
 }
+
 .form-horizontal .form-group {
     margin-bottom: 15px;
 }
 
-.text-split-2{
+.text-split-2 {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: normal;
@@ -84,7 +102,7 @@ a:hover {
     -webkit-line-clamp: 2;
 }
 
-.text-split-1{
+.text-split-1 {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: normal;
@@ -93,9 +111,14 @@ a:hover {
     -webkit-line-clamp: 1;
 }
 
-
 @media (min-width: 992px) {
     .w-lg-50 {
+        width: 50%;
+    }
+}
+
+@media (min-width: 576px) {
+    .w-md-50 {
         width: 50%;
     }
 }

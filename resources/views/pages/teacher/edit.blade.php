@@ -216,7 +216,7 @@
                                 </div>
                                 <div class="text-center mb-3 ">
                                     <button class="btn btn-primary">Cập nhật</button>
-                                    <a href="{{ goPrev() }}" class="btn btn-secondary">Quay lại</a>
+                                    <a href="{{ goPrev('teacher.index') }}" class="btn btn-secondary">Quay lại</a>
                                 </div>
                             </div>
                         </form>
