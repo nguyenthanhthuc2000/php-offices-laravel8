@@ -58,9 +58,9 @@
                                     <a class="btn btn-mute text-warning" title="Chỉnh sửa" href="{{ route('teacher.edit', $teacher->id) }}">
                                         <i class="fa-solid fa-user-pen"></i>
                                     </a>
-                                    <button class="btn btn-mute text-danger" title="Xóa" type="button">
+                                    <a class="btn btn-mute text-danger btn-delete" title="Xóa" type="button" href="{{ route('teacher.delete', $teacher->id) }}">
                                         <i class="fa-solid fa-trash-can"></i>
-                                    </button>
+                                    </a>
                                 </div>
                             </td>
                         </tr>
@@ -79,4 +79,32 @@
             {{$teachers->links()}}
         </div>
     </div>
+@endsection
+@section('script')
+    <script>
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false
+        })
+        $('.btn-delete').click(function(e){
+            e.preventDefault();
+
+            let href = $(this).attr('href');
+            swalWithBootstrapButtons.fire({
+            title: 'Bạn có chắc muốn xóa?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Đồng ý',
+            cancelButtonText: 'Hủy',
+            reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = href;
+                }
+            })
+        })
+    </script>
 @endsection
