@@ -4,12 +4,13 @@
 @section('content')
     <div class="card border-0 shadow rounded-3 my-5 mx-auto">
         <div class="card-body p-4 p-sm-5">
-            <h3 class="card-title text-center text-uppercase">Tạo mới giao viên</h3>
+            <h3 class="card-title text-center text-uppercase">Tạo mới giáo viên</h3>
             <hr class="my-4">
+
             <form action="{{ route('register.post') }}" method="POST" class="needs-validation row" novalidate>
                 @method('post')
                 @csrf
-                <div class="col-md-6 mb-2">
+                <div class="col-md-4 mb-2">
                     <div class="portlet-title">
                         <div class="caption">
                             <span class="caption-subject bold">Thông tin đăng nhập</span>
@@ -35,7 +36,7 @@
                     </div>
                     <div class="form-group mb-2">
                         <label for="password" class="form-label">Mật khẩu</label>
-                        <input type="password" class="form-control" placeholder="Mâth khẩu" name="password" required>
+                        <input type="password" class="form-control" placeholder="Mật khẩu" name="password" required>
                         @if ($errors->password)
                             <div class="invalid-text">
                                 {{ $errors->first('password') }}
@@ -59,6 +60,7 @@
                                 <option value="{{ $key }}" {{ $key == 2 ? 'selected' : '' }}>{{ $role }}</option>
                             @endforeach
                         </select>
+                        <input type="hidden" name="role" value="2">
                         @if ($errors->role)
                             <div class="invalid-text">
                                 {{ $errors->first('role') }}
@@ -66,7 +68,7 @@
                         @endif
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-8">
                     <div class="portlet-title mb-3">
                         <div class="caption">
                             <span class="caption-subject bold">Thông tin cá nhân</span>
@@ -78,7 +80,7 @@
                                         <div class="form-group row mb-2">
                                             <div class="col-md-6">
                                                 <label for="phone" class="form-label">Điện thoại:</label>
-                                                <input type="text" name="phone" class="form-control" value="">
+                                                <input type="text" name="phone" class="form-control" value="" required>
                                                 @if ($errors->phone)
                                                     <div class="text-danger">
                                                         {{ $errors->first('phone') }}
@@ -87,7 +89,7 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <label for="identity_card" class="form-label">Số CMND:</label>
-                                                <input type="text" name="identity_card" class="form-control" value="">
+                                                <input type="text" name="identity_card" class="form-control" value="" required>
                                                 @if ($errors->identity_card)
                                                     <div class="text-danger">
                                                         {{ $errors->first('identity_card') }}
@@ -98,7 +100,7 @@
                                         <div class="form-group row mb-2">
                                             <div class="col-md-6">
                                                 <label for="ethnic" class="form-label">Dân tộc:</label>
-                                                <select class="form-select" aria-label="ethnic" name="ethnic">
+                                                <select class="form-select" aria-label="ethnic" name="ethnic" required>
                                                     <option label="Chọn dân tộc"></option>
                                                     @foreach (getEthnic() as $ethnic)
                                                         <option value="{{ $ethnic->id }}">{{ $ethnic->name }}</option>
@@ -112,7 +114,7 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <label for="selectGender" class="form-label">Giới tính</label>
-                                                <select class="form-select" aria-label="selectGender" name="gender">
+                                                <select class="form-select" aria-label="selectGender" name="gender" required>
                                                     <option label="Chọn giới tính"></option>
                                                     <option value="{{ NAM }}">Nam</option>
                                                     <option value="{{ NU }}">Nữ</option>
@@ -127,7 +129,7 @@
                                         <div class="form-group row mb-2">
                                             <div class="col-md-6">
                                                 <label for="birth" class="form-label">Ngày sinh:</label>
-                                                <input type="date" name="birth" class="form-control" value="1990-01-01">
+                                                <input type="date" name="birth" class="form-control" value="1990-01-01" required>
                                                 @if ($errors->birth)
                                                     <div class="text-danger">
                                                         {{ $errors->first('birth') }}
@@ -136,7 +138,7 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <label for="place_birth" class="form-label">Nơi sinh (Tỉnh / Thành phố)</label>
-                                                <select class="form-select" aria-label="" name="place_birth">
+                                                <select class="form-select" aria-label="" name="place_birth" required>
                                                     <option label="Chọn nơi sinh"></option>
                                                     @foreach (getProvince() as $province)
                                                         <option value="{{ $province->id }}">{{ $province->_name }}</option>
@@ -152,7 +154,7 @@
                                         <div class="form-group row mb-2">
                                             <div class="col-md-6">
                                                 <label for="date_join_tncshcm" class="form-label">Ngày vào Đoàn:</label>
-                                                <input type="date" name="date_join_tncshcm" class="form-control" value="1990-01-01">
+                                                <input type="date" name="date_join_tncshcm" class="form-control" value="1990-01-01" required>
                                                 @if ($errors->date_join_tncshcm)
                                                     <div class="text-danger">
                                                         {{ $errors->first('date_join_tncshcm') }}
@@ -161,7 +163,7 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <label for="date_join_csvn" class="form-label">Ngày vào Đảng:</label>
-                                                <input type="date" name="date_join_csvn" class="form-control"
+                                                <input type="date" name="date_join_csvn" class="form-control" required
                                                         value={{ $teacher->info->date_join_csvn ?? '1990-01-01' }}>
                                                 @if ($errors->date_join_csvn)
                                                     <div class="text-danger">
@@ -173,7 +175,7 @@
                                         <div class="form-group row mb-2">
                                             <div class="col-md-4">
                                                 <label for="selectProvince" class="form-label">Tỉnh / Thành phố</label>
-                                                <select class="form-select" aria-label="selectProvince" name="province">
+                                                <select class="form-select" aria-label="selectProvince" name="province" required>
                                                     <option label="Chọn Tỉnh / Thành phố"></option>
                                                     @foreach (getProvince() as $province)
                                                         <option value="{{ $province->id }}">{{  $province->_name }}</option>
@@ -187,7 +189,7 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <label for="selectDistrict" class="form-label">Quận huyện</label>
-                                                <select class="form-select" aria-label="selectDistrict" name="district">
+                                                <select class="form-select" aria-label="selectDistrict" name="district" required>
                                                     <option label="Chọn Quận huyện"></option>
                                                 </select>
                                                 @if ($errors->district)
@@ -198,7 +200,7 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <label for="exampleFormControlInput1" class="form-label">Phường / Xã / Thị trấn</label>
-                                                <select class="form-select" aria-label="selectWard" name="ward">
+                                                <select class="form-select" aria-label="selectWard" name="ward" required>
                                                     <option label="Chọn Xã / Thị trấn"></option>
                                                 </select>
                                                 @if ($errors->ward)
@@ -214,7 +216,57 @@
                         </div>
                     </div>
                 </div>
-
+                <div class="col-12 mb-3">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <span class="caption-subject bold">Thông tin lớp học</span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-4">
+                            <label for="selectClass" class="form-label">Lớp chủ nhiệm</label>
+                            <select class="form-select" aria-label="selectClass" name="class" required>
+                                <option label="Chọn lớp học"></option>
+                                @foreach (getClass() as $class)
+                                    <option value="{{ $class->id }}">{{ $class->name }}</option>
+                                @endforeach
+                            </select>
+                            @if ($errors->class)
+                                <div class="text-danger">
+                                    {{ $errors->first('class') }}
+                                </div>
+                            @endif
+                        </div>
+                        <div class="col-md-4">
+                            <label for="selectClass" class="form-label">Khoa</label>
+                            <select class="form-select" aria-label="select" name="branch" required>
+                                <option label="Khoa"></option>
+                                @foreach(getFaculies() as $fac)
+                                    <option value="{{ $fac->id }}">{{ $fac->name }}</option>
+                                @endforeach
+                            </select>
+                            @if ($errors->branch)
+                                <div class="text-danger">
+                                    {{ $errors->first('branch') }}
+                                </div>
+                            @endif
+                        </div>
+                        <div class="col-md-4">
+                            <label for="selectSchoolYears" class="form-label">Niên khóa</label>
+                            <select class="form-select" aria-label="selectSchoolYears" name="school_years" required>
+                                <option label="Chọn niên khóa"></option>
+                                @foreach (getSchoolYears() as $years)
+                                    <option value="{{ $years->id }}">{{ $years->name }}</option>
+                                @endforeach
+                            </select>
+                            @if ($errors->school_years)
+                                <div class="text-danger">
+                                    {{ $errors->first('school_years') }}
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+                </div>
                 <div class="d-grid justify-content-center">
                     <button class="btn btn-primary text-uppercase fw-bold" type="submit">Thêm mới</button>
                 </div>

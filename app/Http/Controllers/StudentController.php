@@ -16,7 +16,7 @@ class StudentController extends Controller
     }
 
     public function index (){
-        $students = $this->model->where('role', '3')->paginate(8);
+        $students = $this->model->where('role', '3')->orderBy('created_at', 'desc')->paginate(8);
 
         return view('pages.student.index', compact('students'));
     }

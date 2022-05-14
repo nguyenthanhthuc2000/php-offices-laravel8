@@ -58,46 +58,54 @@ class UserController extends Controller
             ]
         );
 
-        $data = [
+        $data_user = [
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => $request->role,
-            'identity_card' => $request->identity_card,
+            'role' => $request->role
+        ];
+
+        $data_info = [
+            'identity_card_number' => $request->identity_card,
             'student_code' => $request->student_code,
             'ethnic' => $request->ethnic,
-            'gender' => $request->gender,
+            'sex' => $request->gender,
+            'birth_date' => $request->birth,
+            'date_join_tncshcm' => $request->date_join_tncshcm,
+            'date_join_csvn' => $request->date_join_csvn,
             'place_birth' => $request->place_birth,
             'province' => $request->province,
             'district' => $request->district,
+            'phone' => $request->phone,
             'ward' => $request->ward,
-            'class' => $request->class,
-            'school_years' => $request->school_years,
+            'class_id' => $request->class,
+            'school_year' => $request->school_years,
             'education_level' => $request->education_level,
             'type_education' => $request->type_education,
-            'branch' => $request->branch
+            'branch' => $request->branch,
+            'status' => 1
         ];
 
-        $user = $this->user->where('email', $data['email'])->first('email');
+        $user = $this->user->where('email', $data_user['email'])->first('email');
 
         if($user) {
-            return back()->withErrors(['email' => 'Email đã tồn tại.']);
+            return back()->withErrors(['email' => 'Email đã tồn tại.'])->withInput();
         }
         DB::beginTransaction();
             try {
-                $id = $this->user->create($data)->id;
+                $id = $this->user->create($data_user)->id;
                 $new_data = [
                     'user_id'=> $id,
                 ];
 
-                $data = array_merge($data, $new_data);
-                $this->info->create($data);
+                $data_info = array_merge($data_info, $new_data);
+                $this->info->create($data_info);
                 DB::commit();
             } catch (Exception $e) {
                 DB::rollBack();
                 throw new Exception($e->getMessage());
             }
-            return redirect()->route('listStudent');
+            return redirect()->route('student.index');
     }
 
     public function edit($id){
@@ -159,7 +167,18 @@ class UserController extends Controller
 
     }
 
-    public function delete($id){}
+    public function delete($id){
+        $user = $this->user->find($id);
+
+        if (!$user){
+            return back()->withErrors(['errorUpdate' => 'Xóa thất bại.']);
+        }
+
+        if($user->delete()){
+            return back()->with(['updateSuccess' => 'Chỉnh sửa thành công.']);
+        }
+
+    }
 
     public function changeStatus($id){}
 }

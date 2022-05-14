@@ -33,6 +33,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/nien-khoa', [SchoolYearController::class, 'index'])->name('school.year.index');
 
         Route::post('/edit-user/{id}', [UserController::class, 'update'])->name('user.update');
+        Route::get('/xoa-sinh-vien/{id}', [UserController::class, 'delete'])->name('student.delete');
+        Route::get('/xoa-giao-vien/{id}', [UserController::class, 'delete'])->name('teacher.delete');
 
         Route::get('/danh-sach-bai-viet', [NewsController::class, 'index'])->name('news.index');
 
@@ -41,8 +43,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/them-moi-tin-tuc', [NewsController::class, 'create'])->name('news.create');
         Route::post('/tin-tuc/store', [NewsController::class, 'store'])->name('news.store');
         Route::post('/tin-tuc/update/{id}', [NewsController::class, 'update'])->name('news.update');
-        Route::get('/cap-nhat-tin-tuc/{id}', [NewsController::class, 'edit'])->name('news.edit');
-        Route::get('/xoa-bai-viet/{id}', [NewsController::class, 'delete'])->name('news.delete');
+        Route::post('/cap-nhat-tin-tuc/{id}', [NewsController::class, 'edit'])->name('news.edit');
+        Route::post('/xoa-bai-viet/{id}', [NewsController::class, 'delete'])->name('news.delete');
     });
 
     Route::get('/danh-sach-sinh-vien', [StudentController::class, 'index'])->name('student.index');

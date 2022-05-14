@@ -17,7 +17,7 @@ class TeacherController extends Controller
 
     public function index (){
 
-        $teachers = $this->model->where('role', '2')->paginate(8);
+        $teachers = $this->model->where('role', '2')->orderBy('created_at', 'desc')->paginate(8);
         return view('pages.teacher.index', compact('teachers'));
     }
 

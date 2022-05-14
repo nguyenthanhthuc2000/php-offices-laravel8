@@ -1,6 +1,6 @@
 @extends('layout')
 
-@section('title', 'Đăng ký')
+@section('title', 'Tạo mới sinh viên')
 @section('content')
     <div class="card border-0 shadow rounded-3 my-5 mx-auto">
         <div class="card-body p-4 p-sm-5">
