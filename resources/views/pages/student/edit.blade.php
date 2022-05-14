@@ -113,7 +113,7 @@
                                                     <label for="ethnic" class="form-label">Dân tộc:</label>
                                                     <select class="form-select" aria-label="ethnic" name="ethnic">
                                                         <option label="Chọn dân tộc"></option>
-                                                        @foreach ($lstEthnic as $ethnic)
+                                                        @foreach (getEthnic() as $ethnic)
                                                             <option value="{{ $ethnic->id }}"
                                                                     {{ $student->info && $student->info->getEthnic->id == $ethnic->id ? 'selected' : '' }}>{{ $ethnic->name }}</option>
                                                         @endforeach

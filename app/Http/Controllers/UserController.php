@@ -25,17 +25,12 @@ class UserController extends Controller
         return 'list user';
     }
 
-    public function create(){
-        return view('pages.auth.register');
-    }
-
     public function store(Request $request){
         $this->validate($request,
             [
-                'email' => 'bail|required|email',
-                'password' => 'required',
-                'password_confirm' => 'bail|required|same:password',
-                'role' => 'required',
+                'email' => 'bail|email',
+                '*' => 'required',
+                'password_confirm' => 'bail|same:password'
             ],
             [
                 '*.required' => ':attribute không được bỏ trống.',
@@ -46,7 +41,20 @@ class UserController extends Controller
                 'email' => 'Email',
                 'password' => 'Mật khẩu',
                 'password_confirm' => 'Mật khẩu xác nhận',
-                'role' => 'Vài trò',
+                'role' => 'Vai trò',
+                'identity_card' => 'CMND',
+                'student_code' => 'MSSV',
+                'ethnic' => 'Dân tộc',
+                'gender' => 'Giới tính',
+                'place_birth' => 'Nơi sinh',
+                'province' => 'Tỉnh / Thành phố',
+                'district' => 'Quận huyện',
+                'ward' => 'Phường / Xã / Thị trấn',
+                'class' => 'Lớp học',
+                'school_years' => 'Niên khóa',
+                'type_education' => 'Loại đào tạo',
+                'education_level' => 'Bậc đào tạo',
+                'branch' => 'Khoa',
             ]
         );
 
@@ -55,6 +63,19 @@ class UserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'role' => $request->role,
+            'identity_card' => $request->identity_card,
+            'student_code' => $request->student_code,
+            'ethnic' => $request->ethnic,
+            'gender' => $request->gender,
+            'place_birth' => $request->place_birth,
+            'province' => $request->province,
+            'district' => $request->district,
+            'ward' => $request->ward,
+            'class' => $request->class,
+            'school_years' => $request->school_years,
+            'education_level' => $request->education_level,
+            'type_education' => $request->type_education,
+            'branch' => $request->branch
         ];
 
         $user = $this->user->where('email', $data['email'])->first('email');
@@ -62,10 +83,21 @@ class UserController extends Controller
         if($user) {
             return back()->withErrors(['email' => 'Email đã tồn tại.']);
         }
+        DB::beginTransaction();
+            try {
+                $id = $this->user->create($data)->id;
+                $new_data = [
+                    'user_id'=> $id,
+                ];
 
-        if($this->user->create($data)){
+                $data = array_merge($data, $new_data);
+                $this->info->create($data);
+                DB::commit();
+            } catch (Exception $e) {
+                DB::rollBack();
+                throw new Exception($e->getMessage());
+            }
             return redirect()->route('listStudent');
-        }
     }
 
     public function edit($id){
