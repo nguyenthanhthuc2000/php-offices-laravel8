@@ -110,6 +110,9 @@ a:hover {
     display: -webkit-box;
     -webkit-line-clamp: 1;
 }
+.item-news:not(:last-child){
+    border-bottom: 1px solid #999999;
+}
 
 @media (min-width: 992px) {
     .w-lg-50 {

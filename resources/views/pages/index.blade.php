@@ -7,11 +7,12 @@
         <div class="row">
             @foreach($news as $n)
                 <div class="col-md-3 mb-3">
-                    <div class="card p-2">
-                        <img src="{{ asset('/upload/'.$n->image) }}" class="card-img-top" alt="...">
+                    <div class="card p-2"  style="max-height: 330px;">
+                        <a href={{ route('news.detail', $n->slug) }}><img src="{{ asset('/upload/'.$n->image) }}" style="width: 100%; height: 200px; object-fit: cover" class="card-img-top" alt="..."></a>
                         <div class="card-body">
                             <a class="text-split-1" style="font-size: 1rem; font-weight: 600;"  href={{ route('news.detail', $n->slug) }} >{{ $n->title }}</a>
-                            <p class="card-text text-split-2" style="font-size: 0.85rem;" >{{ $n->content }}</p>
+{{--                            <div class="card-text text-split-2" style="font-size: 0.85rem;" >{!! $n->content !!} </div>--}}
+                            <small>Ngày đăng: {{ dateFormat($n->created_at) }}</small>
                         </div>
                     </div>
                 </div>

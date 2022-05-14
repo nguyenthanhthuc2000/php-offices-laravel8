@@ -2,6 +2,7 @@
     <script src="{{ asset('vendor/popper.min.js') }}"></script>
     <script src="{{ asset('vendor/bootstrap.min.js') }}"></script>
     <script src="{{ asset('vendor/sweetalert2.min.js') }}"></script>
+    <script src="{{ asset('vendor/ckeditor/ckeditor.js') }}"></script>
     <script>
         (function () {
             'use strict'
@@ -22,6 +23,9 @@
                 }, false)
                 })
             })()
+
+        CKEDITOR.replace('ckeditor');
+        CKEDITOR.config.entities = false; //khong bi loi font khi insert
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
