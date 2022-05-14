@@ -4,7 +4,7 @@
 @section('content')
     <div class="card border-0 shadow rounded-3 my-5 mx-auto">
         <div class="card-body p-4 p-sm-5">
-            <h3 class="card-title text-center text-uppercase">Tạo mới</h3>
+            <h3 class="card-title text-center text-uppercase">Tạo mới giao viên</h3>
             <hr class="my-4">
             <form action="{{ route('register.post') }}" method="POST" class="needs-validation row" novalidate>
                 @method('post')
@@ -53,10 +53,10 @@
                     </div>
                     <div class="form-group mb2">
                         <label for="password_confirm" class="form-label">Chọn vai trò</label>
-                        <select name="role" class="form-select">
+                        <select name="role" class="form-select" disabled>
                             <option lable="Chọn vai trò"></option>
                             @foreach (config('role') as $key => $role)
-                                <option value="{{ $key }}">{{ $role }}</option>
+                                <option value="{{ $key }}" {{ $key == 2 ? 'selected' : '' }}>{{ $role }}</option>
                             @endforeach
                         </select>
                         @if ($errors->role)

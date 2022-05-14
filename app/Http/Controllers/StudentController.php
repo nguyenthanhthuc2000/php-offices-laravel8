@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class StudentController extends Controller
 {
@@ -19,6 +19,10 @@ class StudentController extends Controller
         $students = $this->model->where('role', '3')->paginate(8);
 
         return view('pages.student.index', compact('students'));
+    }
+
+    public function create(){
+        return view('pages.student.register');
     }
 
     public function profile () {
@@ -40,12 +44,11 @@ class StudentController extends Controller
 
     public function edit ($id) {
         $student_id = Auth::id();
-        $lstEthnic  = DB::table('ethnic')->get();
         if(getRole() == 2 || getRole() == 1) {
             $student_id = $id;
         }
         $student = $this->model->find($student_id);
 
-        return view('pages.student.edit', compact('student', 'lstEthnic'));
+        return view('pages.student.edit', compact('student'));
     }
 }

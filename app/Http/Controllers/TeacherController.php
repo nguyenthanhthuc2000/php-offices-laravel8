@@ -21,6 +21,11 @@ class TeacherController extends Controller
         return view('pages.teacher.index', compact('teachers'));
     }
 
+
+    public function create(){
+        return view('pages.teacher.register');
+    }
+
     public function edit ($id) {
         $user_id = Auth::id();
         $lstEthnic  = DB::table('ethnic')->get();

@@ -25,8 +25,7 @@ Route::get('/get-ward/{id_district}/{id_province}', [Controller::class, 'getWard
 Route::middleware(['auth'])->group(function () {
     // user
     Route::middleware(['isAdmin'])->group(function () {
-        Route::get('/tao-moi', [UserController::class, 'create'])->name('register');
-        Route::post('/register', [UserController::class, 'store'])->name('register.post');
+        Route::get('/tao-moi-giao-vien', [TeacherController::class, 'create'])->name('register.teacher');
         Route::get('/danh-sach-giao-vien', [TeacherController::class, 'index'])->name('teacher.index');
         Route::get('/chinh-sua-thong-tin-giao-vien/{id}', [TeacherController::class, 'edit'])->name('teacher.edit');
         Route::get('/danh-sach-khoa', [FacultyController::class, 'index'])->name('faculty.index');
@@ -35,6 +34,9 @@ Route::middleware(['auth'])->group(function () {
 
         Route::post('/edit-user/{id}', [UserController::class, 'update'])->name('user.update');
         Route::get('/danh-sach-bai-viet', [NewsController::class, 'index'])->name('news.index');
+
+        Route::get('/tao-moi-sinh-vien', [StudentController::class, 'create'])->name('register.student');
+        Route::post('/register', [UserController::class, 'store'])->name('register.post');
     });
 
     Route::get('/danh-sach-sinh-vien', [StudentController::class, 'index'])->name('student.index');

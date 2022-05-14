@@ -4,7 +4,9 @@ use App\Models\Province;
 use App\Models\District;
 use App\Models\Ward;
 use App\Models\Ethnic;
-
+use App\Models\ClassList;
+use App\Models\Faculty;
+use App\Models\schoolYear;
 
 if(!function_exists('getRole')){
     function getRole() {
@@ -81,5 +83,23 @@ if(!function_exists('goPrev')){
             $routeBackTo = url()->current();
         }
         return url()->previous() == url()->current() ? route($routeBackTo) :  url()->previous();
+    }
+}
+
+if(!function_exists('getClass')){
+    function getClass(){
+        return ClassList::get();
+    }
+}
+
+if(!function_exists('getFaculies')){
+    function getFaculies(){
+        return Faculty::get();
+    }
+}
+
+if(!function_exists('getSchoolYears')){
+    function getSchoolYears(){
+        return schoolYear::get();
     }
 }
