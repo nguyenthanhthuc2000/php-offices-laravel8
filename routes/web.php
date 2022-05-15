@@ -48,12 +48,14 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/tin-tuc/update/{id}', [NewsController::class, 'update'])->name('news.update');
         Route::get('/cap-nhat-tin-tuc/{id}', [NewsController::class, 'edit'])->name('news.edit');
         Route::post('/xoa-bai-viet/{id}', [NewsController::class, 'delete'])->name('news.delete');
-    });
+        Route::get('/chinh-sua-thong-tin-sinh-vien/{id}', [StudentController::class, 'edit'])->name('student.edit');
 
+    });
     Route::get('/xoa-sinh-vien/{id}', [UserController::class, 'delete'])->name('student.delete')->middleware('isAdmin', 'isTeacher');
+
+
     Route::get('/danh-sach-sinh-vien', [StudentController::class, 'index'])->name('student.index');
     Route::get('/thong-tin-sinh-vien/{id}', [StudentController::class, 'detail'])->name('student.detail');
-    Route::get('/chinh-sua-thong-tin-sinh-vien/{id}', [StudentController::class, 'edit'])->name('student.edit');
     Route::get('/profile', [StudentController::class, 'profile'])->name('profile');
     Route::get('/xuat-bieu-mau', [FileController::class, 'export'])->name('file.dowload');
     Route::get('/tin-tuc/{slug}', [NewsController::class, 'detail'])->name('news.detail');
