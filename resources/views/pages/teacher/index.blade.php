@@ -6,17 +6,11 @@
             <h4>Danh sách giáo viên</h4>
         </div>
             <div class="mb-2">
-                <form >
+                <form method="GET" action="{{route("teacher.index")}}">
                     <div class="row">
                         <div class="col-md-3">
-                            <select class="form-select" aria-label="Default select example">
-                                <option selected>Chọn lớp</option>
-                                <option value="1">Quản trị mạng 18C</option>
-                            </select>
-                        </div>
-                        <div class="col-md-3">
                             <div  class="d-flex w-100" >
-                                <input class="form-control" type="search" placeholder="Nhập thông tin tìm kiếm..." aria-label="Search">
+                                <input class="form-control" type="search" name="email" placeholder="Nhập email tìm kiếm..." aria-label="Search">
                             </div>
                         </div>
                         <div class="col-md-1">

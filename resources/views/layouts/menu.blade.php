@@ -21,15 +21,15 @@
                     </li>
                 @endif
                 @if(Auth::check() && getRole() == 1)
-                    <li class="nav-item">
-                        <a class="nav-link text-light" href="{{ route('faculty.index') }}">KHOA</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-light" href="{{ route('class.index') }}">LỚP</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-light" href="{{ route('school.year.index') }}">NIÊN KHÓA</a>
-                    </li>
+{{--                    <li class="nav-item">--}}
+{{--                        <a class="nav-link text-light" href="{{ route('faculty.index') }}">KHOA</a>--}}
+{{--                    </li>--}}
+{{--                    <li class="nav-item">--}}
+{{--                        <a class="nav-link text-light" href="{{ route('class.index') }}">LỚP</a>--}}
+{{--                    </li>--}}
+{{--                    <li class="nav-item">--}}
+{{--                        <a class="nav-link text-light" href="{{ route('school.year.index') }}">NIÊN KHÓA</a>--}}
+{{--                    </li>--}}
                     <li class="nav-item">
                         <a class="nav-link text-light" href="{{ route('news.index') }}">TIN TỨC</a>
                     </li>

@@ -46,7 +46,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/them-moi-tin-tuc', [NewsController::class, 'create'])->name('news.create');
         Route::post('/tin-tuc/store', [NewsController::class, 'store'])->name('news.store');
         Route::post('/tin-tuc/update/{id}', [NewsController::class, 'update'])->name('news.update');
-        Route::post('/cap-nhat-tin-tuc/{id}', [NewsController::class, 'edit'])->name('news.edit');
+        Route::get('/cap-nhat-tin-tuc/{id}', [NewsController::class, 'edit'])->name('news.edit');
         Route::post('/xoa-bai-viet/{id}', [NewsController::class, 'delete'])->name('news.delete');
     });
 
