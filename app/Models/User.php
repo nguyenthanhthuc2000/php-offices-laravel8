@@ -7,6 +7,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Scope;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
@@ -52,4 +53,22 @@ class User extends Authenticatable
     {
         return $this->hasOne(FacultyTeacher::class, 'user_id', 'id');
     }
+
+    public function scopeFilterEmail($query, $request)
+    {
+        if ($request->has('email') && $request->email != '') {
+            $query->where('email', 'like' , '%'.$request->email.'%')->get();
+        }
+        return $query;
+    }
+
+    public function scopeClassStudent($query, $request)
+    {
+        if ($request->has('class_id') && $request->class_id != '') {
+            $query->join('info', 'info.user_id', '=', 'users.id')
+                ->where('info.class_id', $request->class_id)->get();
+        }
+        return $query;
+    }
+
 }

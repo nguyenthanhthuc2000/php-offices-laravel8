@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Models\ClassList;
 
 class TeacherController extends Controller
 {
@@ -15,9 +16,16 @@ class TeacherController extends Controller
         $this->model = $user;
     }
 
-    public function index (){
+    public function index (Request $request){
 
-        $teachers = $this->model->where('role', '2')->orderBy('created_at', 'desc')->paginate(8);
+        $teachers =
+            $this->model
+                ->FilterEmail($request)
+                ->where('role', '2')
+                ->select('users.*')
+                ->paginate(8);
+        $teachers->appends(['email' => $request->email]);
+
         return view('pages.teacher.index', compact('teachers'));
     }
 

@@ -6,24 +6,28 @@
             <h4>Danh sách sinh viên</h4>
         </div>
         <div class="mb-3">
-            <form >
+            <form method="GET" action="{{route("student.index")}}">
+                @csrf
                 <div class="row">
                     <div class="col-md-3">
-                        <select class="form-select" aria-label="Default select example">
-                            <option selected>Chọn lớp</option>
-                            <option value="1">Quản trị mạng 18C</option>
+                        <select class="form-select" name="class_id" aria-label="Default select example">
+                            <option selected value="">Chọn lớp</option>
+                            @foreach($class as $l)
+                            <option value="{{ $l->id }}">{{ $l->name }}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="col-md-3">
                         <div  class="d-flex w-100" >
-                            <input class="form-control" type="search" placeholder="Nhập thông tin tìm kiếm..." aria-label="Search">
+                            <input class="form-control" type="search" name="email" placeholder="Nhập email tìm kiếm..." value="{{ old('email') }}" aria-label="Search">
                         </div>
                     </div>
                     <div class="col-md-1">
                         <button class="btn btn-outline-success" type="submit" style="border-radius: 25px;"><i class="fa-solid fa-magnifying-glass" ></i></button>
                     </div>
                 </div>
-            </form></div>
+            </form>
+        </div>
         <div class="d-flex align-items-center justify-content-end mb-2">
             @if (getRole() == IS_ADMIN)
                 <a href="{{ route('register.student') }}" class="btn btn-primary btn-blue" style="border-radius: 25px;"><i class="fa-solid fa-plus"></i> Thêm mới</a>
@@ -69,7 +73,7 @@
                     @endforeach
                 @else
                     <tr>
-                        <th colspan="5">
+                        <th colspan="7">
                             <h6>Không có dữ liệu</h6>
                         </th>
                     </tr>

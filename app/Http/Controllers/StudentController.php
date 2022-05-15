@@ -4,21 +4,33 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\ClassList;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-
 class StudentController extends Controller
 {
     private $model;
-    public function __construct(User $user)
+    private $class;
+    public function __construct(User $user, ClassList $class)
     {
         $this->model = $user;
+        $this->class = $class;
     }
 
-    public function index (){
-        $students = $this->model->where('role', '3')->orderBy('created_at', 'desc')->paginate(8);
+    public function index (Request $request){
+        $students =
+            $this->model
+            ->FilterEmail($request)
+            ->ClassStudent($request)
+            ->where('role', '3')
+            ->select('users.*')
+            ->paginate(8);
+        $students->appends(['email' => $request->email]);
+        $students->appends(['class_id' => $request->class_id]);
 
-        return view('pages.student.index', compact('students'));
+        $class = $this->class->get();
+
+
+        return view('pages.student.index', compact('students', 'class'));
     }
 
     public function create(){
