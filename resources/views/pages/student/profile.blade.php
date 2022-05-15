@@ -28,30 +28,76 @@
                             </div>
 
                             <div class="col-sm-9">
-                                <form class="form-horizontal">
-                                    <div class="form-body">
-                                        <div class="form-group row" style="">
-                                            <label class="col-6">MSSV: <span class="bold">{{$student->info->student_code }}</span></label>
-                                            <label class="col-6">Lớp học: <span class="bold">{{ $student->info->class->name }}</span></label>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="row g-3 align-items-center form-group">
+                                            <div class="col-3">
+                                            <label for="" class="col-form-label">Họ tên:</label>
+                                            </div>
+                                            <div class="col-auto bold">
+                                                {{ $student->info->student_code ?? 'Chưa cập nhật' }}
+                                            </div>
                                         </div>
-                                        <div class="form-group row" style="">
-                                            <label class="col-6">Họ tên: <span class="bold" style="text-transform: uppercase">{{ $student->name }}</span></label>
-                                            <label class="col-6">Khóa học: <span class="bold">{{ $student->info->schoolYear->name }}</span></label>
+                                        <div class="row g-3 align-items-center form-group">
+                                            <div class="col-3">
+                                            <label for="" class="col-form-label">Lớp học:</label>
+                                            </div>
+                                            <div class="col-auto bold">
+                                                {{ $student->info->class->name ?? 'Chưa cập nhật' }}
+                                            </div>
                                         </div>
-                                        <div class="form-group row" style="">
-                                            <label class="col-6">Giới tính: <span class="bold">{{ $student->info->sex == NAM ? 'Nam' : 'Nữ' }}</span></label>
-                                            <label class="col-6">Bậc đào tạo: <span class="bold">{{ $student->info->sex == DAI_HOC ? 'Đại học' : 'Cao đẳng' }}</span></label>
+                                        <div class="row g-3 align-items-center form-group">
+                                            <div class="col-3">
+                                            <label for="" class="col-form-label">Bậc đào tạo:</label>
+                                            </div>
+                                            <div class="col-auto bold">
+                                                {{ $student->info && $student->info->education_level == DAI_HOC ? 'Đại học' : 'Cao đẳng' }}
+                                            </div>
                                         </div>
-                                        <div class="form-group row" style="">
-                                            <label class="col-6">Ngày sinh: <span class="bold">{{ dateFormat($student->info->birth_date) }}</span></label>
-                                            <label class="col-6">Loại: <span class="bold">{{ $student->info->sex == CHINH_QUY ? 'Chính quy' : 'Chất lượng cao' }}</span></label>
-                                        </div>
-                                        <div class="form-group row" style="">
-                                            <label class="col-6">Nơi sinh: <span class="bold">{{$student->info->placeBirth ?  $student->info->placeBirth->_name  : 'Chưa cập nhật'}}</span></label>
-                                            <label class="col-6">Khoa: <span class="bold">{{$student->info->class ? $student->info->class->faculty->name  : 'Chưa cập nhật'}}</span></label>
+                                        <div class="row g-3 align-items-center form-group">
+                                            <div class="col-3">
+                                            <label for="" class="col-form-label">Loại:</label>
+                                            </div>
+                                            <div class="col-auto bold">
+                                                {{ $student->info && $student->info->sex == CHINH_QUY ? 'Chính quy' : 'Chất lượng cao' }}
+                                            </div>
                                         </div>
                                     </div>
-                                </form>
+                                    <div class="col-md-6">
+                                        <div class="row g-3 align-items-center form-group">
+                                            <div class="col-3">
+                                            <label for="" class="col-form-label">MSSV:</label>
+                                            </div>
+                                            <div class="col-auto bold">
+                                                {{ $student->info->student_code ?? 'Chưa cập nhật' }}
+                                            </div>
+                                        </div>
+                                        <div class="row g-3 align-items-center form-group">
+                                            <div class="col-3">
+                                            <label for="" class="col-form-label">Khóa học:</label>
+                                            </div>
+                                            <div class="col-auto bold">
+                                                {{ $student->info->schoolYear->name ?? 'Chưa cập nhật' }}
+                                            </div>
+                                        </div>
+                                        <div class="row g-3 align-items-center form-group">
+                                            <div class="col-3">
+                                            <label for="" class="col-form-label">Khoa:</label>
+                                            </div>
+                                            <div class="col-auto bold">
+                                                {{ $student->info && $student->info->class ? $student->info->class->faculty->name  : 'Chưa cập nhật'}}
+                                            </div>
+                                        </div>
+                                        <div class="row g-3 align-items-center form-group">
+                                            <div class="col-3">
+                                            <label for="" class="col-form-label">Email:</label>
+                                            </div>
+                                            <div class="col-auto bold">
+                                                {{  $student->email ?? 'Chưa cập nhật'  }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

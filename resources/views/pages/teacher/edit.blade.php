@@ -20,28 +20,183 @@
                                     <img src="{{ asset('images/no_avatar.jpg') }}" style="border-radius: 50%;" class="img-responsive">
                                 </div>
                             </div>
-                            <div class="col-sm-6">
-                                <div class="form-horizontal">
-                                    <div class="form-body">
-                                        <div class="form-group row">
-                                            <label class="col-md-6 ">Tên giáo viên: <span class="bold">{{ $teacher->name ?? '' }}</span></label>
-                                            <label class="col-md-6 ">Lớp chủ nhiệm: <span class="bold">{{ $teacher->info->class->name ?? '' }}</span></label>
+                            @if(isAdmin())
+                                    <div class="col-sm-9">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="row g-3 align-items-center form-group mb-3">
+                                                    <div class="col-3">
+                                                    <label for="" class="col-form-label">Họ tên giáo viên:</label>
+                                                    </div>
+                                                    <div class="col-md-7 col-9 bold">
+                                                        <input type="text" class="form-control" value="{{ $teacher->name ?? '' }}">
+                                                    </div>
+                                                </div>
+                                                <div class="row g-3 align-items-center form-group mb-3">
+                                                    <div class="col-3">
+                                                    <label for="" class="col-form-label">Lớp chủ nhiệm:</label>
+                                                    </div>
+                                                    <div class="col-md-7 col-9 bold">
+                                                        <input type="text" class="form-control" value="{{ $teacher->info->class->name ?? '' }}">
+                                                    </div>
+                                                </div>
+                                                <div class="row g-3 align-items-center form-group mb-3">
+                                                    <div class="col-3">
+                                                    <label for="" class="col-form-label">Email:</label>
+                                                    </div>
+                                                    <div class="col-md-7 col-9 bold">
+                                                        <input type="text" class="form-control" value="{{ $teacher->email ?? '' }}">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="row g-3 align-items-center form-group mb-3">
+                                                    <div class="col-3">
+                                                    <label for="" class="col-form-label">Bậc đào tạo:</label>
+                                                    </div>
+                                                    <div class="col-md-7 col-9 bold">
+                                                        <select class="form-select" aria-label="select" name="education_level" required>
+                                                            <option label="Bậc đào tạo"></option>
+                                                            <option value="{{ CAO_DANG }}">Cao đẳng</option>
+                                                            <option value="{{ DAI_HOC }}">Đại học</option>
+                                                        </select>
+                                                        @if ($errors->education_level)
+                                                            <div class="text-danger">
+                                                                {{ $errors->first('education_level') }}
+                                                            </div>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                                <div class="row g-3 align-items-center form-group mb-3">
+                                                    <div class="col-3">
+                                                    <label for="" class="col-form-label">Loại:</label>
+                                                    </div>
+                                                    <div class="col-md-7 col-9 bold">
+                                                        <select class="form-select" aria-label="select" name="type_education" required>
+                                                            <option label="Loại đào tạo"></option>
+                                                            <option value="{{ CHINH_QUY }}">Chính quy</option>
+                                                            <option value="{{ CHAT_LUONG_CAO }}">Chất lượng cao</option>
+                                                        </select>
+                                                        @if ($errors->type_education)
+                                                            <div class="text-danger">
+                                                                {{ $errors->first('type_education') }}
+                                                            </div>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                                <div class="row g-3 align-items-center form-group mb-3">
+                                                    <div class="col-3">
+                                                    <label for="" class="col-form-label">Khóa:</label>
+                                                    </div>
+                                                    <div class="col-md-7 col-9 bold">
+                                                        <select class="form-select" aria-label="selectSchoolYears" name="school_years" required>
+                                                            <option label="Chọn niên khóa"></option>
+                                                            @foreach (getSchoolYears() as $years)
+                                                                <option value="{{ $years->id }}">{{ $years->name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                        @if ($errors->school_years)
+                                                            <div class="text-danger">
+                                                                {{ $errors->first('school_years') }}
+                                                            </div>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                                <div class="row g-3 align-items-center form-group mb-3">
+                                                    <div class="col-3">
+                                                    <label for="" class="col-form-label">Khoa:</label>
+                                                    </div>
+                                                    <div class="col-md-7 col-9 bold">
+                                                        <select class="form-select" aria-label="select" name="branch" required>
+                                                            <option label="Khoa"></option>
+                                                            @foreach(getFaculies() as $fac)
+                                                                <option value="{{ $fac->id }}">{{ $fac->name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                        @if ($errors->branch)
+                                                            <div class="text-danger">
+                                                                {{ $errors->first('branch') }}
+                                                            </div>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="form-group row">
-                                            <label class="col-md-6 ">Khóa học: <span class="bold">{{ $teacher->info->schoolYear->name ?? '' }}</span></label>
-                                            <label class="col-md-6 ">Bậc đào tạo: <span class="bold">{{ $teacher->info && $teacher->info->sex == DAI_HOC ? 'Đại học' : 'Cao đẳng' }}</span></label>
+                                    </div>
+                            @else
+                                <div class="col-sm-9">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="row g-3 align-items-center form-group">
+                                                <div class="col-3">
+                                                <label for="" class="col-form-label">Họ tên:</label>
+                                                </div>
+                                                <div class="col-auto bold">
+                                                    {{ $teacher->info->student_code ?? 'Chưa cập nhật' }}
+                                                </div>
+                                            </div>
+                                            <div class="row g-3 align-items-center form-group">
+                                                <div class="col-3">
+                                                <label for="" class="col-form-label">Lớp học:</label>
+                                                </div>
+                                                <div class="col-auto bold">
+                                                    {{ $teacher->info->class->name ?? 'Chưa cập nhật' }}
+                                                </div>
+                                            </div>
+                                            <div class="row g-3 align-items-center form-group">
+                                                <div class="col-3">
+                                                <label for="" class="col-form-label">Bậc đào tạo:</label>
+                                                </div>
+                                                <div class="col-auto bold">
+                                                    {{ $teacher->info && $teacher->info->education_level == DAI_HOC ? 'Đại học' : 'Cao đẳng' }}
+                                                </div>
+                                            </div>
+                                            <div class="row g-3 align-items-center form-group">
+                                                <div class="col-3">
+                                                <label for="" class="col-form-label">Loại:</label>
+                                                </div>
+                                                <div class="col-auto bold">
+                                                    {{ $teacher->info && $teacher->info->sex == CHINH_QUY ? 'Chính quy' : 'Chất lượng cao' }}
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="form-group row">
-                                            <label class="col-md-6 ">Loại: <span class="bold">{{ $teacher->info && $teacher->info->sex == CHINH_QUY ? 'Chính quy' : 'Chất lượng cao' }}</span></label>
-                                            <label class="col-md-6 ">Khoa: <span class="bold">{{ $teacher->info && $teacher->info->class ? $teacher->info->class->faculty->name  : 'Chưa cập nhật'}}</span></label>
-                                        </div>
-                                        <div class="form-group row">
-                                            {{-- <label class="col-md-6 ">Họ tên: <span class="bold">{{  $teacher->name ?? ''  }}</span></label> --}}
-                                            <label class="col-md-6 ">Email: <span class="bold">{{  $teacher->email ?? ''  }}</span></label>
+                                        <div class="col-md-6">
+                                            <div class="row g-3 align-items-center form-group">
+                                                <div class="col-3">
+                                                <label for="" class="col-form-label">MSSV:</label>
+                                                </div>
+                                                <div class="col-auto bold">
+                                                    {{ $teacher->info->student_code ?? 'Chưa cập nhật' }}
+                                                </div>
+                                            </div>
+                                            <div class="row g-3 align-items-center form-group">
+                                                <div class="col-3">
+                                                <label for="" class="col-form-label">Khóa học:</label>
+                                                </div>
+                                                <div class="col-auto bold">
+                                                    {{ $teacher->info->schoolYear->name ?? 'Chưa cập nhật' }}
+                                                </div>
+                                            </div>
+                                            <div class="row g-3 align-items-center form-group">
+                                                <div class="col-3">
+                                                <label for="" class="col-form-label">Khoa:</label>
+                                                </div>
+                                                <div class="col-auto bold">
+                                                    {{ $teacher->info && $teacher->info->class ? $teacher->info->class->faculty->name  : 'Chưa cập nhật'}}
+                                                </div>
+                                            </div>
+                                            <div class="row g-3 align-items-center form-group">
+                                                <div class="col-3">
+                                                <label for="" class="col-form-label">Email:</label>
+                                                </div>
+                                                <div class="col-auto bold">
+                                                    {{  $teacher->email ?? 'Chưa cập nhật'  }}
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            @endif
                         </div>
                     </div>
                     <div class="portlet-title">

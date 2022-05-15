@@ -2,22 +2,32 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Info;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class StudentController extends Controller
 {
     private $model;
-    public function __construct(User $user)
+    private $info;
+    public function __construct(User $user, Info $info)
     {
         $this->model = $user;
+        $this->info = $info;
     }
 
-    public function index (){
-        $students = $this->model->where('role', '3')->orderBy('created_at', 'desc')->paginate(8);
+    public function index (Request $request){
+        $students = $this->model->where('role', '3')->orderBy('created_at', 'desc');
+        if($request->class && $request->class != ''){
+            $students = $students->where('email','like', $request->email);
+        }
+        // if($request->email && $request->email != ''){
+        //     $students = $this->info->where('class_id', $request->class)->st;
+        // }
 
+        $students = $students->paginate(8);
         return view('pages.student.index', compact('students'));
     }
 

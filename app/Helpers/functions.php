@@ -16,6 +16,12 @@ if(!function_exists('getRole')){
     }
 }
 
+if(!function_exists('isAdmin')){
+    function isAdmin() {
+        return getRole() == 1 ? true : false;
+    }
+}
+
 if(!function_exists('getClassListByUser')){
     function getClassListByUser() {
         if(Auth::check()) {

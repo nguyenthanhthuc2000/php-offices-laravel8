@@ -6,17 +6,19 @@
             <h4>Danh sách sinh viên</h4>
         </div>
         <div class="mb-3">
-            <form >
+            <form>
                 <div class="row">
                     <div class="col-md-3">
-                        <select class="form-select" aria-label="Default select example">
-                            <option selected>Chọn lớp</option>
-                            <option value="1">Quản trị mạng 18C</option>
+                        <select class="form-select" aria-label="" name="class">
+                            <option label="Chọn lớp"></option>
+                            @foreach(getClass() as $class)
+                                <option value="{{ $class->id }}">{{ $class->name }}</option>>
+                            @endforeach
                         </select>
                     </div>
                     <div class="col-md-3">
                         <div  class="d-flex w-100" >
-                            <input class="form-control" type="search" placeholder="Nhập thông tin tìm kiếm..." aria-label="Search">
+                            <input class="form-control" type="search" placeholder="Nhập email..." name="email">
                         </div>
                     </div>
                     <div class="col-md-1">
@@ -60,7 +62,7 @@
                                     <a class="btn btn-mute text-warning" href="{{ route('student.edit', $student->id) }}">
                                         <i class="fa-solid fa-user-pen"></i>
                                     </a>
-                                    <a class="btn btn-mute text-danger" href="{{ route('student.delete', $student->id)}}">
+                                    <a class="btn btn-mute text-danger btn-delete" href="{{ route('student.delete', $student->id)}}">
                                         <i class="fa-solid fa-trash-can"></i>
                                     </a>
                                 </div>
@@ -81,4 +83,32 @@
             {{$students->links()}}
         </div>
     </div>
+@endsection
+@section('script')
+    <script>
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false
+        })
+        $('.btn-delete').click(function(e){
+            e.preventDefault();
+
+            let href = $(this).attr('href');
+            swalWithBootstrapButtons.fire({
+            title: 'Bạn có chắc muốn xóa?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Đồng ý',
+            cancelButtonText: 'Hủy',
+            reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = href;
+                }
+            })
+        })
+    </script>
 @endsection
