@@ -25,20 +25,23 @@ Route::get('/get-ward/{id_district}/{id_province}', [Controller::class, 'getWard
 Route::middleware(['auth'])->group(function () {
     // user
     Route::middleware(['isAdmin'])->group(function () {
+        // giáo viên
         Route::get('/tao-moi-giao-vien', [TeacherController::class, 'create'])->name('register.teacher');
         Route::get('/danh-sach-giao-vien', [TeacherController::class, 'index'])->name('teacher.index');
         Route::get('/chinh-sua-thong-tin-giao-vien/{id}', [TeacherController::class, 'edit'])->name('teacher.edit');
+        Route::get('/xoa-giao-vien/{id}', [UserController::class, 'delete'])->name('teacher.delete');
+
+        // sinh viên
+        Route::get('/tao-moi-sinh-vien', [StudentController::class, 'create'])->name('register.student');
+        Route::post('/edit-user/{id}', [UserController::class, 'update'])->name('user.update');
+
         Route::get('/danh-sach-khoa', [FacultyController::class, 'index'])->name('faculty.index');
         Route::get('/danh-sach-lop', [ClassListController::class, 'index'])->name('class.index');
         Route::get('/nien-khoa', [SchoolYearController::class, 'index'])->name('school.year.index');
 
-        Route::post('/edit-user/{id}', [UserController::class, 'update'])->name('user.update');
-        Route::get('/xoa-sinh-vien/{id}', [UserController::class, 'delete'])->name('student.delete');
-        Route::get('/xoa-giao-vien/{id}', [UserController::class, 'delete'])->name('teacher.delete');
-
         Route::get('/danh-sach-bai-viet', [NewsController::class, 'index'])->name('news.index');
 
-        Route::get('/tao-moi-sinh-vien', [StudentController::class, 'create'])->name('register.student');
+
         Route::post('/register', [UserController::class, 'store'])->name('register.post');
         Route::get('/them-moi-tin-tuc', [NewsController::class, 'create'])->name('news.create');
         Route::post('/tin-tuc/store', [NewsController::class, 'store'])->name('news.store');
@@ -47,6 +50,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/xoa-bai-viet/{id}', [NewsController::class, 'delete'])->name('news.delete');
     });
 
+    Route::get('/xoa-sinh-vien/{id}', [UserController::class, 'delete'])->name('student.delete')->middleware('isAdmin', 'isTeacher');
     Route::get('/danh-sach-sinh-vien', [StudentController::class, 'index'])->name('student.index');
     Route::get('/thong-tin-sinh-vien/{id}', [StudentController::class, 'detail'])->name('student.detail');
     Route::get('/chinh-sua-thong-tin-sinh-vien/{id}', [StudentController::class, 'edit'])->name('student.edit');

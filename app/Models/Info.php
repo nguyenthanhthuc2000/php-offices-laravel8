@@ -13,6 +13,10 @@ class Info extends Model
     protected $guarded = [];
     public $timestamps = true;
 
+    public function user(){
+        return $this->hasMany(User::class);
+    }
+
     public function placeBirth()
     {
         return $this->hasOne(Province::class, 'id', 'place_birth');

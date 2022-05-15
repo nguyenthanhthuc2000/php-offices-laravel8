@@ -49,7 +49,6 @@
                     <th scope="col">Họ tên</th>
                     <th scope="col">Email</th>
                     <th scope="col">Mã số SV</th>
-                    <th scope="col">Khoa</th>
                     <th scope="col">Lớp</th>
                     <th scope="col">Niên khóa</th>
                     <th scope="col" class="text-end">Thao tác</th>
@@ -66,7 +65,6 @@
                             <td>{{$student->name ?? '--'}}</td>
                             <td>{{$student->email ?? '--'}}</td>
                             <td>{{$student->info->student_code ?? '--'}}</td>
-                            <td>{{$student->info->getBranch->name ?? '--'}}</td>
                             <td>{{$student->info->class->name ?? '--'}}</td>
                             <td>{{$student->info->schoolYear->name ?? '--'}}</td>
                             <td class="text-end">
@@ -74,7 +72,7 @@
                                     <a class="btn btn-mute text-warning" href="{{ route('student.edit', $student->id) }}">
                                         <i class="fa-solid fa-user-pen"></i>
                                     </a>
-                                    <a class="btn btn-mute text-danger" href="{{ route('student.delete', $student->id)}}">
+                                    <a class="btn btn-mute text-danger btn-delete" href="{{ route('student.delete', $student->id)}}">
                                         <i class="fa-solid fa-trash-can"></i>
                                     </a>
                                 </div>
@@ -95,4 +93,32 @@
             {{$students->links()}}
         </div>
     </div>
+@endsection
+@section('script')
+    <script>
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false
+        })
+        $('.btn-delete').click(function(e){
+            e.preventDefault();
+
+            let href = $(this).attr('href');
+            swalWithBootstrapButtons.fire({
+            title: 'Bạn có chắc muốn xóa?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Đồng ý',
+            cancelButtonText: 'Hủy',
+            reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = href;
+                }
+            })
+        })
+    </script>
 @endsection

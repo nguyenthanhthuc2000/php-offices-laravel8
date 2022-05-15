@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Info;
 use App\Models\User;
 use App\Models\ClassList;
 use App\Models\Faculty;

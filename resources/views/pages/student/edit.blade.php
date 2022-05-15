@@ -13,79 +13,230 @@
                             <span class="caption-subject bold">Thông tin học vấn</span>
                         </div>
                     </div>
-                    <div class="portlet-body" style="font-size: 0.8rem;">
-                        <div class="row">
-                            <div class="col-sm-3" style="text-align: center;">
-                                <div class="profile-userpic">
-                                    <img src="{{ asset('images/no_avatar.jpg') }}" style="border-radius: 50%;" class="img-responsive">
-                                </div>
-                                <div class="text-center">
-                                    <span>Trạng thái:
-                                        <span class="bold" style="color: red">
-                                            @if($student->info)
-                                                @if($student->info->status == DANG_HOC)
-                                                    Đang học
-                                                @elseif($student->info->status == DA_TOT_NGHIEP)
-                                                    Đã tốt nghiệp
-                                                @elseif($student->info->status == DA_NGHI_HOC)
-                                                    Đã nghĩ học
-                                                @elseif($student->info->status == DANG_TAM_HOAN)
-                                                    Tạm hoãn
+                    <form action="{{ route('user.update', $student->id) }}" method="post">
+                        @csrf
+                        <div class="portlet-body" style="font-size: 0.8rem;">
+                            <div class="row">
+                                <div class="col-sm-3 mb-3" style="text-align: center;">
+                                    <div class="profile-userpic">
+                                        <img src="{{ asset('images/no_avatar.jpg') }}" style="border-radius: 50%;" class="img-responsive">
+                                    </div>
+                                    <div class="text-center">
+                                        <span>Trạng thái:
+                                            <span class="bold" style="color: red">
+                                                @if($student->info)
+                                                    @if($student->info->status == DANG_HOC)
+                                                        Đang học
+                                                    @elseif($student->info->status == DA_TOT_NGHIEP)
+                                                        Đã tốt nghiệp
+                                                    @elseif($student->info->status == DA_NGHI_HOC)
+                                                        Đã nghĩ học
+                                                    @elseif($student->info->status == DANG_TAM_HOAN)
+                                                        Tạm hoãn
+                                                    @else
+                                                        Đang cập nhật
+                                                    @endif
                                                 @else
                                                     Đang cập nhật
                                                 @endif
-                                            @else
-                                                Đang cập nhật
-                                            @endif
-                                        </span>
-                                    </span><br>
-                                    <a href="{{ route('student.detail', $student->id) }}" class="color-active">Về trang cá nhân</a>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="form-horizontal">
-                                    <div class="form-body">
-                                        <div class="form-group row">
-                                            <label class="col-md-6 ">Họ tên: <span class="bold">{{  $student->name ?? ''  }}</span></label>
-                                            <label class="col-md-6 ">MSSV: <span class="bold">{{ $student->info->student_code ?? '' }}</span></label>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-md-6 ">Lớp học: <span class="bold">{{ $student->info->class->name ?? '' }}</span></label>
-                                            <label class="col-md-6 ">Khóa học: <span class="bold">{{ $student->info->schoolYear->name ?? '' }}</span></label>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-md-6 ">Bậc đào tạo: <span class="bold">{{ $student->info && $student->info->sex == DAI_HOC ? 'Đại học' : 'Cao đẳng' }}</span></label>
-                                            <label class="col-md-6 ">Khoa: <span class="bold">{{ $student->info && $student->info->class ? $student->info->class->faculty->name  : 'Chưa cập nhật'}}</span></label>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-md-6 ">Loại: <span class="bold">{{ $student->info && $student->info->sex == CHINH_QUY ? 'Chính quy' : 'Chất lượng cao' }}</span></label>
-                                            <label class="col-md-6 ">Email: <span class="bold">{{  $student->email ?? ''  }}</span></label>
-                                        </div>
+                                            </span>
+                                        </span><br>
+                                        <a href="{{ route('student.detail', $student->id) }}" class="color-active">Về trang cá nhân</a>
                                     </div>
                                 </div>
+                                @if(isAdmin())
+                                    <div class="col-sm-9">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="row g-3 align-items-center form-group mb-3">
+                                                    <div class="col-3">
+                                                    <label for="" class="col-form-label">Họ tên:</label>
+                                                    </div>
+                                                    <div class="col-md-7 col-9 bold">
+                                                        <input type="text" class="form-control" value="{{ $student->info->student_code ?? '' }}">
+                                                    </div>
+                                                </div>
+                                                <div class="row g-3 align-items-center form-group mb-3">
+                                                    <div class="col-3">
+                                                    <label for="" class="col-form-label">Lớp học:</label>
+                                                    </div>
+                                                    <div class="col-md-7 col-9 bold">
+                                                        <input type="text" class="form-control" value="{{ $student->info->class->name ?? '' }}">
+                                                    </div>
+                                                </div>
+                                                <div class="row g-3 align-items-center form-group mb-3">
+                                                    <div class="col-3">
+                                                    <label for="" class="col-form-label">Bậc đào tạo:</label>
+                                                    </div>
+                                                    <div class="col-md-7 col-9 bold">
+                                                        <select class="form-select" aria-label="select" name="education_level" required>
+                                                            <option label="Bậc đào tạo"></option>
+                                                            <option value="{{ CAO_DANG }}">Cao đẳng</option>
+                                                            <option value="{{ DAI_HOC }}">Đại học</option>
+                                                        </select>
+                                                        @if ($errors->education_level)
+                                                            <div class="text-danger">
+                                                                {{ $errors->first('education_level') }}
+                                                            </div>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                                <div class="row g-3 align-items-center form-group mb-3">
+                                                    <div class="col-3">
+                                                    <label for="" class="col-form-label">Loại:</label>
+                                                    </div>
+                                                    <div class="col-md-7 col-9 bold">
+                                                        <select class="form-select" aria-label="select" name="type_education" required>
+                                                            <option label="Loại đào tạo"></option>
+                                                            <option value="{{ CHINH_QUY }}">Chính quy</option>
+                                                            <option value="{{ CHAT_LUONG_CAO }}">Chất lượng cao</option>
+                                                        </select>
+                                                        @if ($errors->type_education)
+                                                            <div class="text-danger">
+                                                                {{ $errors->first('type_education') }}
+                                                            </div>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="row g-3 align-items-center form-group mb-3">
+                                                    <div class="col-3">
+                                                    <label for="" class="col-form-label">MSSV:</label>
+                                                    </div>
+                                                    <div class="col-md-7 col-9 bold">
+                                                        <input type="text" class="form-control" value="{{ $student->info->student_code ?? '' }}">
+                                                    </div>
+                                                </div>
+                                                <div class="row g-3 align-items-center form-group mb-3">
+                                                    <div class="col-3">
+                                                    <label for="" class="col-form-label">Khóa học:</label>
+                                                    </div>
+                                                    <div class="col-md-7 col-9 bold">
+                                                        <select class="form-select" aria-label="selectSchoolYears" name="school_years" required>
+                                                            <option label="Chọn niên khóa"></option>
+                                                            @foreach (getSchoolYears() as $years)
+                                                                <option value="{{ $years->id }}">{{ $years->name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                        @if ($errors->school_years)
+                                                            <div class="text-danger">
+                                                                {{ $errors->first('school_years') }}
+                                                            </div>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                                <div class="row g-3 align-items-center form-group mb-3">
+                                                    <div class="col-3">
+                                                    <label for="" class="col-form-label">Khoa:</label>
+                                                    </div>
+                                                    <div class="col-md-7 col-9 bold">
+                                                        <select class="form-select" aria-label="select" name="branch" required>
+                                                            <option label="Khoa"></option>
+                                                            @foreach(getFaculies() as $fac)
+                                                                <option value="{{ $fac->id }}">{{ $fac->name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                        @if ($errors->branch)
+                                                            <div class="text-danger">
+                                                                {{ $errors->first('branch') }}
+                                                            </div>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                                <div class="row g-3 align-items-center form-group mb-3">
+                                                    <div class="col-3">
+                                                    <label for="" class="col-form-label">Email:</label>
+                                                    </div>
+                                                    <div class="col-md-7 col-9 bold">
+                                                        <input type="text" class="form-control" value="{{ $student->email ?? '' }}">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @else
+                                    <div class="col-sm-9">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="row g-3 align-items-center form-group">
+                                                    <div class="col-3">
+                                                    <label for="" class="col-form-label">Họ tên:</label>
+                                                    </div>
+                                                    <div class="col-auto bold">
+                                                        {{ $student->info->student_code ?? 'Chưa cập nhật' }}
+                                                    </div>
+                                                </div>
+                                                <div class="row g-3 align-items-center form-group">
+                                                    <div class="col-3">
+                                                    <label for="" class="col-form-label">Lớp học:</label>
+                                                    </div>
+                                                    <div class="col-auto bold">
+                                                        {{ $student->info->class->name ?? 'Chưa cập nhật' }}
+                                                    </div>
+                                                </div>
+                                                <div class="row g-3 align-items-center form-group">
+                                                    <div class="col-3">
+                                                    <label for="" class="col-form-label">Bậc đào tạo:</label>
+                                                    </div>
+                                                    <div class="col-auto bold">
+                                                        {{ $student->info && $student->info->education_level == DAI_HOC ? 'Đại học' : 'Cao đẳng' }}
+                                                    </div>
+                                                </div>
+                                                <div class="row g-3 align-items-center form-group">
+                                                    <div class="col-3">
+                                                    <label for="" class="col-form-label">Loại:</label>
+                                                    </div>
+                                                    <div class="col-auto bold">
+                                                        {{ $student->info && $student->info->sex == CHINH_QUY ? 'Chính quy' : 'Chất lượng cao' }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="row g-3 align-items-center form-group">
+                                                    <div class="col-3">
+                                                    <label for="" class="col-form-label">MSSV:</label>
+                                                    </div>
+                                                    <div class="col-auto bold">
+                                                        {{ $student->info->student_code ?? 'Chưa cập nhật' }}
+                                                    </div>
+                                                </div>
+                                                <div class="row g-3 align-items-center form-group">
+                                                    <div class="col-3">
+                                                    <label for="" class="col-form-label">Khóa học:</label>
+                                                    </div>
+                                                    <div class="col-auto bold">
+                                                        {{ $student->info->schoolYear->name ?? 'Chưa cập nhật' }}
+                                                    </div>
+                                                </div>
+                                                <div class="row g-3 align-items-center form-group">
+                                                    <div class="col-3">
+                                                    <label for="" class="col-form-label">Khoa:</label>
+                                                    </div>
+                                                    <div class="col-auto bold">
+                                                        {{ $student->info && $student->info->class ? $student->info->class->faculty->name  : 'Chưa cập nhật'}}
+                                                    </div>
+                                                </div>
+                                                <div class="row g-3 align-items-center form-group">
+                                                    <div class="col-3">
+                                                    <label for="" class="col-form-label">Email:</label>
+                                                    </div>
+                                                    <div class="col-auto bold">
+                                                        {{  $student->email ?? 'Chưa cập nhật'  }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
                             </div>
                         </div>
-                    </div>
-                    <div class="portlet-title">
-                        <div class="caption">
-                            <span class="caption-subject bold">Thông tin cá nhân</span>
+                        <div class="portlet-title">
+                            <div class="caption">
+                                <span class="caption-subject bold">Thông tin cá nhân</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="portlet-body" style="font-size: 0.8rem;">
-                        @if ($errors->first('errorUpdate'))
-                            <div class="px-3">
-                                <div class="alert alert-danger" role="alert">
-                                    {{ $errors->first('errorUpdate') }}
-                                </div>
-                            </div>
-                        @endif
-                        @if (session('updateSuccess'))
-                                <div class="alert alert-success" role="alert">
-                                    {{ session('updateSuccess') }}
-                            </div>
-                        @endif
-                        <form action="{{ route('user.update', $student->id) }}" method="post">
-                            @csrf
+                        <div class="portlet-body" style="font-size: 0.8rem;">
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="form-horizontal">
@@ -102,7 +253,7 @@
                                                 </div>
                                                 <div class="col-md-3 mb-2">
                                                     <label for="identity_card" class="form-label">Số CMND:</label>
-                                                    <input type="text" name="identity_card" class="form-control" value={{ $student->info->identity_card_number ?? '' }}>
+                                                    <input type="text" name="identity_card" class="form-control" value={{ $student->info->identity_card_number ?? 'Chưa cập nhật' }}>
                                                     @if ($errors->identity_card)
                                                         <div class="text-danger">
                                                             {{ $errors->first('identity_card') }}
@@ -117,8 +268,8 @@
                                                             <option value="{{ $ethnic->id }}"
                                                                     {{ $student->info && $student->info->getEthnic->id == $ethnic->id ? 'selected' : '' }}>{{ $ethnic->name }}</option>
                                                         @endforeach
-                                                      </select>
-                                                      @if ($errors->ethnic)
+                                                    </select>
+                                                    @if ($errors->ethnic)
                                                         <div class="text-danger">
                                                             {{ $errors->first('ethnic') }}
                                                         </div>
@@ -137,7 +288,7 @@
                                             <div class="form-group row">
                                                 <div class="col-md-3 mb-2">
                                                     <label for="phone" class="form-label">Điện thoại:</label>
-                                                    <input type="text" name="phone" class="form-control" value={{ $student->info->phone ?? '' }}>
+                                                    <input type="text" name="phone" class="form-control" value={{ $student->info->phone ?? 'Chưa cập nhật' }}>
                                                     @if ($errors->phone)
                                                         <div class="text-danger">
                                                             {{ $errors->first('phone') }}
@@ -191,8 +342,8 @@
                                                             <option value="{{ $province->id }}"
                                                                     {{ $student->info && $student->info->province == $province->id ? 'selected' : '' }}>{{  $province->_name }}</option>
                                                         @endforeach
-                                                      </select>
-                                                      @if ($errors->province)
+                                                    </select>
+                                                    @if ($errors->province)
                                                         <div class="text-danger">
                                                             {{ $errors->first('province') }}
                                                         </div>
@@ -241,9 +392,9 @@
                                     <a href="{{ goPrev('student.index') }}" class="btn btn-secondary">Quay lại</a>
                                 </div>
                             </div>
-                        </form>
-                    </div>
+                        </div>
 
+                    </form>
                 </div>
             </div>
         </div>
@@ -251,6 +402,48 @@
 @endsection
 
 @section('script')
+        @if ($errors->first('errorUpdate'))
+            <script>
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                    })
+
+                    Toast.fire({
+                    icon: 'error',
+                    title: '{{ $errors->first('errorUpdate') }}'
+                })
+            </script>
+        @endif
+
+        @if (session('updateSuccess'))
+            <script>
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                    })
+
+                    Toast.fire({
+                    icon: 'success',
+                    title: '{{ session('updateSuccess') }}'
+                })
+            </script>
+        @endif
+
     <script>
         var provinceEle = $('[name="province"]');
         var districtEle = $('[name="district"]');
