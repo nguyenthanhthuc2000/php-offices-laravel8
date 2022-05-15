@@ -62,12 +62,17 @@ class User extends Authenticatable
         return $query;
     }
 
-    public function scopeClassStudent($query, $request)
+    public function scopeInfo($query, $request)
     {
+        $query->join('info', 'info.user_id', '=', 'users.id');
+
         if ($request->has('class_id') && $request->class_id != '') {
-            $query->join('info', 'info.user_id', '=', 'users.id')
-                ->where('info.class_id', $request->class_id)->get();
+            $query->where('info.class_id', $request->class_id);
         }
+        elseif($request->has('faculty_id') && $request->faculty_id != '') {
+            $query->where('info.branch', $request->faculty_id);
+        }
+        $query->get();
         return $query;
     }
 

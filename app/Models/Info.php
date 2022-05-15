@@ -28,6 +28,11 @@ class Info extends Model
         return $this->hasOne(SchoolYear::class, 'id', 'school_year');
     }
 
+    public function getBranch()
+    {
+        return $this->hasOne(Faculty::class, 'id', 'branch');
+    }
+
     public function getEthnic()
     {
         return $this->hasOne(Ethnic::class, 'id', 'ethnic');
