@@ -10,10 +10,18 @@
                 @csrf
                 <div class="row">
                     <div class="col-md-3">
+                        <select class="form-select" name="faculty_id" aria-label="Default select example">
+                            <option selected value="">Chọn khoa</option>
+                            @foreach($faculty as $f)
+                            <option value="{{ $f->id }}">{{ $f->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-3">
                         <select class="form-select" name="class_id" aria-label="Default select example">
                             <option selected value="">Chọn lớp</option>
-                            @foreach($class as $class)
-                            <option value="{{ $class->id }}">{{ $class->name }}</option>
+                            @foreach($class as $l)
+                                <option value="{{ $l->id }}">{{ $l->name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -73,7 +81,7 @@
                     @endforeach
                 @else
                     <tr>
-                        <th colspan="7">
+                        <th colspan="8">
                             <h6>Không có dữ liệu</h6>
                         </th>
                     </tr>
