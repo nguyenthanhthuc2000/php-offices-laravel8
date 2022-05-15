@@ -122,7 +122,18 @@ class UserController extends Controller
             ]
         );
 
-        $data = [
+        $data_user = [
+            "name"  => $request->name,
+            "email" => $request->email
+        ];
+
+        $data_info = [
+            "class_id"               => $request->class,
+            "education_level"        => $request->education_level,
+            "type_education"         => $request->type_education,
+            "student_code"           => $request->code_student,
+            "school_year"            => $request->school_years,
+            "branch"                 => $request->branch,
             'birth_date'             => $request->birth,
             'identity_card_number'   => $request->identity_card,
             'ethnic'                 => $request->ethnic,
@@ -144,17 +155,17 @@ class UserController extends Controller
         }
         DB::beginTransaction();
             try {
-                $user->update($data);
+                $user->update($data_user);
                 if(!$user->info){
                     $new_data = [
                         'user_id'=> $id,
                         'status' => 1
                     ];
-                    $data = array_merge($data, $new_data);
+                    $data = array_merge($data_info, $new_data);
                     $this->info->create($data);
                 }
                 else{
-                    $user->info->update($data);
+                    $user->info->update($data_info);
                 }
                 DB::commit();
             } catch (Exception $e) {

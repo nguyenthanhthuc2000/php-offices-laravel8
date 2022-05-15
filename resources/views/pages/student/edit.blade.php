@@ -13,7 +13,7 @@
                             <span class="caption-subject bold">Thông tin học vấn</span>
                         </div>
                     </div>
-                    <form action="{{ route('user.update', $student->id) }}" method="post">
+                    <form action="{{ route('user.update', $student->id) }}" method="post" class="needs-validation" novalidate>
                         @csrf
                         <div class="portlet-body" style="font-size: 0.8rem;">
                             <div class="row">
@@ -52,27 +52,37 @@
                                                     <div class="col-3">
                                                     <label for="" class="col-form-label">Họ tên:</label>
                                                     </div>
-                                                    <div class="col-md-7 col-9 bold">
-                                                        <input type="text" class="form-control" value="{{ $student->info->student_code ?? '' }}">
+                                                    <div class="col-md-7 col-9">
+                                                        <input type="text" class="form-control" value="{{ $student->name ?? '' }}" name="name">
                                                     </div>
                                                 </div>
                                                 <div class="row g-3 align-items-center form-group mb-3">
                                                     <div class="col-3">
                                                     <label for="" class="col-form-label">Lớp học:</label>
                                                     </div>
-                                                    <div class="col-md-7 col-9 bold">
-                                                        <input type="text" class="form-control" value="{{ $student->info->class->name ?? '' }}">
+                                                    <div class="col-md-7 col-9">
+                                                        <select class="form-select" aria-label="selectSchoolYears" name="class" required>
+                                                            <option label="Lớp học"></option>
+                                                            @foreach (getClass() as $class)
+                                                                <option value="{{ $class->id }}" {{ $class->id == $student->info->class_id ? "selected" : '' }}>{{ $class->name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                        @if ($errors->class)
+                                                            <div class="text-danger">
+                                                                {{ $errors->first('class') }}
+                                                            </div>
+                                                        @endif
                                                     </div>
                                                 </div>
                                                 <div class="row g-3 align-items-center form-group mb-3">
                                                     <div class="col-3">
                                                     <label for="" class="col-form-label">Bậc đào tạo:</label>
                                                     </div>
-                                                    <div class="col-md-7 col-9 bold">
+                                                    <div class="col-md-7 col-9">
                                                         <select class="form-select" aria-label="select" name="education_level" required>
                                                             <option label="Bậc đào tạo"></option>
-                                                            <option value="{{ CAO_DANG }}">Cao đẳng</option>
-                                                            <option value="{{ DAI_HOC }}">Đại học</option>
+                                                            <option value="{{ CAO_DANG }}" {{ $student->info->education_level == CAO_DANG ? "selected" : '' }}>Cao đẳng</option>
+                                                            <option value="{{ DAI_HOC }}" {{ $student->info->education_level == DAI_HOC ? "selected" : '' }}>Đại học</option>
                                                         </select>
                                                         @if ($errors->education_level)
                                                             <div class="text-danger">
@@ -85,11 +95,11 @@
                                                     <div class="col-3">
                                                     <label for="" class="col-form-label">Loại:</label>
                                                     </div>
-                                                    <div class="col-md-7 col-9 bold">
+                                                    <div class="col-md-7 col-9">
                                                         <select class="form-select" aria-label="select" name="type_education" required>
                                                             <option label="Loại đào tạo"></option>
-                                                            <option value="{{ CHINH_QUY }}">Chính quy</option>
-                                                            <option value="{{ CHAT_LUONG_CAO }}">Chất lượng cao</option>
+                                                            <option value="{{ CHINH_QUY }}" {{ $student->info->type_education == CHINH_QUY ? "selected" : '' }}>Chính quy</option>
+                                                            <option value="{{ CHAT_LUONG_CAO }}" {{ $student->info->type_education == CHAT_LUONG_CAO ? "selected" : '' }}>Chất lượng cao</option>
                                                         </select>
                                                         @if ($errors->type_education)
                                                             <div class="text-danger">
@@ -104,19 +114,19 @@
                                                     <div class="col-3">
                                                     <label for="" class="col-form-label">MSSV:</label>
                                                     </div>
-                                                    <div class="col-md-7 col-9 bold">
-                                                        <input type="text" class="form-control" value="{{ $student->info->student_code ?? '' }}">
+                                                    <div class="col-md-7 col-9">
+                                                        <input type="text" name="code_student" class="form-control" value="{{ $student->info->student_code ?? '' }}">
                                                     </div>
                                                 </div>
                                                 <div class="row g-3 align-items-center form-group mb-3">
                                                     <div class="col-3">
                                                     <label for="" class="col-form-label">Khóa học:</label>
                                                     </div>
-                                                    <div class="col-md-7 col-9 bold">
+                                                    <div class="col-md-7 col-9">
                                                         <select class="form-select" aria-label="selectSchoolYears" name="school_years" required>
                                                             <option label="Chọn niên khóa"></option>
                                                             @foreach (getSchoolYears() as $years)
-                                                                <option value="{{ $years->id }}">{{ $years->name }}</option>
+                                                                <option value="{{ $years->id }}" {{ $student->info->school_year == $years->id ? "selected" : '' }}>{{ $years->name }}</option>
                                                             @endforeach
                                                         </select>
                                                         @if ($errors->school_years)
@@ -130,11 +140,11 @@
                                                     <div class="col-3">
                                                     <label for="" class="col-form-label">Khoa:</label>
                                                     </div>
-                                                    <div class="col-md-7 col-9 bold">
+                                                    <div class="col-md-7 col-9">
                                                         <select class="form-select" aria-label="select" name="branch" required>
                                                             <option label="Khoa"></option>
                                                             @foreach(getFaculies() as $fac)
-                                                                <option value="{{ $fac->id }}">{{ $fac->name }}</option>
+                                                                <option value="{{ $fac->id }}"{{ $student->info->branch == $fac->id ? "selected" : '' }}>{{ $fac->name }}</option>
                                                             @endforeach
                                                         </select>
                                                         @if ($errors->branch)
@@ -148,8 +158,13 @@
                                                     <div class="col-3">
                                                     <label for="" class="col-form-label">Email:</label>
                                                     </div>
-                                                    <div class="col-md-7 col-9 bold">
-                                                        <input type="text" class="form-control" value="{{ $student->email ?? '' }}">
+                                                    <div class="col-md-7 col-9">
+                                                        <input type="text" name="email" class="form-control" value="{{ $student->email ?? '' }}" placeholder="Email..." required>
+                                                        @if ($errors->email)
+                                                            <div class="text-danger">
+                                                                {{ $errors->first('email') }}
+                                                            </div>
+                                                        @endif
                                                     </div>
                                                 </div>
                                             </div>
@@ -164,7 +179,7 @@
                                                     <label for="" class="col-form-label">Họ tên:</label>
                                                     </div>
                                                     <div class="col-auto bold">
-                                                        {{ $student->info->student_code ?? 'Chưa cập nhật' }}
+                                                        {{ $student->name ?? 'Chưa cập nhật' }}
                                                     </div>
                                                 </div>
                                                 <div class="row g-3 align-items-center form-group">
