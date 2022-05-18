@@ -9,7 +9,7 @@
             <form method="GET" action="{{route('student.index')}}">
                 @csrf
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <select class="form-select" name="faculty_id" aria-label="Default select example">
                             <option selected value="">Chọn khoa</option>
                             @foreach($faculty as $f)
@@ -17,10 +17,19 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <select class="form-select" name="class_id" aria-label="Default select example">
                             <option selected value="">Chọn lớp</option>
                             @foreach($class as $l)
+                                <option value="{{ $l->id }}">{{ $l->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="col-md-2">
+                        <select class="form-select" name="class_id" aria-label="Default select example">
+                            <option selected value="">Chọn khóa</option>
+                            @foreach(getSchoolYears() as $l)
                                 <option value="{{ $l->id }}">{{ $l->name }}</option>
                             @endforeach
                         </select>
