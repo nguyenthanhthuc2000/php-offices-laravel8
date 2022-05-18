@@ -6,7 +6,7 @@
             <h4>Danh sách sinh viên</h4>
         </div>
         <div class="mb-3">
-            <form method="GET" action="{{route("student.index")}}">
+            <form method="GET" action="{{route('student.index')}}">
                 @csrf
                 <div class="row">
                     <div class="col-md-3">
@@ -51,6 +51,7 @@
                     <th scope="col">Mã số SV</th>
                     <th scope="col">Lớp</th>
                     <th scope="col">Niên khóa</th>
+                    <th scope="col">Khoa</th>
                     <th scope="col" class="text-end">Thao tác</th>
                 </tr>
                 </thead>
@@ -67,9 +68,10 @@
                             <td>{{$student->info->student_code ?? '--'}}</td>
                             <td>{{$student->info->class->name ?? '--'}}</td>
                             <td>{{$student->info->schoolYear->name ?? '--'}}</td>
+                            <td>{{$student->info->getBranch->name ?? '--'}}</td>
                             <td class="text-end">
                                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                    <a class="btn btn-mute text-warning" href="{{ route('student.edit', $student->id) }}">
+                                    <a class="btn btn-mute text-warning" href="{{ route('student.detail', $student->id) }}">
                                         <i class="fa-solid fa-user-pen"></i>
                                     </a>
                                     <a class="btn btn-mute text-danger btn-delete" href="{{ route('student.delete', $student->id)}}">

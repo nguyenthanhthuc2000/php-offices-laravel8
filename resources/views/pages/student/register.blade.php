@@ -53,18 +53,9 @@
                     </div>
                     <div class="form-group mb2">
                         <label for="password_confirm" class="form-label">Chọn vai trò</label>
-                        <select name="role" class="form-select" disabled>
-                            <option lable="Chọn vai trò"></option>
-                            @foreach (config('role') as $key => $role)
-                                <option value="{{ $key }}" {{ $key == 3 ? 'selected' : '' }}>{{ $role }}</option>
-                            @endforeach
+                        <select name="role" class="form-select">
+                                <option value="3" >Sinh viên</option>
                         </select>
-                        <input type="hidden" name="role" value="3">
-                        @if ($errors->role)
-                            <div class="invalid-text">
-                                {{ $errors->first('role') }}
-                            </div>
-                        @endif
                     </div>
                 </div>
                 <div class="col-md-8">
@@ -312,6 +303,47 @@
 @endsection
 
 @section('script')
+@if ($errors->first('errorUpdate'))
+            <script>
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                    })
+
+                    Toast.fire({
+                    icon: 'error',
+                    title: '{{ $errors->first('errorUpdate') }}'
+                })
+            </script>
+        @endif
+
+        @if (session('updateSuccess'))
+            <script>
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                    })
+
+                    Toast.fire({
+                    icon: 'success',
+                    title: '{{ session('updateSuccess') }}'
+                })
+            </script>
+        @endif
     <script>
         var provinceEle = $('[name="province"]');
         var districtEle = $('[name="district"]');

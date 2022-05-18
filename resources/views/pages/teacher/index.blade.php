@@ -46,7 +46,7 @@
                             <th scope="row">{{ $no++ }}</th>
                             <td>{{$teacher->name}}</td>
                             <td>{{$teacher->email}}</td>
-                            <td >{{$teacher->facultyTeacher ? $teacher->facultyTeacher->faculty->name : 'Chưa cập nhật'}}</td>
+                            <td>{{ $teacher->info && $teacher->info->class ? $teacher->info->class->faculty->name  : 'Chưa cập nhật'}}</td>
                             <td class="text-end">
                                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                                     <a class="btn btn-mute text-warning" title="Chỉnh sửa" href="{{ route('teacher.edit', $teacher->id) }}">

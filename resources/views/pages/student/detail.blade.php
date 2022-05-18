@@ -40,7 +40,9 @@
                                             @endif
                                         </span>
                                     </p>
+                                    @if(getRole()!= 2) 
                                     <a href="{{ route('student.edit', $student->id) }}" class="color-active">Cập nhật thông tin</a>
+                                    @endif
                                 </div>
                             </div>
                             <div class="col-sm-9">
@@ -139,7 +141,7 @@
                                         <label for="" class="col-form-label">Số CMND:</label>
                                         </div>
                                         <div class="col-auto bold">
-                                            {{ $student->info && $student->info->identity_card_number }}
+                                        {{ $student->info && $student->info->identity_card_number ? $student->info->identity_card_number : 'Chưa cập nhật' }}
                                         </div>
                                     </div>
                                     <div class="row g-3 align-items-center form-group">

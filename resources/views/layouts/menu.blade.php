@@ -49,8 +49,8 @@
                         <img src="{{ asset('images/no_avatar.jpg') }}" style="border-radius: 50%; width: 25px; margin-right: 5px" > {{ Auth::user()->name }}
                     </a>
                     <ul class="dropdown-menu " aria-labelledby="dropdownMenuButton1">
-                    <li style="    border-bottom: 1px solid #3333;"><a class="dropdown-item" href="#">Hồ sơ</a></li>
-                    <li style="    border-bottom: 1px solid #3333;"><a class="dropdown-item" href="#">Đổi mật khẩu</a></li>
+{{--                    <li style="    border-bottom: 1px solid #3333;"><a class="dropdown-item" href="#">Hồ sơ</a></li>--}}
+{{--                    <li style="    border-bottom: 1px solid #3333;"><a class="dropdown-item" href="#">Đổi mật khẩu</a></li>--}}
                     <li><a class="dropdown-item" href="{{ route('logout') }}">Đăng xuất</a></li>
                     </ul>
                 </div>

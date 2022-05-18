@@ -44,9 +44,12 @@ class StudentController extends Controller
 
     public function profile () {
         $student_id = Auth::id();
+        if(getRole() == 2 || getRole() == 1) {
+            $student_id = $id;
+        }
         $student = $this->model->find($student_id);
 
-        return view('pages.student.profile', compact('student'));
+        return view('pages.student.detail', compact('student'));
     }
 
     public function detail ($id) {

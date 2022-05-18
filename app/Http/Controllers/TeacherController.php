@@ -23,6 +23,7 @@ class TeacherController extends Controller
                 ->FilterEmail($request)
                 ->where('role', '2')
                 ->select('users.*')
+                ->orderBy('id', 'DESC')
                 ->paginate(8);
         $teachers->appends(['email' => $request->email]);
 

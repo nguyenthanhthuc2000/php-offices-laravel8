@@ -26,11 +26,15 @@ class UserController extends Controller
     }
 
     public function store(Request $request){
+
         $this->validate($request,
             [
                 'email' => 'bail|email',
                 '*' => 'required',
-                'password_confirm' => 'bail|same:password'
+                'password_confirm' => 'bail|same:password',
+                'code_student' => 'digits:10',
+                'phone' => 'digits:10',
+                'identity_card' => 'max:14'
             ],
             [
                 '*.required' => ':attribute không được bỏ trống.',
@@ -65,6 +69,7 @@ class UserController extends Controller
             'role' => $request->role
         ];
 
+
         $data_info = [
             'identity_card_number' => $request->identity_card,
             'student_code' => $request->student_code,
@@ -83,17 +88,19 @@ class UserController extends Controller
             'education_level' => $request->education_level,
             'type_education' => $request->type_education,
             'branch' => $request->branch,
-            'status' => 1
+            'status' => 1,
+            'student_code' => substr(md5(microtime()),rand(0,5), 7).substr(md5(microtime()),rand(0,5), 7),
         ];
 
         $user = $this->user->where('email', $data_user['email'])->first('email');
 
         if($user) {
-            return back()->withErrors(['email' => 'Email đã tồn tại.'])->withInput();
+            return back()->withErrors(['email' => 'Email đã tồn tại.'])->withInput($request->input());
         }
         DB::beginTransaction();
             try {
                 $id = $this->user->create($data_user)->id;
+
                 $new_data = [
                     'user_id'=> $id,
                 ];
@@ -103,14 +110,13 @@ class UserController extends Controller
                 DB::commit();
             } catch (Exception $e) {
                 DB::rollBack();
+                // return back()->withErrors(['errorUpdate' => 'Thêm sửa thất bại.'])->withInput($request->input());
                 throw new Exception($e->getMessage());
             }
-            return redirect()->route('student.index');
+            return back()->with(['updateSuccess' => 'Thêm thành công.']);
     }
 
-    public function edit($id){
-        return $id;
-    }
+
 
     public function update(Request $request, $id){
         $this->validate($request,
@@ -128,12 +134,6 @@ class UserController extends Controller
         ];
 
         $data_info = [
-            "class_id"               => $request->class,
-            "education_level"        => $request->education_level,
-            "type_education"         => $request->type_education,
-            "student_code"           => $request->code_student,
-            "school_year"            => $request->school_years,
-            "branch"                 => $request->branch,
             'birth_date'             => $request->birth,
             'identity_card_number'   => $request->identity_card,
             'ethnic'                 => $request->ethnic,
@@ -146,16 +146,26 @@ class UserController extends Controller
             'district'               => $request->district,
             'ward'                   => $request->ward
         ];
-
-
+         if(getRole() == 1){
+             $new_data_info = [
+                "class_id"               => $request->class,
+                "education_level"        => $request->education_level,
+                "type_education"         => $request->type_education,
+                "student_code"           => $request->code_student,
+                "school_year"            => $request->school_years,
+                "branch"                 => $request->branch
+             ];
+             $data_info =  array_merge($data_info, $new_data_info);
+         }
         $user = $this->user->find($id);
 
         if (!$user){
-            return back()->withErrors(['errorUpdate' => 'Chỉnh sửa thất bại.'])->withInput($request->input());
+            return back()->withErrors(['errorUpdate' => 'Chỉnh sửa thất bại.!'])->withInput($request->input());
         }
         DB::beginTransaction();
             try {
-                $user->update($data_user);
+                if(($data_user['name'] != '' || $data_user['name'] != null)&& $data_user['email'] != '' || $data_user['email'] != null){
+                $user->update($data_user);}
                 if(!$user->info){
                     $new_data = [
                         'user_id'=> $id,
@@ -171,7 +181,7 @@ class UserController extends Controller
             } catch (Exception $e) {
                 DB::rollBack();
 
-                // return back()->withErrors(['errorUpdate' => 'Chỉnh sửa thất bại.'])->withInput($request->input());
+                //return back()->withErrors(['errorUpdate' => 'Chỉnh sửa thất bại.'])->withInput($request->input());
                 throw new Exception($e->getMessage());
             }
             return back()->with(['updateSuccess' => 'Chỉnh sửa thành công.']);

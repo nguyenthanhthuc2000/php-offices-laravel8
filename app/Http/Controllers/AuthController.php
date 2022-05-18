@@ -27,12 +27,9 @@ class AuthController extends Controller
         );
 
         if (Auth::attempt($credentials, $remember)) {
-            if(Auth::user()->role < 3) {
+           
                 return redirect()->route('home');
-            }
-            else {
-                return redirect()->route('profile');
-            }
+            
         }
 
         return back()->withErrors(

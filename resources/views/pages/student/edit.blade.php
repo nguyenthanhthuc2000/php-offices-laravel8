@@ -8,10 +8,11 @@
         <div class="col-md-12">
             <div class="box-df profile-ds-info">
                 <div class="portlet">
-                    <div class="portlet-title">
-                        <div class="caption">
+                    <div class="portlet-title d-flex justify-content-between pb-2">
+                        <div class="caption ">
                             <span class="caption-subject bold">Thông tin học vấn</span>
                         </div>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exportFile">Xuất biểu mẩu</button>
                     </div>
                     <form action="{{ route('user.update', $student->id) }}" method="post" class="needs-validation" novalidate>
                         @csrf
@@ -403,7 +404,9 @@
                                     </div>
                                 </div>
                                 <div class="text-center mb-3 ">
-                                    <button class="btn btn-primary">Cập nhật</button>
+                                 @if(getRole()!= 2)   
+                                <button class="btn btn-primary">Cập nhật</button>
+                                @endif
                                     <a href="{{ goPrev('student.index') }}" class="btn btn-secondary">Quay lại</a>
                                 </div>
                             </div>
@@ -414,6 +417,30 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="exportFile" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="min-width: 30%">
+    <div class="modal-content" >
+        <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Đề xuất biểu mẩu</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form>
+        <div class="modal-body">
+            <input type="hidden" id="student_id" value={{$student->id}}>
+            <select class="form-select" aria-label="Default select example" id='file_type'>
+                <option value="">Chọn biểu mẩu</option>
+                <option value="1">Sơ yếu lí lịch</option>
+                {{-- <option value="2">Giấy hoãn nghĩa vụ quân sự</option> --}}
+            </select>
+        </div>
+        <div class="modal-footer">
+            <a href="" class="btn btn-primary btn-dowload d-none" data-url="{{route('file.dowload')}}">Tải về</a>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+        </div>
+    </form>
+    </div>
+    </div>
+</div>    
 @endsection
 
 @section('script')
@@ -496,4 +523,24 @@
             })
         })
     </script>
+
 @endsection
+
+@push('javascript')
+  <script>
+    $('#file_type').change(function() {
+      const id = $('#student_id').val();
+      const type = $('#file_type').val();
+
+      if([1,2].includes(parseInt(type))) {
+        $('.btn-dowload').removeClass('d-none');
+        let url = $('.btn-dowload').attr('data-url')+'?'+'id='+id+'?type='+type;
+        $('.btn-dowload').attr('href', url);
+      }
+      else {
+        $('.btn-dowload').addClass('d-none');
+      }
+    })
+
+  </script>
+@endpush
