@@ -45,7 +45,7 @@ class StudentController extends Controller
     public function profile () {
         $student_id = Auth::id();
         if(getRole() == 2 || getRole() == 1) {
-            $student_id = $id;
+            $student_id = $student_id;
         }
         $student = $this->model->find($student_id);
 
