@@ -17,8 +17,8 @@ class CreateTableInfo extends Migration
             $table->id();
             $table->integer('user_id');
             $table->integer('status');// 1 đang hoc, 2 đã tốt nghiệp, 3 nghĩ học, 4 bảo lưu điểm
-            $table->date('birth_date')->nullable();
-            $table->integer('class_id')->nullable()->comment('Lớp hoc');
+            $table->date('birth_date')->nullable()->nullable();
+            $table->integer('class_id')->nullable()->comment('Lớp hoc')->nullable();
             $table->integer('ethnic')->comment('Dân tộc')->nullable();
             $table->integer('religion')->comment('Tôn giáo')->nullable();
             $table->date('date_join_tncshcm')->comment('Ngày vào Đoàn TNCSHCM')->nullable();

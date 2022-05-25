@@ -9,6 +9,7 @@
             <form method="GET" action="{{route('student.index')}}">
                 @csrf
                 <div class="row">
+                    @if(getRole() == 1)
                     <div class="col-md-2">
                         <select class="form-select" name="faculty_id" aria-label="Default select example">
                             <option selected value="">Chọn khoa</option>
@@ -27,13 +28,14 @@
                     </div>
 
                     <div class="col-md-2">
-                        <select class="form-select" name="class_id" aria-label="Default select example">
+                        <select class="form-select" name="school_year" aria-label="Default select example">
                             <option selected value="">Chọn khóa</option>
                             @foreach(getSchoolYears() as $l)
                                 <option value="{{ $l->id }}">{{ $l->name }}</option>
                             @endforeach
                         </select>
                     </div>
+                    @endif
                     <div class="col-md-3">
                         <div  class="d-flex w-100" >
                             <input class="form-control" type="search" name="email" placeholder="Nhập email tìm kiếm..." value="{{ old('email') }}" aria-label="Search">

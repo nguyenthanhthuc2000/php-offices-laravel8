@@ -52,69 +52,8 @@
                                                         @endif
                                                     </div>
                                                 </div>
-                                                <div class="row g-3 align-items-center form-group mb-3">
-                                                    <div class="col-3">
-                                                    <label for="" class="col-form-label">Email:</label>
-                                                    </div>
-                                                    <div class="col-md-7 col-9">
-                                                        <input type="text" class="form-control" value="{{ $teacher->email ?? '' }}" name="email"required>
-                                                    </div>
-                                                </div>
                                             </div>
                                             <div class="col-md-6">
-                                                <div class="row g-3 align-items-center form-group mb-3">
-                                                    <div class="col-3">
-                                                    <label for="" class="col-form-label">Bậc đào tạo:</label>
-                                                    </div>
-                                                    <div class="col-md-7 col-9">
-
-                                                        <select class="form-select" aria-label="select" name="education_level" required>
-                                                            <option label="Bậc đào tạo"></option>
-                                                            <option value="{{ CAO_DANG }}" {{ $teacher->info && $teacher->info->education_level == CAO_DANG ? "selected" : '' }}>Cao đẳng</option>
-                                                            <option value="{{ DAI_HOC }}" {{ $teacher->info && $teacher->info->education_level == DAI_HOC ? "selected" : '' }}>Đại học</option>
-                                                        </select>
-                                                        @if ($errors->education_level)
-                                                            <div class="text-danger">
-                                                                {{ $errors->first('education_level') }}
-                                                            </div>
-                                                        @endif
-                                                    </div>
-                                                </div>
-                                                <div class="row g-3 align-items-center form-group mb-3">
-                                                    <div class="col-3">
-                                                    <label for="" class="col-form-label">Loại:</label>
-                                                    </div>
-                                                    <div class="col-md-7 col-9">
-                                                        <select class="form-select" aria-label="select" name="type_education" required>
-                                                            <option label="Loại đào tạo"></option>
-                                                            <option value="{{ CHINH_QUY }}" {{ $teacher->info && $teacher->info->type_education == CHINH_QUY ? "selected" : '' }}>Chính quy</option>
-                                                            <option value="{{ CHAT_LUONG_CAO }}" {{ $teacher->info && $teacher->info->type_education == CHAT_LUONG_CAO ? "selected" : '' }}>Chất lượng cao</option>
-                                                        </select>
-                                                        @if ($errors->type_education)
-                                                            <div class="text-danger">
-                                                                {{ $errors->first('type_education') }}
-                                                            </div>
-                                                        @endif
-                                                    </div>
-                                                </div>
-                                                <div class="row g-3 align-items-center form-group mb-3">
-                                                    <div class="col-3">
-                                                    <label for="" class="col-form-label">Khóa:</label>
-                                                    </div>
-                                                    <div class="col-md-7 col-9">
-                                                        <select class="form-select" aria-label="selectSchoolYears" name="school_years" required>
-                                                            <option label="Chọn niên khóa"></option>
-                                                            @foreach (getSchoolYears() as $years)
-                                                                <option value="{{ $years->id }}" {{ $teacher->info && $teacher->info->school_year == $years->id ? "selected" : '' }}>{{ $years->name }}</option>
-                                                            @endforeach
-                                                        </select>
-                                                        @if ($errors->school_years)
-                                                            <div class="text-danger">
-                                                                {{ $errors->first('school_years') }}
-                                                            </div>
-                                                        @endif
-                                                    </div>
-                                                </div>
                                                 <div class="row g-3 align-items-center form-group mb-3">
                                                     <div class="col-3">
                                                     <label for="" class="col-form-label">Khoa:</label>
@@ -131,6 +70,14 @@
                                                                 {{ $errors->first('branch') }}
                                                             </div>
                                                         @endif
+                                                    </div>
+                                                </div>
+                                                <div class="row g-3 align-items-center form-group mb-3">
+                                                    <div class="col-3">
+                                                        <label for="" class="col-form-label">Email:</label>
+                                                    </div>
+                                                    <div class="col-md-7 col-9">
+                                                        <input type="text" class="form-control" value="{{ $teacher->email ?? '' }}" name="email"required>
                                                     </div>
                                                 </div>
                                             </div>

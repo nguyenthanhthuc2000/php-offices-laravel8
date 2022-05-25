@@ -20,20 +20,33 @@ class StudentController extends Controller
     }
 
     public function index (Request $request){
-        $students =
-            $this->model
-            ->FilterEmail($request)
-            ->Info($request)
-            ->where('role', '3')
-            ->select('users.*')
-            ->paginate(8);
-        $students->appends(['email' => $request->email]);
-        $students->appends(['class_id' => $request->class_id]);
-        $students->appends(['faculty_id' => $request->faculty_id]);
+        if(getRole() == 1) {
+            $students =
+                $this->model
+                    ->FilterEmail($request)
+                    ->Info($request)
+                    ->where('role', '3')
+                    ->select('users.*')
+                    ->paginate(8);
+            $students->appends(['class_id' => $request->class_id]);
+            $students->appends(['faculty_id' => $request->faculty_id]);
+            $students->appends(['email' => $request->email]);
+        }
+        else if (getRole() == 2) {
+            $classId = Auth::user()->info->class_id ?? Auth::user()->info->class_id ;
+            $students =
+                $this->model
+                    ->FilterEmail($request)
+                    ->Info($request)
+                    ->where('role', '3')
+                    ->where('class_id', $classId ? $classId : '')
+                    ->select('users.*')
+                    ->paginate(8);
+            $students->appends(['email' => $request->email]);
+        }
 
         $class = $this->class->get();
         $faculty = $this->faculty->get();
-
 
         return view('pages.student.index', compact('students', 'class', 'faculty'));
     }

@@ -233,7 +233,7 @@
                             <select class="form-select" aria-label="select" name="branch" required>
                                 <option label="Khoa"></option>
                                 @foreach(getFaculies() as $fac)
-                                    <option value="{{ $fac->id }}" {{ old('branch') && old('branch') == $branch->id ? 'selected' : '' }}>{{ $fac->name }}</option>
+                                    <option value="{{ $fac->id }}" {{ old('branch') && old('branch') == $fac->id ? 'selected' : '' }}>{{ $fac->name }}</option>
                                 @endforeach
                             </select>
                             @if ($errors->branch)
@@ -242,20 +242,20 @@
                                 </div>
                             @endif
                         </div>
-                        <div class="col-md-4">
-                            <label for="selectSchoolYears" class="form-label">Niên khóa</label>
-                            <select class="form-select" aria-label="selectSchoolYears" name="school_years" required>
-                                <option label="Chọn niên khóa"></option>
-                                @foreach (getSchoolYears() as $years)
-                                    <option value="{{ $years->id }}" {{ old('school_years') && old('school_years') == $school_years->id ? 'selected' : '' }}>{{ $years->name }}</option>
-                                @endforeach
-                            </select>
-                            @if ($errors->school_years)
-                                <div class="text-danger">
-                                    {{ $errors->first('school_years') }}
-                                </div>
-                            @endif
-                        </div>
+{{--                        <div class="col-md-4">--}}
+{{--                            <label for="selectSchoolYears" class="form-label">Niên khóa</label>--}}
+{{--                            <select class="form-select" aria-label="selectSchoolYears" name="school_years" required>--}}
+{{--                                <option label="Chọn niên khóa"></option>--}}
+{{--                                @foreach (getSchoolYears() as $years)--}}
+{{--                                    <option value="{{ $years->id }}" {{ old('school_years') && old('school_years') == $school_years->id ? 'selected' : '' }}>{{ $years->name }}</option>--}}
+{{--                                @endforeach--}}
+{{--                            </select>--}}
+{{--                            @if ($errors->school_years)--}}
+{{--                                <div class="text-danger">--}}
+{{--                                    {{ $errors->first('school_years') }}--}}
+{{--                                </div>--}}
+{{--                            @endif--}}
+{{--                        </div>--}}
                     </div>
                 </div>
                 <div class="d-grid justify-content-center">

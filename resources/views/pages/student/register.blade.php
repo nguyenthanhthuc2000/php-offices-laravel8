@@ -79,7 +79,7 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <label for="identity_card" class="form-label">Số CMND:</label>
-                                                <input type="number" name="identity_card" class="form-control" value="{{ old('identity_card') }}" required>
+                                                <input type='number' name="identity_card" class="form-control" maxLength="12" value="{{ old('identity_card') }}" required>
                                                 @if ($errors->identity_card)
                                                     <div class="text-danger">
                                                         {{ $errors->first('identity_card') }}

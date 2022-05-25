@@ -73,6 +73,9 @@ class User extends Authenticatable
         elseif($request->has('faculty_id') && $request->faculty_id != '') {
             $query->where('info.branch', $request->faculty_id);
         }
+        elseif($request->has('school_year') && $request->school_year != '') {
+            $query->where('info.school_year', $request->school_year);
+        }
         $query->get();
         return $query;
     }

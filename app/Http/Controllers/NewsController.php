@@ -62,7 +62,8 @@ class NewsController extends Controller
             'title' => $request->title,
             'slug' => Str::slug($request->title.'-'.$code),
             'content' => $request->contents,
-            'image' => $image
+            'image' => $image,
+            'code' => $code
         ];
 
         if($this->news->create($data)) {

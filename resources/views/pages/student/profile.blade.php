@@ -24,7 +24,6 @@
                                 <div class="text-center">
                                     <a href="{{ route('student.detail', $student->id) }}" class="color-active">Xem chi tiết</a><br>
                                     <a href="{{ route('student.edit', $student->id) }}" class="color-active">Cập nhật thông tin</a>
-                                    
                                 </div>
                             </div>
 

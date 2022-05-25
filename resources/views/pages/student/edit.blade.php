@@ -404,9 +404,9 @@
                                     </div>
                                 </div>
                                 <div class="text-center mb-3 ">
-                                 @if(getRole()!= 2)   
+{{--                                 @if(getRole()!= 2)   --}}
                                 <button class="btn btn-primary">Cập nhật</button>
-                                @endif
+{{--                                @endif--}}
                                     <a href="{{ goPrev('student.index') }}" class="btn btn-secondary">Quay lại</a>
                                 </div>
                             </div>
@@ -440,7 +440,7 @@
     </form>
     </div>
     </div>
-</div>    
+</div>
 @endsection
 
 @section('script')
