@@ -80,4 +80,8 @@ class User extends Authenticatable
         return $query;
     }
 
+    public function getRelative() {
+        return $this->hasMany(Relative::class, 'user_id');
+    }
+
 }

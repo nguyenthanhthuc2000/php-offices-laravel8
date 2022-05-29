@@ -9,6 +9,7 @@
             <div class="box-df profile-ds-info">
                 <div class="portlet">
                     <div class="portlet-title pb-3" style="display: flex; justify-content: space-between;">
+
                         <div class="caption">
                             <span class="caption-subject bold">Thông tin học vấn</span>
                         </div>
