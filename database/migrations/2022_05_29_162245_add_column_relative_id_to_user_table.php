@@ -14,7 +14,7 @@ class AddColumnRelativeIdToUserTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->integer('relative_id')->after('id');
+            $table->integer('relative_id')->after('id')->nullable();
         });
     }
 
