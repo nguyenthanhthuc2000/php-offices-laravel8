@@ -13,7 +13,7 @@ class AddColumnRelativeIdToUserTable extends Migration
      */
     public function up()
     {
-        Schema::table('user', function (Blueprint $table) {
+        Schema::table('users', function (Blueprint $table) {
             $table->integer('relative_id')->after('id');
         });
     }
