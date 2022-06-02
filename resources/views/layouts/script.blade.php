@@ -32,7 +32,9 @@
     <script>
 
         $('input[type="number"]').on('input', function(){
-            this.value = this.value.slice(0,this.getAttribute('maxLength'))
+            if(this.hasAttr('maxLength')){
+                this.value = this.value.slice(0,this.getAttribute('maxLength'))
+            }
         })
     </script>
 @stack('javascript')

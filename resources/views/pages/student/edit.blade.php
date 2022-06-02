@@ -412,215 +412,57 @@
                         </div>
                         <div class="portlet-body" style="font-size: 0.8rem;">
                             <div class="row">
-                                <div class="col-sm-12">
-                                    <div class="form-horizontal">
-                                        <div class="form-body">
-                                                <div class="form-group row">
-                                                    <div class="col-md-6">
-                                                        <label for="" class="form-label">Họ tên cha:</label>
-                                                        <input type="text" class="form-control" value="{{ $student->name ?? '' }}" name="name_father">
-                                                        @if ($errors->name_father)
-                                                            <div class="text-danger">
-                                                                {{ $errors->first('name_father') }}
-                                                            </div>
-                                                        @endif
+                                @foreach ($student->relative as $i => $relatives)
+                                    @php
+                                        $prefix = $i == 0 ? 'father' : ($i == 1 ? 'mom' : 'other');
+                                        $title = $i == 0 ? 'cha' : ($i == 1 ? 'mẹ' : 'vợ/chồng');
+                                    @endphp
+                                    <div class="col-sm-12">
+                                        <div class="form-horizontal">
+                                            <div class="form-body">
+                                                    <div class="form-group row">
+                                                        <div class="col-md-6">
+                                                            <label for="" class="form-label">Họ tên {{ $title }}:</label>
+                                                                    <input type="text" class="form-control"
+                                                                            value="{{ $relatives->name }}"
+                                                                            name="name_{{ $prefix }}">
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label for="birth_{{ $prefix }}" class="form-label">Năm sinh</label>
+                                                            <input type="date" name="birth_{{ $prefix }}" class="form-control" value={{ $student->relative[0]->year_birth ?? '1990-01-01' }}>
+                                                        </div>
                                                     </div>
-                                                    <div class="col-md-6">
-                                                        <label for="birth_father" class="form-label">Năm sinh</label>
-                                                        <input type="date" name="birth_father" class="form-control" value={{ $student->info->birth_date ?? '1990-01-01' }}>
-                                                        @if ($errors->birth_father)
-                                                            <div class="text-danger">
-                                                                {{ $errors->first('birth_father') }}
-                                                            </div>
-                                                        @endif
+                                                    <div class="form-group row">
+                                                        <div class="col-md-4">
+                                                            <label for="" class="form-label">Công việc:</label>
+                                                            <input type="text" class="form-control" value="" name="job_{{ $prefix }}">
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <label for="phone" class="form-label">Điện thoại:</label>
+                                                            <input type="text" name="phone_{{ $prefix }}" class="form-control" value={{ $student->info->phone ?? 'Chưa cập nhật' }}>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <label for="ethnic" class="form-label">Dân tộc:</label>
+                                                            <select class="form-select" aria-label="ethnic" name="ethnic_{{ $prefix }}">
+                                                                <option label="Chọn dân tộc"></option>
+                                                                @foreach (getEthnic() as $ethnic)
+                                                                    <option value="{{ $ethnic->id }}"
+                                                                            {{ $student->info && $student->info->getEthnic->id == $ethnic->id ? 'selected' : '' }}>{{ $ethnic->name }}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <div class="col-md-4">
-                                                        <label for="" class="form-label">Công việc:</label>
-                                                        <input type="text" class="form-control" value="" name="job_father">
-                                                        @if ($errors->job_father)
-                                                            <div class="text-danger">
-                                                                {{ $errors->first('job_father') }}
-                                                            </div>
-                                                        @endif
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        <label for="phone" class="form-label">Điện thoại:</label>
-                                                        <input type="text" name="phone" class="form-control" value={{ $student->info->phone ?? 'Chưa cập nhật' }}>
-                                                        @if ($errors->phone)
-                                                            <div class="text-danger">
-                                                                {{ $errors->first('phone') }}
-                                                            </div>
-                                                        @endif
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        <label for="ethnic" class="form-label">Dân tộc:</label>
-                                                        <select class="form-select" aria-label="ethnic" name="ethnic">
-                                                            <option label="Chọn dân tộc"></option>
-                                                            @foreach (getEthnic() as $ethnic)
-                                                                <option value="{{ $ethnic->id }}"
-                                                                        {{ $student->info && $student->info->getEthnic->id == $ethnic->id ? 'selected' : '' }}>{{ $ethnic->name }}</option>
-                                                            @endforeach
-                                                        </select>
-                                                        @if ($errors->ethnic)
-                                                            <div class="text-danger">
-                                                                {{ $errors->first('ethnic') }}
-                                                            </div>
-                                                        @endif
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <div class="col-12">
-                                                        <label for="" class="form-label">Địa chỉ thường trú:</label>
-                                                        <input type="text" class="form-control" value="{{ $student->name ?? '' }}" name="name">
-                                                        @if ($errors->ethnic)
-                                                            <div class="text-danger">
-                                                                {{ $errors->first('ethnic') }}
-                                                            </div>
-                                                        @endif
+                                                    <div class="form-group row">
+                                                        <div class="col-12">
+                                                            <label for="" class="form-label">Địa chỉ thường trú:</label>
+                                                            <input type="text" class="form-control" value="{{ $student->relative[0]->permanent_address ?? '' }}" name="address_{{ $prefix }}">
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-sm-12">
-                                    <div class="form-horizontal">
-                                        <div class="form-body">
-                                                <div class="form-group row">
-                                                    <div class="col-md-6">
-                                                        <label for="" class="form-label">Họ tên mẹ:</label>
-                                                        <input type="text" class="form-control" value="{{ $student->name ?? '' }}" name="name">
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <label for="birth" class="form-label">Năm sinh</label>
-                                                        <input type="date" name="birth" class="form-control" value={{ $student->info->birth_date ?? '1990-01-01' }}>
-                                                        @if ($errors->birth)
-                                                            <div class="text-danger">
-                                                                {{ $errors->first('birth') }}
-                                                            </div>
-                                                        @endif
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <div class="col-md-4">
-                                                        <label for="" class="form-label">Công việc:</label>
-                                                        <input type="text" class="form-control" value="{{ $student->name ?? '' }}" name="name">
-                                                        @if ($errors->ethnic)
-                                                            <div class="text-danger">
-                                                                {{ $errors->first('ethnic') }}
-                                                            </div>
-                                                        @endif
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        <label for="phone" class="form-label">Điện thoại:</label>
-                                                        <input type="text" name="phone" class="form-control" value={{ $student->info->phone ?? 'Chưa cập nhật' }}>
-                                                        @if ($errors->phone)
-                                                            <div class="text-danger">
-                                                                {{ $errors->first('phone') }}
-                                                            </div>
-                                                        @endif
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        <label for="ethnic" class="form-label">Dân tộc:</label>
-                                                        <select class="form-select" aria-label="ethnic" name="ethnic">
-                                                            <option label="Chọn dân tộc"></option>
-                                                            @foreach (getEthnic() as $ethnic)
-                                                                <option value="{{ $ethnic->id }}"
-                                                                        {{ $student->info && $student->info->getEthnic->id == $ethnic->id ? 'selected' : '' }}>{{ $ethnic->name }}</option>
-                                                            @endforeach
-                                                        </select>
-                                                        @if ($errors->ethnic)
-                                                            <div class="text-danger">
-                                                                {{ $errors->first('ethnic') }}
-                                                            </div>
-                                                        @endif
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <div class="col-12">
-                                                        <label for="" class="form-label">Địa chỉ thường trú:</label>
-                                                        <input type="text" class="form-control" value="{{ $student->name ?? '' }}" name="name">
-                                                        @if ($errors->ethnic)
-                                                            <div class="text-danger">
-                                                                {{ $errors->first('ethnic') }}
-                                                            </div>
-                                                        @endif
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-12">
-                                    <div class="form-horizontal">
-                                        <div class="form-body">
-                                                <div class="form-group row">
-                                                    <div class="col-md-6">
-                                                        <label for="" class="form-label">Họ tên vợ/chồng:</label>
-                                                        <input type="text" class="form-control" value="{{ $student->name ?? '' }}" name="name">
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <label for="birth" class="form-label">Năm sinh</label>
-                                                        <input type="date" name="birth" class="form-control" value={{ $student->info->birth_date ?? '1990-01-01' }}>
-                                                        @if ($errors->birth)
-                                                            <div class="text-danger">
-                                                                {{ $errors->first('birth') }}
-                                                            </div>
-                                                        @endif
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <div class="col-md-4">
-                                                        <label for="" class="form-label">Công việc:</label>
-                                                        <input type="text" class="form-control" value="{{ $student->name ?? '' }}" name="name">
-                                                        @if ($errors->ethnic)
-                                                            <div class="text-danger">
-                                                                {{ $errors->first('ethnic') }}
-                                                            </div>
-                                                        @endif
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        <label for="phone" class="form-label">Điện thoại:</label>
-                                                        <input type="text" name="phone" class="form-control" value={{ $student->info->phone ?? 'Chưa cập nhật' }}>
-                                                        @if ($errors->phone)
-                                                            <div class="text-danger">
-                                                                {{ $errors->first('phone') }}
-                                                            </div>
-                                                        @endif
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        <label for="ethnic" class="form-label">Dân tộc:</label>
-                                                        <select class="form-select" aria-label="ethnic" name="ethnic">
-                                                            <option label="Chọn dân tộc"></option>
-                                                            @foreach (getEthnic() as $ethnic)
-                                                                <option value="{{ $ethnic->id }}"
-                                                                        {{ $student->info && $student->info->getEthnic->id == $ethnic->id ? 'selected' : '' }}>{{ $ethnic->name }}</option>
-                                                            @endforeach
-                                                        </select>
-                                                        @if ($errors->ethnic)
-                                                            <div class="text-danger">
-                                                                {{ $errors->first('ethnic') }}
-                                                            </div>
-                                                        @endif
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <div class="col-12">
-                                                        <label for="" class="form-label">Địa chỉ thường trú:</label>
-                                                        <input type="text" class="form-control" value="{{ $student->name ?? '' }}" name="name">
-                                                        @if ($errors->ethnic)
-                                                            <div class="text-danger">
-                                                                {{ $errors->first('ethnic') }}
-                                                            </div>
-                                                        @endif
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                @endforeach
                                 <div class="text-center mb-3">
                                     <button class="btn btn-primary">Cập nhật</button>
                                     <a href="{{ goPrev('student.index') }}" class="btn btn-secondary">Quay lại</a>
