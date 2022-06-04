@@ -410,6 +410,9 @@
                                 <span class="caption-subject bold">Thông tin người thân</span>
                             </div>
                         </div>
+                        @php
+                            $student->relative = $student->relative->first() != null || empty($student->relative) ? $student->relative : [ 0 => '123', 1 => 'null', 2 => 'null'];
+                        @endphp
                         <div class="portlet-body" style="font-size: 0.8rem;">
                             <div class="row">
                                 @foreach ($student->relative as $i => $relatives)
@@ -424,12 +427,12 @@
                                                         <div class="col-md-6">
                                                             <label for="" class="form-label">Họ tên {{ $title }}:</label>
                                                                     <input type="text" class="form-control"
-                                                                            value="{{ $relatives->name }}"
+                                                                            value="{{ $relatives->name ?? '' }}"
                                                                             name="name_{{ $prefix }}">
                                                         </div>
                                                         <div class="col-md-6">
                                                             <label for="birth_{{ $prefix }}" class="form-label">Năm sinh</label>
-                                                            <input type="date" name="birth_{{ $prefix }}" class="form-control" value={{ $student->relative[0]->year_birth ?? '1990-01-01' }}>
+                                                            <input type="date" name="birth_{{ $prefix }}" class="form-control" value={{ $relatives->year_birth ?? '1990-01-01' }}>
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">
@@ -439,7 +442,7 @@
                                                         </div>
                                                         <div class="col-md-4">
                                                             <label for="phone" class="form-label">Điện thoại:</label>
-                                                            <input type="text" name="phone_{{ $prefix }}" class="form-control" value={{ $student->info->phone ?? 'Chưa cập nhật' }}>
+                                                            <input type="number" maxLength="10" name="phone_{{ $prefix }}" class="form-control" value={{ $relatives->phone ?? '' }}>
                                                         </div>
                                                         <div class="col-md-4">
                                                             <label for="ethnic" class="form-label">Dân tộc:</label>
@@ -447,7 +450,7 @@
                                                                 <option label="Chọn dân tộc"></option>
                                                                 @foreach (getEthnic() as $ethnic)
                                                                     <option value="{{ $ethnic->id }}"
-                                                                            {{ $student->info && $student->info->getEthnic->id == $ethnic->id ? 'selected' : '' }}>{{ $ethnic->name }}</option>
+                                                                            {{ $relatives->ethnic == $ethnic->id ? 'selected' : '' }}>{{ $ethnic->name }}</option>
                                                                 @endforeach
                                                             </select>
                                                         </div>
@@ -455,7 +458,7 @@
                                                     <div class="form-group row">
                                                         <div class="col-12">
                                                             <label for="" class="form-label">Địa chỉ thường trú:</label>
-                                                            <input type="text" class="form-control" value="{{ $student->relative[0]->permanent_address ?? '' }}" name="address_{{ $prefix }}">
+                                                            <input type="text" class="form-control" value="{{ $relatives->permanent_address ?? '' }}" name="address_{{ $prefix }}">
                                                         </div>
                                                     </div>
                                                 </div>

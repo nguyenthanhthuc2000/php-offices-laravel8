@@ -9,7 +9,7 @@
             <form action="{{ route('register.post') }}" method="POST" class="needs-validation row" novalidate>
                 @method('post')
                 @csrf
-                <div class="col-md-4 mb-2">
+                <div class="col-xl-4 mb-2">
                     <div class="portlet-title">
                         <div class="caption">
                             <span class="caption-subject bold">Thông tin đăng nhập</span>
@@ -58,7 +58,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-md-8">
+                <div class="col-xl-8">
                     <div class="portlet-title mb-3">
                         <div class="caption">
                             <span class="caption-subject bold">Thông tin cá nhân</span>
@@ -87,11 +87,11 @@
                                                 @endif
                                             </div>
                                             <div class="col-md-4">
-                                                <label for="student_code" class="form-label">MSSV:</label>
-                                                <input type="text" name="student_code" maxLength="10" class="form-control" value="{{ old('student_code') }}" required>
+                                                <label for="code_student" class="form-label">MSSV: <small class="text-italic" style="font-size:0.75rem">(bỏ trống để tự động)</small></label>
+                                                <input type="text" name="code_student" maxLength="10" class="form-control" value="{{ old('code_student') }}" >
                                                 @if ($errors->student_code)
                                                     <div class="text-danger">
-                                                        {{ $errors->first('student_code') }}
+                                                        {{ $errors->first('code_student') }}
                                                     </div>
                                                 @endif
                                             </div>
@@ -127,11 +127,11 @@
                                         </div>
                                         <div class="form-group row mb-2">
                                             <div class="col-md-6">
-                                                <label for="birth" class="form-label">Ngày sinh:</label>
-                                                <input type="date" name="birth" class="form-control" value="{{ old('birth') ?? '1990-01-01' }}" required>
+                                                <label for="birth_date" class="form-label">Ngày sinh:</label>
+                                                <input type="date" name="birth_date" class="form-control" value="{{ old('birth_date') ?? '1990-01-01' }}" required>
                                                 @if ($errors->birth)
                                                     <div class="text-danger">
-                                                        {{ $errors->first('birth') }}
+                                                        {{ $errors->first('birth_date') }}
                                                     </div>
                                                 @endif
                                             </div>

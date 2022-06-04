@@ -18,6 +18,12 @@ class UserController extends Controller
     protected $info;
     protected $relative;
 
+    public function __construct(User $user, Info $info, Relative $relative){
+        $this->user = $user;
+        $this->info = $info;
+        $this->relative = $relative;
+    }
+
     protected function customAttributes(){
         return [
             'email' => 'Email',
@@ -26,6 +32,7 @@ class UserController extends Controller
             'role' => 'Vai trò',
             'identity_card' => 'CMND',
             'student_code' => 'MSSV',
+            'code_student' => 'MSSV',
             'ethnic' => 'Dân tộc',
             'gender' => 'Giới tính',
             'place_birth' => 'Nơi sinh',
@@ -48,27 +55,32 @@ class UserController extends Controller
         ];
     }
 
-    public function __construct(User $user, Info $info, Relative $relative){
-        $this->user = $user;
-        $this->info = $info;
-        $this->relative = $relative;
-    }
-
-    public function index(){
-        return 'list user';
-    }
-
-    public function store(Request $request){
-
-        $this->validate($request,
-            [
+    protected function ruleValidateUser($id, $type = null){
+        $role = $id !== null ? getRoleUser($id) : $type;
+        $rule = [];
+        if($role == 2){
+            $rule = [
+                'name' => 'required',
                 'email' => 'bail|email|required',
-                'password_confirm' => 'bail|same:password',
-                'code_student' => 'required|digits:10',
                 'phone' => 'digits:10',
                 'identity_card' => 'required|max:14',
-                'password' => 'required',
-                'role' => 'required',
+                'ethnic' => 'required',
+                'gender' => 'required',
+                'place_birth' => 'required',
+                'province' => 'required',
+                'district' => 'required',
+                'ward' => 'required',
+                'class' => 'required',
+                'branch' => 'required',
+                "date_join_tncshcm"  => 'date',
+                "date_join_csvn"     => 'date',
+            ];
+        }
+        if($role == 3){
+            $rule = [
+                'email' => 'bail|email|required',
+                'phone' => 'digits:10',
+                'identity_card' => 'required|max:14',
                 'ethnic' => 'required',
                 'gender' => 'required',
                 'place_birth' => 'required',
@@ -80,7 +92,21 @@ class UserController extends Controller
                 'type_education' => 'required',
                 'education_level' => 'required',
                 'branch' => 'required',
-            ],
+                "date_join_tncshcm"  => 'date',
+                "date_join_csvn"     => 'date',
+                "birth_date"         => 'date',
+            ];
+        }
+        return $rule;
+    }
+
+    public function index(){
+        return 'list user';
+    }
+
+    public function store(Request $request){
+        $this->validate($request,
+            $this->ruleValidateUser(null, $request->role),
             $this->customMessage(),
             $this->customAttributes()
         );
@@ -98,7 +124,7 @@ class UserController extends Controller
             'student_code' => $request->student_code,
             'ethnic' => $request->ethnic,
             'sex' => $request->gender,
-            'birth_date' => $request->birth,
+            'birth_date' => $request->birth ?? $request->birth_date,
             'date_join_tncshcm' => $request->date_join_tncshcm,
             'date_join_csvn' => $request->date_join_csvn,
             'place_birth' => $request->place_birth,
@@ -112,7 +138,7 @@ class UserController extends Controller
             'type_education' => $request->type_education,
             'branch' => $request->branch,
             'status' => 1,
-            'student_code' => substr(md5(microtime()),rand(0,5), 7).substr(md5(microtime()),rand(0,5), 7),
+            'student_code' => $request->role == 2 ? null : ($request->student_code ?? setStudentCode()),
         ];
 
         $user = $this->user->where('email', $data_user['email'])->first('email');
@@ -142,27 +168,9 @@ class UserController extends Controller
 
 
     public function update(Request $request, $id){
-        $this->validate($request,
-            [
-                'email' => 'bail|email|required',
-                'code_student' => 'required|digits:10',
-                'phone' => 'digits:10',
-                'identity_card' => 'required|max:14',
-                'ethnic' => 'required',
-                'gender' => 'required',
-                'place_birth' => 'required',
-                'province' => 'required',
-                'district' => 'required',
-                'ward' => 'required',
-                'class' => 'required',
-                'school_years' => 'required',
-                'type_education' => 'required',
-                'education_level' => 'required',
-                'branch' => 'required',
-                "date_join_tncshcm"  => 'date',
-                "date_join_csvn"     => 'date',
-                "birth_date"         => 'date',
-            ],
+        $this->validate(
+            $request,
+            $this->ruleValidateUser($id),
             $this->customMessage(),
             $this->customAttributes()
         );
@@ -228,7 +236,7 @@ class UserController extends Controller
                     elseif(preg_match("/_mom/i", $key )){
                         $relatives_mom[$key] = $req;
                     }
-                    else{
+                    elseif(preg_match("/_other/i", $key )){
                         $relatives_other[$key] = $req;
                     }
                 }
@@ -253,7 +261,7 @@ class UserController extends Controller
 
                 $relative = $user->relative;
 
-                if($relatives_father['type_relative']){
+                if(isset($relatives_father['type_relative']) && $relatives_father['type_relative']){
                     $data_relatives['father'] = [
                         'type_relative' => 1,
                         "name"      => $relatives_father['name_father'],
@@ -264,7 +272,7 @@ class UserController extends Controller
                         "permanent_address"   => $relatives_father['address_father']
                     ];
                 }
-                if($relatives_mom['type_relative']){
+                if(isset($relatives_mom['type_relative']) && $relatives_mom['type_relative']){
                     $data_relatives['mom'] = [
                         'type_relative' => 2,
                         "name"      => $relatives_mom['name_mom'],
@@ -275,29 +283,35 @@ class UserController extends Controller
                         "permanent_address"   => $relatives_mom['address_mom']
                     ];
                 }
-                if($relatives_other['type_relative']){
+                if(isset($relatives_other['type_relative']) && $relatives_other['type_relative']){
                     $data_relatives['other'] = [
-                        'type_relative' => 3,
-                        "name"      => $relatives_other['name_other'],
-                        "year_birth"     => $relatives_other['birth_other'],
-                        "job"       => $relatives_other['job_other'],
-                        "phone"     => $relatives_other['phone_other'],
-                        "ethnic"    => $relatives_other['ethnic_other'],
-                        "permanent_address"   => $relatives_other['address_other']
+                        'type_relative'     => 3,
+                        "name"              => $relatives_other['name_other'],
+                        "year_birth"        => $relatives_other['birth_other'],
+                        "job"               => $relatives_other['job_other'],
+                        "phone"             => $relatives_other['phone_other'],
+                        "ethnic"            => $relatives_other['ethnic_other'],
+                        "permanent_address" => $relatives_other['address_other']
                     ];
                 }
-                foreach($data_relatives as $i => $data_relative){
-                    $userRelative = $user->relative->where('type_relative', $data_relative['type_relative'])->first();
-                    if(!$userRelative){
-                        $data_relative['user_id'] = $id;
-                        $this->relative->insert(
-                            $data_relative
-                        );
-                    }
-                    else{
-                        $userRelative->update(
-                            $data_relative
-                        );
+                if(
+                    isset($relatives_father['type_relative']) &&
+                    isset($relatives_mom['type_relative']) &&
+                    isset($relatives_other['type_relative'])
+                ){
+                    foreach($data_relatives as $i => $data_relative){
+                        $userRelative = $user->relative->where('type_relative', $data_relative['type_relative'])->first();
+                        if(!$userRelative){
+                            $data_relative['user_id'] = $id;
+                            $this->relative->insert(
+                                $data_relative
+                            );
+                        }
+                        else{
+                            $userRelative->update(
+                                $data_relative
+                            );
+                        }
                     }
                 }
                 DB::commit();

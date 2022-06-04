@@ -134,7 +134,7 @@
                                         <label for="" class="col-form-label">Ngày sinh:</label>
                                         </div>
                                         <div class="col-auto bold">
-                                            {{ $student->info ? dateFormat($student->info->birth_date) : '--' }}
+                                            {{ $student->info ? dateFormat($student->info->birth_date) : 'Chưa cập nhật' }}
                                         </div>
                                     </div>
                                     <div class="row g-3 align-items-center form-group">
@@ -213,6 +213,181 @@
                             </div>
                         </div>
                     </div>
+                    {{-- thân nhân --}}
+                    @php
+                        $father = $student->relative && isset($student->relative[0]) ? $student->relative[0] : null;
+                        $mom = $student->relative && isset($student->relative[1]) ? $student->relative[1] : null;
+                        $other = $student->relative && isset($student->relative[2]) ? $student->relative[2] : null;
+                    @endphp
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <span class="caption-subject bold">Thông tin người thân{{ (($father == null && $father->name == null) && ($mom == null && $mom->name == null) && ($other == null && $other->name == null)) ? ' (Chưa cập nhật)' : ''}}</span>
+                        </div>
+                    </div>
+                    @if($father != null && $father->name != null)
+                        <div class="portlet-body" style="font-size: 0.8rem;">
+                            <div class="form-body">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="row g-3 align-items-center form-group">
+                                            <label for="" class="col-form-label col-4">Họ và tên cha</label>
+                                            <div class="col-auto bold">
+                                                {{ $father != null ? $father->name : 'Chưa cập nhật' }}
+                                            </div>
+                                        </div>
+                                        <div class="row g-3 align-items-center form-group">
+                                            <label for="" class="col-form-label col-4">Địa chỉ thường trú:</label>
+                                            <div class="col-auto bold">
+                                                {{ $father != null ? $father->permanent_address : 'Chưa cập nhật'}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="row g-3 align-items-center form-group">
+                                            <label for="" class="col-form-label col-4">Năm sinh:</label>
+                                            <div class="col-auto bold">
+                                                {{ $father != null ? dateFormat($father->year_birth, 'Y') : 'Chưa cập nhật' }}
+                                            </div>
+                                        </div>
+                                        <div class="row g-3 align-items-center form-group">
+                                            <div class="col-4">
+                                            <label for="" class="col-form-label">Điện thoại:</label>
+                                            </div>
+                                            <div class="col-auto bold">
+                                                {{ $father != null ? $father->phone : 'Chưa cập nhật' }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="row g-3 align-items-center form-group">
+                                            <label for="" class="col-form-label col-4">Công việc</label>
+                                            <div class="col-auto bold">
+                                                {{ $father != null ? $father->job : 'Chưa cập nhật' }}
+                                            </div>
+                                        </div>
+                                        <div class="row g-3 align-items-center form-group">
+                                            <div class="col-4">
+                                            <label for="" class="col-form-label">Dân tộc:</label>
+                                            </div>
+                                            <div class="col-auto bold">
+                                                {{ $father != null ? getNameEthnic($father->ethnic) : 'Chưa cập nhật' }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+                    @if($mom != null && $mom->name != null)
+                        {{-- mẹ --}}
+                        <div class="portlet-body" style="font-size: 0.8rem;">
+                            <div class="form-body">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="row g-3 align-items-center form-group">
+                                            <label for="" class="col-form-label col-4">Họ và tên mẹ</label>
+                                            <div class="col-auto bold">
+                                                {{ $mom != null ? $mom->name : 'Chưa cập nhật' }}
+                                            </div>
+                                        </div>
+                                        <div class="row g-3 align-items-center form-group">
+                                            <label for="" class="col-form-label col-4">Địa chỉ thường trú:</label>
+                                            <div class="col-auto bold">
+                                                {{ $mom != null ? $mom->permanent_address : 'Chưa cập nhật'}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="row g-3 align-items-center form-group">
+                                            <label for="" class="col-form-label col-4">Năm sinh:</label>
+                                            <div class="col-auto bold">
+                                                {{ $mom != null ? dateFormat($mom->year_birth, 'Y') : 'Chưa cập nhật' }}
+                                            </div>
+                                        </div>
+                                        <div class="row g-3 align-items-center form-group">
+                                            <div class="col-4">
+                                            <label for="" class="col-form-label">Điện thoại:</label>
+                                            </div>
+                                            <div class="col-auto bold">
+                                                {{ $mom != null ? $mom->phone : 'Chưa cập nhật' }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="row g-3 align-items-center form-group">
+                                            <label for="" class="col-form-label col-4">Công việc</label>
+                                            <div class="col-auto bold">
+                                                {{ $mom != null ? $mom->job : 'Chưa cập nhật' }}
+                                            </div>
+                                        </div>
+                                        <div class="row g-3 align-items-center form-group">
+                                            <div class="col-4">
+                                            <label for="" class="col-form-label">Dân tộc:</label>
+                                            </div>
+                                            <div class="col-auto bold">
+                                                {{ $mom != null ? getNameEthnic($mom->ethnic) : 'Chưa cập nhật' }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+                    @if($other != null && $other->name != null)
+                        {{-- vợ chồng --}}
+                        <div class="portlet-body" style="font-size: 0.8rem;">
+                            <div class="form-body">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="row g-3 align-items-center form-group">
+                                            <label for="" class="col-form-label col-4">Họ và tên vợ/chồng</label>
+                                            <div class="col-auto bold">
+                                                {{ $other != null ? $other->name : 'Chưa cập nhật' }}
+                                            </div>
+                                        </div>
+                                        <div class="row g-3 align-items-center form-group">
+                                            <label for="" class="col-form-label col-4">Địa chỉ thường trú:</label>
+                                            <div class="col-auto bold">
+                                                {{ $other != null ? $other->permanent_address : 'Chưa cập nhật'}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="row g-3 align-items-center form-group">
+                                            <label for="" class="col-form-label col-4">Năm sinh:</label>
+                                            <div class="col-auto bold">
+                                                {{ $other != null ? dateFormat($other->year_birth, 'Y') : 'Chưa cập nhật' }}
+                                            </div>
+                                        </div>
+                                        <div class="row g-3 align-items-center form-group">
+                                            <div class="col-4">
+                                            <label for="" class="col-form-label">Điện thoại:</label>
+                                            </div>
+                                            <div class="col-auto bold">
+                                                {{ $other != null ? $other->phone : 'Chưa cập nhật' }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="row g-3 align-items-center form-group">
+                                            <label for="" class="col-form-label col-4">Công việc</label>
+                                            <div class="col-auto bold">
+                                                {{ $other != null ? $other->job : 'Chưa cập nhật' }}
+                                            </div>
+                                        </div>
+                                        <div class="row g-3 align-items-center form-group">
+                                            <div class="col-4">
+                                            <label for="" class="col-form-label">Dân tộc:</label>
+                                            </div>
+                                            <div class="col-auto bold">
+                                                {{ $other != null ? getNameEthnic($other->ethnic) : 'Chưa cập nhật' }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

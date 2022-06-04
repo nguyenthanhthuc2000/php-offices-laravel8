@@ -33,13 +33,13 @@ class StudentController extends Controller
             $students->appends(['email' => $request->email]);
         }
         else if (getRole() == 2) {
-            $classId = Auth::user()->info->class_id ?? Auth::user()->info->class_id ;
+            $classId = isset(Auth::user()->info->class_id) ? Auth::user()->info->class_id : '' ;
             $students =
                 $this->model
                     ->FilterEmail($request)
                     ->Info($request)
                     ->where('role', '3')
-                    ->where('class_id', $classId ? $classId : '')
+                    ->where('class_id', $classId)
                     ->select('users.*')
                     ->paginate(8);
             $students->appends(['email' => $request->email]);

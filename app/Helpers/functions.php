@@ -3,6 +3,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Province;
 use App\Models\District;
 use App\Models\Ward;
+use App\Models\User;
 use App\Models\Ethnic;
 use App\Models\ClassList;
 use App\Models\Faculty;
@@ -13,6 +14,12 @@ if(!function_exists('getRole')){
         if(Auth::check()) {
             return Auth::user()->role;
         }
+    }
+}
+
+if(!function_exists('getRoleUser')){
+    function getRoleUser($id) {
+        return User::find($id)->role;
     }
 }
 
@@ -83,6 +90,12 @@ if(!function_exists('getEthnic')){
     }
 }
 
+if(!function_exists('getNameEthnic')){
+    function getNameEthnic($id_ethnic){
+        return Ethnic::find($id_ethnic)->name;
+    }
+}
+
 if(!function_exists('goPrev')){
     function goPrev($routeBackTo = null){
         if($routeBackTo == null){
@@ -107,5 +120,11 @@ if(!function_exists('getFaculies')){
 if(!function_exists('getSchoolYears')){
     function getSchoolYears(){
         return schoolYear::get();
+    }
+}
+
+if(!function_exists('setStudentCode')){
+    function setStudentCode(){
+        return substr(rand(10,100), 10);
     }
 }
