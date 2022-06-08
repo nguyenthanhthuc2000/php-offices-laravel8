@@ -74,12 +74,12 @@
                     @foreach($students as $student)
                         <tr>
                             <th scope="row">{{ $no++ }}</th>
-                            <td>{{$student->name ?? '--'}}</td>
-                            <td>{{$student->email ?? '--'}}</td>
-                            <td>{{$student->info->student_code ?? '--'}}</td>
-                            <td>{{$student->info->class->name ?? '--'}}</td>
-                            <td>{{$student->info->schoolYear->name ?? '--'}}</td>
-                            <td>{{$student->info->getBranch->name ?? '--'}}</td>
+                            <td>{{ $student->name ?? 'Chưa cập nhật'}}</td>
+                            <td>{{ $student->email ?? 'Chưa cập nhật'}}</td>
+                            <td>{{ $student->info->student_code ?? 'Chưa cập nhật'}}</td>
+                            <td style="max-width: 350px">{{ getClassName($student->info->class_id) ?? 'Chưa cập nhật'}}</td>
+                            <td>{{ $student->info->schoolYear->name ?? 'Chưa cập nhật'}}</td>
+                            <td>{{ $student->info->getBranch->name ?? 'Chưa cập nhật'}}</td>
                             <td class="text-end">
                                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                                     <a class="btn btn-mute text-warning" href="{{ route('student.detail', $student->id) }}">

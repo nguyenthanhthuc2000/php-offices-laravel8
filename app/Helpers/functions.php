@@ -29,6 +29,12 @@ if(!function_exists('isAdmin')){
     }
 }
 
+if(!function_exists('isTeacher')){
+    function isTeacher() {
+        return getRole() == 2 ? true : false;
+    }
+}
+
 if(!function_exists('getClassListByUser')){
     function getClassListByUser() {
         if(Auth::check()) {
@@ -125,6 +131,41 @@ if(!function_exists('getSchoolYears')){
 
 if(!function_exists('setStudentCode')){
     function setStudentCode(){
-        return substr(rand(10,100), 10);
+        return rand(1000000000,9999999999);
+    }
+}
+
+if(!function_exists('getClassName')){
+    function getClassName($class_id){
+        $class_name = '';
+        $class = json_decode($class_id);
+        if(is_array($class)){
+            foreach($class as $c){
+                $class_name .= ClassList::find($c)->name . (end($class) == $c ? '' : ', ');
+            }
+        }
+        else{
+            $class_name = $class_id->name ?? null;
+        }
+        return $class_name;
+    }
+}
+
+if(!function_exists('checkSelected')){
+    function checkSelected($id, $value) {
+        $selected = false;
+        if($value === null){
+            return $selected;
+        }
+        $arrValue = json_decode($value);
+        if(is_array($arrValue)){
+            if(in_array($id, $arrValue)){
+                $selected = 'selected';
+            }
+        }
+        else{
+            $selected = $id == $value ? 'selected' : false;
+        }
+        return $selected;
     }
 }

@@ -56,27 +56,10 @@ class UserController extends Controller
     }
 
     protected function ruleValidateUser($id, $type = null){
-        $role = $id !== null ? getRoleUser($id) : $type;
+        $role = getRole();
         $rule = [];
-        if($role == 2){
-            $rule = [
-                'name' => 'required',
-                'email' => 'bail|email|required',
-                'phone' => 'digits:10',
-                'identity_card' => 'required|max:14',
-                'ethnic' => 'required',
-                'gender' => 'required',
-                'place_birth' => 'required',
-                'province' => 'required',
-                'district' => 'required',
-                'ward' => 'required',
-                'class' => 'required',
-                'branch' => 'required',
-                "date_join_tncshcm"  => 'date',
-                "date_join_csvn"     => 'date',
-            ];
-        }
-        if($role == 3){
+        switch ($role) {
+            case 1:
             $rule = [
                 'email' => 'bail|email|required',
                 'phone' => 'digits:10',
@@ -96,6 +79,43 @@ class UserController extends Controller
                 "date_join_csvn"     => 'date',
                 "birth_date"         => 'date',
             ];
+            break;
+            case 2:
+                $rule = [
+                    'name' => 'required',
+                    'email' => 'bail|email|required',
+                    'phone' => 'digits:10',
+                    'identity_card' => 'required|max:14',
+                    'ethnic' => 'required',
+                    'gender' => 'required',
+                    'place_birth' => 'required',
+                    'province' => 'required',
+                    'district' => 'required',
+                    'ward' => 'required',
+                    'class' => 'required',
+                    'branch' => 'required',
+                    "date_join_tncshcm"  => 'date',
+                    "date_join_csvn"     => 'date',
+                ];
+                break;
+            case 3:
+                $rule = [
+                    'name' => 'required',
+                    'email' => 'bail|email|required',
+                    'phone' => 'digits:10',
+                    'identity_card' => 'required|max:14',
+                    'ethnic' => 'required',
+                    'gender' => 'required',
+                    'place_birth' => 'required',
+                    'province' => 'required',
+                    'district' => 'required',
+                    'ward' => 'required',
+                    'class' => 'required',
+                    'branch' => 'required',
+                    "date_join_tncshcm"  => 'date',
+                    "date_join_csvn"     => 'date',
+                ];
+                break;
         }
         return $rule;
     }
@@ -118,7 +138,6 @@ class UserController extends Controller
             'role' => $request->role
         ];
 
-
         $data_info = [
             'identity_card_number' => $request->identity_card,
             'student_code' => $request->student_code,
@@ -132,7 +151,7 @@ class UserController extends Controller
             'district' => $request->district,
             'phone' => $request->phone,
             'ward' => $request->ward,
-            'class_id' => $request->class,
+            'class_id' => json_encode($request->class),
             'school_year' => $request->school_years,
             'education_level' => $request->education_level,
             'type_education' => $request->type_education,
@@ -196,12 +215,12 @@ class UserController extends Controller
             'ward'                   => $request->ward
         ];
 
-         if(getRole() == 1){
+         if(getRole() == 1 || getRole() == 2){
              $new_data_info = [
                 "class_id"               => $request->class,
                 "education_level"        => $request->education_level,
                 "type_education"         => $request->type_education,
-                "student_code"           => $request->code_student,
+                "student_code"           => $request->code_student ?? setStudentCode(),
                 "school_year"            => $request->school_years,
                 "branch"                 => $request->branch
              ];
@@ -209,7 +228,6 @@ class UserController extends Controller
          }
 
         $user = $this->user->find($id);
-
         if (!$user){
             return back()->withErrors(['errorUpdate' => 'Chỉnh sửa thất bại.!'])->withInput($request->input());
         }

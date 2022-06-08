@@ -62,7 +62,7 @@
                                             <label for="" class="col-form-label">Lớp học:</label>
                                             </div>
                                             <div class="col-auto bold">
-                                                {{ $student->info->class->name ?? 'Chưa cập nhật' }}
+                                                {{ getClassName($student->info->class_id) ?? 'Chưa cập nhật' }}
                                             </div>
                                         </div>
                                         <div class="row g-3 align-items-center form-group">
@@ -221,7 +221,7 @@
                     @endphp
                     <div class="portlet-title">
                         <div class="caption">
-                            <span class="caption-subject bold">Thông tin người thân{{ (($father == null && $father->name == null) && ($mom == null && $mom->name == null) && ($other == null && $other->name == null)) ? ' (Chưa cập nhật)' : ''}}</span>
+                            <span class="caption-subject bold">Thông tin người thân{{ $father == null && $mom == null && $other == null ? ' (Chưa cập nhật)' : ''}}</span>
                         </div>
                     </div>
                     @if($father != null && $father->name != null)

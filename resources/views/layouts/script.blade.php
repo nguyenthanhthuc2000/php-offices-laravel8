@@ -3,8 +3,8 @@
     <script src="{{ asset('vendor/bootstrap.min.js') }}"></script>
     <script src="{{ asset('vendor/sweetalert2.min.js') }}"></script>
     <script src="{{ asset('vendor/ckeditor/ckeditor.js') }}"></script>
-    <script>
 
+    <script>
         (function () {
             'use strict'
 
@@ -30,6 +30,8 @@
     </script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="{{ asset('vendor/multiselect/js/chosen.jquery.min.js') }}"></script>
+    <script src="{{ asset('vendor/multiselect/js/main.js') }}"></script>
     <script>
         $('input[type="number"]').on('input', function(){
             if($(this).attr('maxLength') !== undefined){
