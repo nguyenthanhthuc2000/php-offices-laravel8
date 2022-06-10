@@ -23,6 +23,8 @@ Route::get('/get-district/{id_province}', [Controller::class, 'getDistrictByProv
 Route::get('/get-ward/{id_district}/{id_province}', [Controller::class, 'getWardByDistrict'])->name('getWard/{id_province}');
 
 Route::middleware(['auth'])->group(function () {
+    Route::get('/doi-mat-khau', [AuthController::class, 'changePassword'])->name('password.change');
+    Route::post('/change-password', [AuthController::class, 'updatePassword'])->name('password.update');
     // user
     Route::middleware(['isAdmin'])->group(function () {
         // giáo viên
