@@ -98,7 +98,7 @@ if(!function_exists('getEthnic')){
 
 if(!function_exists('getNameEthnic')){
     function getNameEthnic($id_ethnic){
-        return Ethnic::find($id_ethnic)->name;
+        return Ethnic::find($id_ethnic)->name ?? 'Chưa cập nhật';
     }
 }
 
@@ -145,7 +145,7 @@ if(!function_exists('getClassName')){
             }
         }
         else{
-            $class_name = $class_id->name ?? null;
+            $class_name = ClassList::find($class_id)->name ?? null;
         }
         return $class_name;
     }

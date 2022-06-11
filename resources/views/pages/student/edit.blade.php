@@ -67,12 +67,10 @@
                                                     <label for="" class="col-form-label">Lớp học:</label>
                                                     </div>
                                                     <div class="col-md-7 col-9">
-                                                        <select class="chosen-select" aria-label="selectClass" name="class[]" multiple required tabindex="8" placeholder="Chọn lớp học">
+                                                        <select class="form-select" aria-label="selectSchoolYears" name="class" required>
+                                                            <option label="Lớp học"></option>
                                                             @foreach (getClass() as $class)
-                                                                <option value="{{ $class->id }}"
-                                                                        {{-- {{ old('class') == $class->id || ($student->info && $student->info->class_id == $class->id) ? 'selected' : '' }} --}}
-                                                                        {{ checkSelected($class->id, $student->info->class_id) }}
-                                                                >{{ $class->name }}</option>
+                                                                <option value="{{ $class->id }}" {{ $student->info && $class->id == $student->info->class_id ? "selected" : '' }}>{{ $class->name }}</option>
                                                             @endforeach
                                                         </select>
                                                         @if ($errors->any('class'))

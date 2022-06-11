@@ -224,12 +224,10 @@
                     <div class="form-group row">
                         <div class="col-md-6">
                             <label for="selectClass" class="form-label">Lớp học</label>
-                            <select class="chosen-select" aria-label="selectClass" name="class[]" multiple required tabindex="8" placeholder="Chọn lớp học">
+                            <select class="form-select" aria-label="selectClass" name="class" required>
+                                <option label="Chọn lớp học"></option>
                                 @foreach (getClass() as $class)
-                                    <option value="{{ $class->id }}"
-                                            {{-- {{ old('class') == $class->id ? 'selected' : '' }} --}}
-                                            {{ checkSelected($class->id, old('class')) }}
-                                            >{{ $class->name }}</option>
+                                    <option value="{{ $class->id }}" {{ old('class') == $class->id ? 'selected' : '' }}>{{ $class->name }}</option>
                                 @endforeach
                             </select>
                             @if ($errors->class)
