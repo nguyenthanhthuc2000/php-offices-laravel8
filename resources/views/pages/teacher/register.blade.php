@@ -215,20 +215,6 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-md-4">
-                            <label for="selectClass" class="form-label">Lớp chủ nhiệm</label>
-                            <select class="form-select" aria-label="selectClass" name="class" required>
-                                <option label="Chọn lớp học"></option>
-                                @foreach (getClass() as $class)
-                                    <option value="{{ $class->id }}" {{ old('class') == $class->id ? 'selected' : '' }}>{{ $class->name }}</option>
-                                @endforeach
-                            </select>
-                            @if ($errors->class)
-                                <div class="text-danger">
-                                    {{ $errors->first('class') }}
-                                </div>
-                            @endif
-                        </div>
-                        <div class="col-md-4">
                             <label for="selectClass" class="form-label">Khoa</label>
                             <select class="form-select" aria-label="select" name="branch" required>
                                 <option label="Khoa"></option>
@@ -239,6 +225,20 @@
                             @if ($errors->branch)
                                 <div class="text-danger">
                                     {{ $errors->first('branch') }}
+                                </div>
+                            @endif
+                        </div>
+                        <div class="col-md-4">
+                            <label for="selectClass" class="form-label">Lớp chủ nhiệm</label>
+                            <select class="chosen-select" aria-label="selectClass" name="class[]" multiple required tabindex="8" placeholder="Chọn lớp học">
+                                @foreach (getClass() as $class)
+                                    <option value="{{ $class->id }}"
+                                            >{{ $class->name }}</option>
+                                @endforeach
+                            </select>
+                            @if ($errors->class)
+                                <div class="text-danger">
+                                    {{ $errors->first('class') }}
                                 </div>
                             @endif
                         </div>

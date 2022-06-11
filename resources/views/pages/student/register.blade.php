@@ -223,13 +223,25 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-md-6">
+                            <label for="selectClass" class="form-label">Khoa</label>
+                            <select class="form-select" aria-label="select" name="branch" required>
+                                <option label="Khoa"></option>
+                                @foreach(getFaculies() as $fac)
+                                    <option value="{{ $fac->id }}" {{ old('branch') == $fac->id ? 'selected' : '' }}>{{ $fac->name }}</option>
+                                @endforeach
+                            </select>
+                            @if ($errors->branch)
+                                <div class="text-danger">
+                                    {{ $errors->first('branch') }}
+                                </div>
+                            @endif
+                        </div>
+                        <div class="col-md-6">
                             <label for="selectClass" class="form-label">Lớp học</label>
-                            <select class="chosen-select" aria-label="selectClass" name="class[]" multiple required tabindex="8" placeholder="Chọn lớp học">
+                            <select class="form-select" aria-label="selectClass" name="class" required>
+                                <option label="Chọn lớp học"></option>
                                 @foreach (getClass() as $class)
-                                    <option value="{{ $class->id }}"
-                                            {{-- {{ old('class') == $class->id ? 'selected' : '' }} --}}
-                                            {{ checkSelected($class->id, old('class')) }}
-                                            >{{ $class->name }}</option>
+                                    <option value="{{ $class->id }}" {{ old('class') == $class->id ? 'selected' : '' }}>{{ $class->name }}</option>
                                 @endforeach
                             </select>
                             @if ($errors->class)
@@ -238,7 +250,9 @@
                                 </div>
                             @endif
                         </div>
-                        <div class="col-md-6">
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-4">
                             <label for="selectSchoolYears" class="form-label">Niên khóa</label>
                             <select class="form-select" aria-label="selectSchoolYears" name="school_years" required>
                                 <option label="Chọn niên khóa"></option>
@@ -252,8 +266,6 @@
                                 </div>
                             @endif
                         </div>
-                    </div>
-                    <div class="form-group row">
                         <div class="col-md-4">
                             <label for="selectClass" class="form-label">Loại đào tạo</label>
                             <select class="form-select" aria-label="select" name="type_education" required>
@@ -277,20 +289,6 @@
                             @if ($errors->education_level)
                                 <div class="text-danger">
                                     {{ $errors->first('education_level') }}
-                                </div>
-                            @endif
-                        </div>
-                        <div class="col-md-4">
-                            <label for="selectClass" class="form-label">Khoa</label>
-                            <select class="form-select" aria-label="select" name="branch" required>
-                                <option label="Khoa"></option>
-                                @foreach(getFaculies() as $fac)
-                                    <option value="{{ $fac->id }}" {{ old('branch') == $fac->id ? 'selected' : '' }}>{{ $fac->name }}</option>
-                                @endforeach
-                            </select>
-                            @if ($errors->branch)
-                                <div class="text-danger">
-                                    {{ $errors->first('branch') }}
                                 </div>
                             @endif
                         </div>

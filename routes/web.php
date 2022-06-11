@@ -12,7 +12,7 @@ use App\Http\Controllers\FacultyController;
 use App\Http\Controllers\SchoolYearController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\NewsController;
-
+use App\Models\Faculty;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/trang-chu', [HomeController::class, 'index'])->name('home');
@@ -21,6 +21,7 @@ Route::post('/login-submit',[AuthController::class, 'login'])->name('login.post'
 Route::get('/dang-xuat', [AuthController::class, 'logout'])->name('logout');
 Route::get('/get-district/{id_province}', [Controller::class, 'getDistrictByProvince'])->name('getDistrict');
 Route::get('/get-ward/{id_district}/{id_province}', [Controller::class, 'getWardByDistrict'])->name('getWard/{id_province}');
+Route::get('/get-class/{id_faculty}', [FacultyController::class, 'getFaculty'])->name('getWard/{id_province}');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/doi-mat-khau', [AuthController::class, 'changePassword'])->name('password.change');
@@ -51,8 +52,9 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/chinh-sua-thong-tin-giao-vien/{id}', [TeacherController::class, 'edit'])->name('teacher.edit');
         Route::get('/xoa-giao-vien/{id}', [UserController::class, 'delete'])->name('teacher.delete');
 
-        // Sinh viên
+        // sinh viên
         Route::get('/tao-moi-sinh-vien', [StudentController::class, 'create'])->name('register.student');
+
 
         Route::get('/danh-sach-khoa', [FacultyController::class, 'index'])->name('faculty.index');
         Route::get('/danh-sach-lop', [ClassListController::class, 'index'])->name('class.index');

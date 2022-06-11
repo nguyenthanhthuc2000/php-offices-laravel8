@@ -232,13 +232,13 @@
                                         <div class="row g-3 align-items-center form-group">
                                             <label for="" class="col-form-label col-4">Họ và tên cha</label>
                                             <div class="col-auto bold">
-                                                {{ $father != null ? $father->name : 'Chưa cập nhật' }}
+                                                {{ $father != null && $father->name ? $father->name : 'Chưa cập nhật' }}
                                             </div>
                                         </div>
                                         <div class="row g-3 align-items-center form-group">
                                             <label for="" class="col-form-label col-4">Địa chỉ thường trú:</label>
                                             <div class="col-auto bold">
-                                                {{ $father != null ? $father->permanent_address : 'Chưa cập nhật'}}
+                                                {{ $father != null && $father->permanent_address ? $father->permanent_address : 'Chưa cập nhật'}}
                                             </div>
                                         </div>
                                     </div>
@@ -246,7 +246,7 @@
                                         <div class="row g-3 align-items-center form-group">
                                             <label for="" class="col-form-label col-4">Năm sinh:</label>
                                             <div class="col-auto bold">
-                                                {{ $father != null ? dateFormat($father->year_birth, 'Y') : 'Chưa cập nhật' }}
+                                                {{ $father != null && $father->year_birth ? dateFormat($father->year_birth, 'Y') : 'Chưa cập nhật' }}
                                             </div>
                                         </div>
                                         <div class="row g-3 align-items-center form-group">
@@ -254,7 +254,7 @@
                                             <label for="" class="col-form-label">Điện thoại:</label>
                                             </div>
                                             <div class="col-auto bold">
-                                                {{ $father != null ? $father->phone : 'Chưa cập nhật' }}
+                                                {{ $father != null && $father->phone ? $father->phone : 'Chưa cập nhật' }}
                                             </div>
                                         </div>
                                     </div>
@@ -262,7 +262,7 @@
                                         <div class="row g-3 align-items-center form-group">
                                             <label for="" class="col-form-label col-4">Công việc</label>
                                             <div class="col-auto bold">
-                                                {{ $father != null ? $father->job : 'Chưa cập nhật' }}
+                                                {{ $father != null && $father->job ? $father->job : 'Chưa cập nhật' }}
                                             </div>
                                         </div>
                                         <div class="row g-3 align-items-center form-group">
@@ -270,7 +270,7 @@
                                             <label for="" class="col-form-label">Dân tộc:</label>
                                             </div>
                                             <div class="col-auto bold">
-                                                {{ $father != null ? getNameEthnic($father->ethnic) : 'Chưa cập nhật' }}
+                                                {{ $father != null && $father->ethnic ? getNameEthnic($father->ethnic) : 'Chưa cập nhật' }}
                                             </div>
                                         </div>
                                     </div>
@@ -287,13 +287,13 @@
                                         <div class="row g-3 align-items-center form-group">
                                             <label for="" class="col-form-label col-4">Họ và tên mẹ</label>
                                             <div class="col-auto bold">
-                                                {{ $mom != null ? $mom->name : 'Chưa cập nhật' }}
+                                                {{ $mom != null && $mom->name ? $mom->name : 'Chưa cập nhật' }}
                                             </div>
                                         </div>
                                         <div class="row g-3 align-items-center form-group">
                                             <label for="" class="col-form-label col-4">Địa chỉ thường trú:</label>
                                             <div class="col-auto bold">
-                                                {{ $mom != null ? $mom->permanent_address : 'Chưa cập nhật'}}
+                                                {{ $mom != null && $mom->permanent_address ? $mom->permanent_address : 'Chưa cập nhật'}}
                                             </div>
                                         </div>
                                     </div>
@@ -301,7 +301,7 @@
                                         <div class="row g-3 align-items-center form-group">
                                             <label for="" class="col-form-label col-4">Năm sinh:</label>
                                             <div class="col-auto bold">
-                                                {{ $mom != null ? dateFormat($mom->year_birth, 'Y') : 'Chưa cập nhật' }}
+                                                {{ $mom != null && $mom->year_birth ? dateFormat($mom->year_birth, 'Y') : 'Chưa cập nhật' }}
                                             </div>
                                         </div>
                                         <div class="row g-3 align-items-center form-group">
@@ -309,7 +309,7 @@
                                             <label for="" class="col-form-label">Điện thoại:</label>
                                             </div>
                                             <div class="col-auto bold">
-                                                {{ $mom != null ? $mom->phone : 'Chưa cập nhật' }}
+                                                {{ $mom != null && $mom->phone ? $mom->phone : 'Chưa cập nhật' }}
                                             </div>
                                         </div>
                                     </div>
@@ -317,7 +317,7 @@
                                         <div class="row g-3 align-items-center form-group">
                                             <label for="" class="col-form-label col-4">Công việc</label>
                                             <div class="col-auto bold">
-                                                {{ $mom != null ? $mom->job : 'Chưa cập nhật' }}
+                                                {{ $mom != null && $mom->job ? $mom->job : 'Chưa cập nhật' }}
                                             </div>
                                         </div>
                                         <div class="row g-3 align-items-center form-group">
@@ -325,7 +325,7 @@
                                             <label for="" class="col-form-label">Dân tộc:</label>
                                             </div>
                                             <div class="col-auto bold">
-                                                {{ $mom != null ? getNameEthnic($mom->ethnic) : 'Chưa cập nhật' }}
+                                                {{ $mom != null && $mom->ethnic ? getNameEthnic($mom->ethnic) : 'Chưa cập nhật' }}
                                             </div>
                                         </div>
                                     </div>
@@ -342,13 +342,13 @@
                                         <div class="row g-3 align-items-center form-group">
                                             <label for="" class="col-form-label col-4">Họ và tên vợ/chồng</label>
                                             <div class="col-auto bold">
-                                                {{ $other != null ? $other->name : 'Chưa cập nhật' }}
+                                                {{ $other != null && $other->name ? $other->name : 'Chưa cập nhật' }}
                                             </div>
                                         </div>
                                         <div class="row g-3 align-items-center form-group">
                                             <label for="" class="col-form-label col-4">Địa chỉ thường trú:</label>
                                             <div class="col-auto bold">
-                                                {{ $other != null ? $other->permanent_address : 'Chưa cập nhật'}}
+                                                {{ $other != null && $other->permanent_address ? $other->permanent_address : 'Chưa cập nhật'}}
                                             </div>
                                         </div>
                                     </div>
@@ -356,7 +356,7 @@
                                         <div class="row g-3 align-items-center form-group">
                                             <label for="" class="col-form-label col-4">Năm sinh:</label>
                                             <div class="col-auto bold">
-                                                {{ $other != null ? dateFormat($other->year_birth, 'Y') : 'Chưa cập nhật' }}
+                                                {{ $other != null && $other->year_birth ? dateFormat($other->year_birth, 'Y') : 'Chưa cập nhật' }}
                                             </div>
                                         </div>
                                         <div class="row g-3 align-items-center form-group">
@@ -364,7 +364,7 @@
                                             <label for="" class="col-form-label">Điện thoại:</label>
                                             </div>
                                             <div class="col-auto bold">
-                                                {{ $other != null ? $other->phone : 'Chưa cập nhật' }}
+                                                {{ $other != null && $other->phone ? $other->phone : 'Chưa cập nhật' }}
                                             </div>
                                         </div>
                                     </div>

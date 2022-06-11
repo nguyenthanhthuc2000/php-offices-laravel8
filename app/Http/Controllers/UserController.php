@@ -56,8 +56,22 @@ class UserController extends Controller
     }
 
     protected function ruleValidateUser($id, $type = null){
-        $role = getRole();
+        $roleUser = '';
+        if(getRole() == 3) { $roleUser = getRole() ;}
+        $role = $id ? getRoleUser($id) : $type;
         $rule = [];
+        if($roleUser && $roleUser == 3){
+            return [
+                "ethnic" => "required",
+                "gender" => "required",
+                "place_birth" => "required",
+                "province" => "required",
+                "district" => "required",
+                "ward" => "required",
+                "date_join_tncshcm" => "date",
+                "date_join_csvn" => "date"
+            ];
+        }
         switch ($role) {
             case 1:
             $rule = [

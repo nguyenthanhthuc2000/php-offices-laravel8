@@ -4,14 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Faculty;
-use DB;
+use App\Models\ClassList;
 
 class FacultyController extends Controller
 {
     private $model;
-    public function __construct(Faculty $faculty)
+    private $class;
+    public function __construct(Faculty $faculty, ClassList $class)
     {
         $this->model = $faculty;
+        $this->class = $class;
     }
 
     public function update (Request $request, $id) {
@@ -30,7 +32,7 @@ class FacultyController extends Controller
                 'name.required' => 'Tên khoa không để trống',
                 'sign.required' => 'Kí hiệu không được bỏ trống'
             ]
-        ); 
+        );
 
         $data = [
             'name' => $request->name,
@@ -59,7 +61,7 @@ class FacultyController extends Controller
                 'name.required' => 'Tên khoa không để trống',
                 'sign.required' => 'Kí hiệu không được bỏ trống'
             ]
-        ); 
+        );
 
         $data = [
             'name' => $request->name,
@@ -90,5 +92,14 @@ class FacultyController extends Controller
 
         $faculties = $this->model->orderBy('id', 'DESC')->paginate(8);
         return view('pages.faculty.index', compact('faculties'));
+    }
+
+    public function getFaculty($id_faculty){
+        $class_list = '';
+        if($id_faculty === 0){
+            return $class_list;
+        }
+        $class_list = $this->class->where('faculty_id', $id_faculty)->get();
+        return json_decode($class_list);
     }
 }
