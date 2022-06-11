@@ -38,5 +38,37 @@
                 this.value = this.value.slice(0,this.getAttribute('maxLength'))
             }
         })
+
+        if($('[name="branch"]').val() == ''){
+            $('[name^="class"]').prop('disabled', true);
+        }
+
+        $('[name="branch"]').on('change', function(){
+            let facultyId = $(this).val() == '' ? 0 : $(this).val();
+            const url = '/get-class/' + facultyId;
+            $.get(
+                url
+            ,
+            (result) => {
+                let classList = `<option label="Khoa"></option>`;
+                let chosenList = '';
+                result.map((item, index) => {
+                    classList += `<option value="${item.id}">${item.name}</option>`;
+                    chosenList += `<li class="active-result" data-option-array-index="${index}">${item.name}</li>`
+                })
+                $('[name^="class"]').html(classList);
+                if($(this).val() == ''){
+                    $('[name^="class"]').prop('disabled', true);
+                    $('.chosen-select').chosen('destroy').chosen();
+                    $('.chosen-container').addClass('chosen-disabled');
+                }
+                else{
+                    $('[name^="class"]').prop('disabled', false);
+                    $('.chosen-container').removeClass('chosen-disabled');
+                    $('.chosen-select').chosen('destroy').chosen();
+                    $('.chosen-results').html(chosenList);
+                }
+            })
+        })
     </script>
 @stack('javascript')

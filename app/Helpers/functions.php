@@ -135,6 +135,14 @@ if(!function_exists('setStudentCode')){
     }
 }
 
+if(!function_exists('getClassByFacultyCode')){
+    function getClassByFacultyCode($faculty_id){
+        $class_list = ClassList::where('faculty_id', $faculty_id)->get();
+        return $class_list;
+    }
+}
+
+
 if(!function_exists('getClassName')){
     function getClassName($class_id){
         $class_name = '';

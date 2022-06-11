@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use PhpOffice\PhpWord\Writer\Word2007\Part\Rels;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class AuthController extends Controller
 {
@@ -62,9 +62,9 @@ class AuthController extends Controller
         );
 
         if (Auth::attempt($credentials, $remember)) {
-           
+
                 return redirect()->route('home');
-            
+
         }
 
         return back()->withErrors(

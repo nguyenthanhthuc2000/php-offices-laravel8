@@ -65,11 +65,11 @@
                                                 <div class="row g-3 align-items-center form-group mb-3">
                                                     <div class="col-3">
                                                     <label for="" class="col-form-label">Lớp học:</label>
-                                                    </div>
+                                                </div>
                                                     <div class="col-md-7 col-9">
                                                         <select class="form-select" aria-label="selectSchoolYears" name="class" required>
                                                             <option label="Lớp học"></option>
-                                                            @foreach (getClass() as $class)
+                                                            @foreach (getClassByFacultyCode($student->info->branch) as $class)
                                                                 <option value="{{ $class->id }}" {{ $student->info && $class->id == $student->info->class_id ? "selected" : '' }}>{{ $class->name }}</option>
                                                             @endforeach
                                                         </select>
