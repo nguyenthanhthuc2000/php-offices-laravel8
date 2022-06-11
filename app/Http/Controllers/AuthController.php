@@ -4,11 +4,46 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use PhpOffice\PhpWord\Writer\Word2007\Part\Rels;
+use DB;
 
 class AuthController extends Controller
 {
     public function index(){
         return view('pages.auth.login');
+    }
+
+    public function changePassword(){
+        return view('pages.auth.change_password');
+    }
+
+
+    public function updatePassword (Request $request) {
+        $this->validate( $request,
+            [
+                'current_password' => 'required',
+                'new_password' => 'required',
+                'confirm_password' => 'required|same:new_password',
+            ],
+            [
+                'current_password.required' => 'Mật khẩu cũ không được để trống',
+                'new_password.required' => 'Mật khẩu mới không được để trống',
+                'confirm_password.required' => 'Mật khẩu xác nhận không để trống',
+                'confirm_password.same' => 'Mật khẩu xác nhận không đúng',
+            ]
+        );
+        if (Hash::check($request->current_password, Auth::user()->password))
+        {
+            $update = DB::table('users')->where('id', Auth::id())->update(['password' => Hash::make($request->new_password)]);
+            if($update){
+                $request->session()->flush();
+                Auth::logout();
+                return redirect()->route('login')->with('updatePasswordSuccess', 'Đổi mật khẩu thành công, vui lòng đăng nhập lại!');
+            }
+            return back()->with('updatePasswordError', 'Lỗi, vui lòng thử lại!');
+        }
+        return back()->with('updatePasswordError', 'Sai mật khẩu hiện tại!');
     }
 
     public function login(Request $request){

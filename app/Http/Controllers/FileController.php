@@ -66,7 +66,7 @@ class FileController extends Controller
                 $phone_3 = 'Chưa cập nhật';
                 $job_3 = 'Chưa cập nhật';
 
-                $relatives = $user->getRelative;
+                $relatives = $user->relative;
                 if(count($relatives) > 0) {
 
                    foreach ($relatives as $relative) {

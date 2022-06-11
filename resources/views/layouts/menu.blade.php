@@ -21,15 +21,15 @@
                     </li>
                 @endif
                 @if(Auth::check() && getRole() == 1)
-{{--                    <li class="nav-item">--}}
-{{--                        <a class="nav-link text-light" href="{{ route('faculty.index') }}">KHOA</a>--}}
-{{--                    </li>--}}
-{{--                    <li class="nav-item">--}}
-{{--                        <a class="nav-link text-light" href="{{ route('class.index') }}">LỚP</a>--}}
-{{--                    </li>--}}
-{{--                    <li class="nav-item">--}}
-{{--                        <a class="nav-link text-light" href="{{ route('school.year.index') }}">NIÊN KHÓA</a>--}}
-{{--                    </li>--}}
+                   <li class="nav-item">
+                       <a class="nav-link text-light" href="{{ route('faculty.index') }}">KHOA</a>
+                   </li>
+                   <li class="nav-item">
+                       <a class="nav-link text-light" href="{{ route('class.index') }}">LỚP</a>
+                   </li>
+                   <li class="nav-item">
+                       <a class="nav-link text-light" href="{{ route('school.year.index') }}">NIÊN KHÓA</a>
+                   </li>
                     <li class="nav-item">
                         <a class="nav-link text-light" href="{{ route('news.index') }}">TIN TỨC</a>
                     </li>
@@ -50,7 +50,7 @@
                     </a>
                     <ul class="dropdown-menu " aria-labelledby="dropdownMenuButton1">
 {{--                    <li style="    border-bottom: 1px solid #3333;"><a class="dropdown-item" href="#">Hồ sơ</a></li>--}}
-{{--                    <li style="    border-bottom: 1px solid #3333;"><a class="dropdown-item" href="#">Đổi mật khẩu</a></li>--}}
+                   <li style="    border-bottom: 1px solid #3333;"><a class="dropdown-item" href="{{ route('password.change') }}">Đổi mật khẩu</a></li>
                     <li><a class="dropdown-item" href="{{ route('logout') }}">Đăng xuất</a></li>
                     </ul>
                 </div>

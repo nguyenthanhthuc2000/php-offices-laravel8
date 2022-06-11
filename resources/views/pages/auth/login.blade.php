@@ -6,6 +6,12 @@
         <div class="card-body p-4 p-sm-5">
           <h3 class="card-title text-center text-uppercase">Đăng nhập</h3>
           <hr class="my-4">
+          @if(session()->has('updatePasswordSuccess'))
+          <div class="alert alert-success alert-dismissible fade show" role="alert"
+               style="justify-content: center">
+              <strong>{{ session()->get('updatePasswordSuccess') }}</strong>
+          </div>
+      @endif
           <form action="{{ route('login.post') }}" method="POST" class="needs-validation" novalidate>
             @method('post')
             @csrf
