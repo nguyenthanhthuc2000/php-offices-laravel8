@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\ClassList;
 use App\Models\Faculty;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 class StudentController extends Controller
 {
     private $model;
@@ -17,6 +18,17 @@ class StudentController extends Controller
         $this->model = $user;
         $this->class = $class;
         $this->faculty = $faculty;
+    }
+
+    public function resetPassword ($id) {
+        $user = $this->model->where('id', $id)->first();
+        $newpass = substr(md5(time()), 0, 16);
+        if($user) {
+            $this->model->where('id', $id)->update(['password' => Hash::make($newpass)]);
+            $message = 'Mật khẩu mới của tài khoản '.$user->email.' là '.$newpass. ' !';
+            return redirect()->route('student.index')->with('messageResetPass', $message);
+        }
+        return redirect()->route('student.index')->with('messageResetPass', 'Không tìm thấy tài khoản!');
     }
 
     public function index (Request $request){
