@@ -359,13 +359,12 @@ class UserController extends Controller
 
     public function delete($id){
         $user = $this->user->find($id);
-
         if (!$user){
             return back()->withErrors(['errorUpdate' => 'Xóa thất bại.']);
         }
 
         if($user->delete()){
-            return back()->with(['updateSuccess' => 'Chỉnh sửa thành công.']);
+            return back()->with(['deleteSuccess' => 'Xóa thành công.']);
         }
 
     }

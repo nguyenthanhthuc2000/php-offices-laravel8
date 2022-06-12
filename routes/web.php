@@ -12,7 +12,6 @@ use App\Http\Controllers\FacultyController;
 use App\Http\Controllers\SchoolYearController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\NewsController;
-use App\Models\Faculty;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/trang-chu', [HomeController::class, 'index'])->name('home');
@@ -53,7 +52,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/xoa-bai-viet/{id}', [NewsController::class, 'delete'])->name('news.delete');
 
     });
-    Route::get('/xoa-sinh-vien/{id}', [UserController::class, 'delete'])->name('student.delete')->middleware('isAdmin', 'isTeacher');
+    Route::get('/xoa-sinh-vien/{id}', [UserController::class, 'delete'])->name('student.delete')->middleware('isCanDelete');
     Route::post('/edit-user/{id}', [UserController::class, 'update'])->name('user.update');
     Route::get('/chinh-sua-thong-tin-sinh-vien/{id}', [StudentController::class, 'edit'])->name('student.edit');
 
