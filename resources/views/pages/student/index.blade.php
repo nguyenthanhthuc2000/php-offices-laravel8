@@ -47,6 +47,13 @@
                 </div>
             </form>
         </div>
+        @if(session()->has('messageResetPass'))
+        <br>
+            <div class="alert alert-success" role="alert"
+             style="justify-content: center">
+            <strong>{{ session()->get('messageResetPass') }}</strong>
+            </div>
+        @endif
         <div class="d-flex align-items-center justify-content-end mb-2">
             @if (getRole() == IS_ADMIN)
                 <a href="{{ route('register.student') }}" class="btn btn-primary btn-blue" style="border-radius: 25px;"><i class="fa-solid fa-plus"></i> Thêm mới</a>
@@ -82,6 +89,10 @@
                             <td>{{ $student->info->getBranch->name ?? 'Chưa cập nhật'}}</td>
                             <td class="text-end">
                                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                    <button class="btn btn-mute text-primary btn-reset-password" data-email="{{ $student->email }}" 
+                                        data-href="{{ route('student.reset.password', $student->id)}}">
+                                        <i class="fa-solid fa-key"></i>
+                                    </button>
                                     <a class="btn btn-mute text-warning" href="{{ route('student.detail', $student->id) }}">
                                         <i class="fa-solid fa-user-pen"></i>
                                     </a>
@@ -131,6 +142,23 @@
             let href = $(this).attr('href');
             swalWithBootstrapButtons.fire({
             title: 'Bạn có chắc muốn xóa?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Đồng ý',
+            cancelButtonText: 'Hủy',
+            reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = href;
+                }
+            })
+        })
+        $('.btn-reset-password').click(function(e){
+            e.preventDefault();
+            let href = $(this).attr('data-href');
+            let email = $(this).attr('data-email');
+            swalWithBootstrapButtons.fire({
+            title: 'Bạn có chắc muốn reset mật khẩu cho tài khoản '+email+'?',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonText: 'Đồng ý',
