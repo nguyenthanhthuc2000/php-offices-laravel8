@@ -47,6 +47,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/update-nien-khoa/{id}', [SchoolYearController::class, 'update'])->name('school.year.update');
 
         // Giáo viên
+        Route::get('/reset-password-teacher/{id}', [TeacherController::class, 'resetPassword'])->name('teacher.reset.password');
         Route::get('/tao-moi-giao-vien', [TeacherController::class, 'create'])->name('register.teacher');
         Route::get('/danh-sach-giao-vien', [TeacherController::class, 'index'])->name('teacher.index');
         Route::get('/chinh-sua-thong-tin-giao-vien/{id}', [TeacherController::class, 'edit'])->name('teacher.edit');
