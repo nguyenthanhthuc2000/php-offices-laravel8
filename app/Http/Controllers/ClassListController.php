@@ -30,7 +30,7 @@ class ClassListController extends Controller
                 'name.required' => 'Tên lớp không để trống',
                 'sign.required' => 'Kí hiệu không được bỏ trống'
             ]
-        ); 
+        );
 
         $data = [
             'name' => $request->name,
@@ -64,7 +64,7 @@ class ClassListController extends Controller
                 'sign.required' => 'Kí hiệu không được bỏ trống',
                 'faculty_id.required' => 'Vui lòng chọn khoa'
             ]
-        ); 
+        );
 
         $data = [
             'name' => $request->name,
@@ -96,5 +96,17 @@ class ClassListController extends Controller
 
         $class = $this->model->orderBy('id', 'DESC')->paginate(8);
         return view('pages.class.index', compact('class'));
+    }
+
+    public function delete($id){
+        $class = $this->model->find($id);
+        if (!$class){
+            return back()->withErrors(['errorUpdate' => 'Xóa thất bại.']);
+        }
+
+        if($class->delete()){
+            return back()->with(['deleteSuccess' => 'Xóa thành công.']);
+        }
+
     }
 }

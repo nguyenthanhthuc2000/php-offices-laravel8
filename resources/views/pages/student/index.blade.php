@@ -119,6 +119,15 @@
     </div>
 @endsection
 @section('script')
+    @if(session('deleteSuccess'))
+        <script>
+            Swal.fire({
+                title: 'Xóa thành công',
+                icon: 'success',
+                confirmButtonText: 'Đồng ý'
+            })
+        </script>
+    @endif
     <script>
         const swalWithBootstrapButtons = Swal.mixin({
             customClass: {

@@ -102,4 +102,16 @@ class FacultyController extends Controller
         $class_list = $this->class->where('faculty_id', $id_faculty)->get();
         return json_decode($class_list);
     }
+
+    public function delete($id){
+        $faculty = $this->model->find($id);
+        if (!$faculty){
+            return back()->withErrors(['errorUpdate' => 'Xóa thất bại.']);
+        }
+
+        if($faculty->delete()){
+            return back()->with(['deleteSuccess' => 'Xóa thành công.']);
+        }
+
+    }
 }

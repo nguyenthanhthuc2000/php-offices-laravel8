@@ -12,7 +12,6 @@ use App\Http\Controllers\FacultyController;
 use App\Http\Controllers\SchoolYearController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\NewsController;
-use App\Models\Faculty;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/trang-chu', [HomeController::class, 'index'])->name('home');
@@ -33,18 +32,21 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/chinh-sua-khoa/{id}', [FacultyController::class, 'edit'])->name('faculty.edit');
         Route::post('/store-faculty', [FacultyController::class, 'store'])->name('faculty.store');
         Route::post('/update-faculty/{id}', [FacultyController::class, 'update'])->name('faculty.update');
+        Route::get('/xoa-khoa/{id}', [FacultyController::class, 'delete'])->name('faculty.delete');
 
          //Lớp
          Route::get('/tao-moi-lop', [ClassListController::class, 'create'])->name('class.create');
          Route::get('/chinh-sua-lop/{id}', [ClassListController::class, 'edit'])->name('class.edit');
          Route::post('/store-class', [ClassListController::class, 'store'])->name('class.store');
          Route::post('/update-class/{id}', [ClassListController::class, 'update'])->name('class.update');
+         Route::get('/xoa-lop/{id}', [ClassListController::class, 'delete'])->name('class.delete');
 
         //Niên khóa
         Route::get('/tao-moi-nien-khoa', [SchoolYearController::class, 'create'])->name('school.year.create');
         Route::get('/chinh-sua-nien-khoa/{id}', [SchoolYearController::class, 'edit'])->name('school.year.edit');
         Route::post('/store-nien-khoa', [SchoolYearController::class, 'store'])->name('school.year.store');
         Route::post('/update-nien-khoa/{id}', [SchoolYearController::class, 'update'])->name('school.year.update');
+        Route::get('/xoa-nien-khoa/{id}', [SchoolYearController::class, 'delete'])->name('school.year.delete');
 
         // Giáo viên
         Route::get('/reset-password-teacher/{id}', [TeacherController::class, 'resetPassword'])->name('teacher.reset.password');
@@ -72,7 +74,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/xoa-bai-viet/{id}', [NewsController::class, 'delete'])->name('news.delete');
 
     });
-    Route::get('/xoa-sinh-vien/{id}', [UserController::class, 'delete'])->name('student.delete')->middleware('isAdmin', 'isTeacher');
+    Route::get('/xoa-sinh-vien/{id}', [UserController::class, 'delete'])->name('student.delete')->middleware('isCanDelete');
     Route::post('/edit-user/{id}', [UserController::class, 'update'])->name('user.update');
     Route::get('/chinh-sua-thong-tin-sinh-vien/{id}', [StudentController::class, 'edit'])->name('student.edit');
 

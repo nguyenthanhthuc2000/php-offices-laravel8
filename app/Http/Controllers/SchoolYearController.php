@@ -21,7 +21,7 @@ class SchoolYearController extends Controller
                     'unique:App\Models\SchoolYear,name,'.$id,
                 ]
             ]
-        ); 
+        );
 
         $data = [
             'name' => $request->name
@@ -41,7 +41,7 @@ class SchoolYearController extends Controller
                     'unique:App\Models\SchoolYear,name',
                 ],
             ]
-        ); 
+        );
 
         $data = [
             'name' => $request->name,
@@ -70,5 +70,17 @@ class SchoolYearController extends Controller
 
         $years = $this->model->orderBy('id', 'DESC')->paginate(8);
         return view('pages.school_years.index', compact('years'));
+    }
+
+    public function delete($id){
+        $class = $this->model->find($id);
+        if (!$class){
+            return back()->withErrors(['errorUpdate' => 'Xóa thất bại.']);
+        }
+
+        if($class->delete()){
+            return back()->with(['deleteSuccess' => 'Xóa thành công.']);
+        }
+
     }
 }
