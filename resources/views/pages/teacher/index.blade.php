@@ -46,7 +46,7 @@
                             <th scope="row">{{ $no++ }}</th>
                             <td>{{$teacher->name}}</td>
                             <td>{{$teacher->email}}</td>
-                            <td>{{ $teacher->info && $teacher->info->class ? $teacher->info->class->faculty->name  : 'Chưa cập nhật'}}</td>
+                            <td>{{ $teacher->info && $teacher->info->class_id ? getFacultyNameByClass($teacher->info->class_id) : 'Chưa cập nhật'}}</td>
                             <td class="text-end">
                                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                                     <a class="btn btn-mute text-warning" title="Chỉnh sửa" href="{{ route('teacher.edit', $teacher->id) }}">
@@ -111,4 +111,45 @@
             })
         })
     </script>
+    @if ($errors->first('errorUpdate'))
+            <script>
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                    })
+
+                    Toast.fire({
+                    icon: 'error',
+                    title: '{{ $errors->first('errorUpdate') }}'
+                })
+            </script>
+    @endif
+
+    @if (session('updateSuccess'))
+        <script>
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+                })
+
+                Toast.fire({
+                icon: 'success',
+                title: '{{ session('updateSuccess') }}'
+            })
+        </script>
+    @endif
 @endsection

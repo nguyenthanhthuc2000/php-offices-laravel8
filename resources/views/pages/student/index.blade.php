@@ -89,7 +89,7 @@
                             <td>{{ $student->info->getBranch->name ?? 'Chưa cập nhật'}}</td>
                             <td class="text-end">
                                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                    <button class="btn btn-mute text-primary btn-reset-password" data-email="{{ $student->email }}" 
+                                    <button class="btn btn-mute text-primary btn-reset-password" data-email="{{ $student->email }}"
                                         data-href="{{ route('student.reset.password', $student->id)}}">
                                         <i class="fa-solid fa-key"></i>
                                     </button>
@@ -171,4 +171,45 @@
             })
         })
     </script>
+    @if ($errors->first('errorUpdate'))
+    <script>
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+            })
+
+            Toast.fire({
+            icon: 'error',
+            title: '{{ $errors->first('errorUpdate') }}'
+        })
+    </script>
+@endif
+
+@if (session('updateSuccess'))
+    <script>
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+            })
+
+            Toast.fire({
+            icon: 'success',
+            title: '{{ session('updateSuccess') }}'
+        })
+    </script>
+@endif
 @endsection

@@ -195,7 +195,23 @@ class UserController extends Controller
                 // return back()->withErrors(['errorUpdate' => 'Thêm sửa thất bại.'])->withInput($request->input());
                 throw new Exception($e->getMessage());
             }
-            return back()->with(['updateSuccess' => 'Thêm thành công.']);
+            $back_route = '';
+
+            switch ($request->role) {
+                // case '1':
+                //     $back_route = 'home';
+                //     break;
+                case '2':
+                    $back_route = 'teacher.index';
+                    break;
+                case '3':
+                    $back_route = 'student.index';
+                    break;
+                default:
+                    $back_route = 'home';
+                    break;
+            }
+            return redirect()->route($back_route)->with(['updateSuccess' => 'Thêm thành công.']);
     }
 
 

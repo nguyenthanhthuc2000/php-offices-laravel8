@@ -32,21 +32,21 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/chinh-sua-khoa/{id}', [FacultyController::class, 'edit'])->name('faculty.edit');
         Route::post('/store-faculty', [FacultyController::class, 'store'])->name('faculty.store');
         Route::post('/update-faculty/{id}', [FacultyController::class, 'update'])->name('faculty.update');
-        Route::get('/xoa-khoa/{id}', [FacultyController::class, 'delete'])->name('faculty.delete');
+        Route::get('/xoa-khoa/{id}', [FacultyController::class, 'delete'])->name('faculty.delete')->middleware('isCanDelete');;
 
          //Lớp
          Route::get('/tao-moi-lop', [ClassListController::class, 'create'])->name('class.create');
          Route::get('/chinh-sua-lop/{id}', [ClassListController::class, 'edit'])->name('class.edit');
          Route::post('/store-class', [ClassListController::class, 'store'])->name('class.store');
          Route::post('/update-class/{id}', [ClassListController::class, 'update'])->name('class.update');
-         Route::get('/xoa-lop/{id}', [ClassListController::class, 'delete'])->name('class.delete');
+         Route::get('/xoa-lop/{id}', [ClassListController::class, 'delete'])->name('class.delete')->middleware('isCanDelete');;
 
         //Niên khóa
         Route::get('/tao-moi-nien-khoa', [SchoolYearController::class, 'create'])->name('school.year.create');
         Route::get('/chinh-sua-nien-khoa/{id}', [SchoolYearController::class, 'edit'])->name('school.year.edit');
         Route::post('/store-nien-khoa', [SchoolYearController::class, 'store'])->name('school.year.store');
         Route::post('/update-nien-khoa/{id}', [SchoolYearController::class, 'update'])->name('school.year.update');
-        Route::get('/xoa-nien-khoa/{id}', [SchoolYearController::class, 'delete'])->name('school.year.delete');
+        Route::get('/xoa-nien-khoa/{id}', [SchoolYearController::class, 'delete'])->name('school.year.delete')->middleware('isCanDelete');;
 
         // Giáo viên
         Route::get('/tao-moi-giao-vien', [TeacherController::class, 'create'])->name('register.teacher');

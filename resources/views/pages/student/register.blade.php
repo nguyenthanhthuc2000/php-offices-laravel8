@@ -303,47 +303,47 @@
 @endsection
 
 @section('script')
-@if ($errors->first('errorUpdate'))
-            <script>
-                const Toast = Swal.mixin({
-                    toast: true,
-                    position: 'top-end',
-                    showConfirmButton: false,
-                    timer: 3000,
-                    timerProgressBar: true,
-                    didOpen: (toast) => {
-                        toast.addEventListener('mouseenter', Swal.stopTimer)
-                        toast.addEventListener('mouseleave', Swal.resumeTimer)
-                    }
-                    })
-
-                    Toast.fire({
-                    icon: 'error',
-                    title: '{{ $errors->first('errorUpdate') }}'
+    @if ($errors->first('errorUpdate'))
+        <script>
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
                 })
-            </script>
-        @endif
 
-        @if (session('updateSuccess'))
-            <script>
-                const Toast = Swal.mixin({
-                    toast: true,
-                    position: 'top-end',
-                    showConfirmButton: false,
-                    timer: 3000,
-                    timerProgressBar: true,
-                    didOpen: (toast) => {
-                        toast.addEventListener('mouseenter', Swal.stopTimer)
-                        toast.addEventListener('mouseleave', Swal.resumeTimer)
-                    }
-                    })
+                Toast.fire({
+                icon: 'error',
+                title: '{{ $errors->first('errorUpdate') }}'
+            })
+        </script>
+    @endif
 
-                    Toast.fire({
-                    icon: 'success',
-                    title: '{{ session('updateSuccess') }}'
+    @if (session('updateSuccess'))
+        <script>
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
                 })
-            </script>
-        @endif
+
+                Toast.fire({
+                icon: 'success',
+                title: '{{ session('updateSuccess') }}'
+            })
+        </script>
+    @endif
     <script>
         var provinceEle = $('[name="province"]');
         var districtEle = $('[name="district"]');

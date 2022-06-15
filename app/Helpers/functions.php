@@ -142,7 +142,6 @@ if(!function_exists('getClassByFacultyCode')){
     }
 }
 
-
 if(!function_exists('getClassName')){
     function getClassName($class_id){
         $class_name = '';
@@ -156,6 +155,22 @@ if(!function_exists('getClassName')){
             $class_name = ClassList::find($class_id)->name ?? null;
         }
         return $class_name;
+    }
+}
+
+if(!function_exists('getFacultyNameByClass')){
+    function getFacultyNameByClass($class_id){
+        $faculty_name = '';
+        $class_id = json_decode($class_id);
+        if(is_array($class_id)){
+            foreach($class_id as $c){
+                $faculty_name .= ClassList::find($c)->faculty->name . (end($class_id) == $c ? '' : ', ');
+            }
+            return implode(array_unique(explode(", ", $faculty_name)));
+        }
+        else{
+            return ClassList::find($class_id)->faculty->name ?? null;
+        }
     }
 }
 

@@ -7,11 +7,6 @@
         <h4>Danh sách bài viết</h4>
         <a href="{{ route('news.create') }}" class="btn btn-primary btn-blue" style="border-radius: 25px;"><i class="fa-solid fa-plus"></i> Thêm mới</a>
     </div>
-    @if(Session::get('success_message'))
-    <div class="alert alert-success pt-2 pb-2 mt-2" role="alert">
-        {{ Session::get('success_message') ? Session::get('success_message') : '' }}
-    </div>
-    @endif
     <div class="table-responsive">
         <table class="table">
             <thead>
@@ -61,7 +56,26 @@
     </div>
 </div>
 @endsection
+
 @push('javascript')
+    @if(session('success_message'))
+        <script>
+            Swal.fire({
+                title: 'Xóa thành công',
+                icon: 'success',
+                confirmButtonText: 'Đồng ý'
+            })
+        </script>
+    @endif
+    @if(session('error_message'))
+        <script>
+            Swal.fire({
+                title: 'Xóa thất bại',
+                icon: 'warning',
+                confirmButtonText: 'Đồng ý'
+            })
+        </script>
+    @endif
     <script>
         $.ajaxSetup({
             headers: {
